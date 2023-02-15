@@ -20,14 +20,14 @@
       </div>
       <div v-if="files.length">
         <div v-for="file in files" :key="file.name">
-          <!-- <div class="container border-1 shadow-sm mt-3">
+          <div class="container border-1 shadow-sm mt-3">
             <table width="100%">
               <tr>
                 <td rowspan="2">
                   <img alt="" class="custom_thumbnail" v-bind:src="icons[file.name.split('.').pop()]"/>&nbsp;
                 </td>
-                <td>{{ file.name }}&nbsp</td>
-                <td>{{ Math.round(file.size / 1000) + "Kb" }}&nbsp</td>
+                <td>{{ file.name }}&nbsp;</td>
+                <td>{{ Math.round(file.size / 1000) + "Kb" }}&nbsp;</td>
                 <td rowspan="2" align="right">
                   <button class="remove-file-button" type="button" @click="removeFile(files.indexOf(file))">
                     <img alt="" class="custom_thumbnail" src="/red_x.png"/>&nbsp;
@@ -40,7 +40,7 @@
                 </td>
               </tr>
             </table>
-          </div> -->
+          </div>
         </div>
         <div class="container bg-light">
           <button class="run-button" type="button" @click="submitFiles">
