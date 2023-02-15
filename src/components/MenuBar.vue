@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
             <li class="nav-item">
-              <router-link class="nav-link me-lg-3" to="/howtouse">How to Use</router-link>
+              <router-link class="nav-link me-lg-3" to="/aboutus">About Us</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link me-lg-3" to="/contribute">Contribute</router-link>
