@@ -102,7 +102,7 @@ export default {
       // Axios Request to Back-End Server
       axios({
         method: "POST",
-        url: 'https://nemo-backend.herokuapp.com/',
+        url: 'https://nemo-backend-flask.herokuapp.com/',
         data: formData,
         headers: {"Content-Type": "multipart/form-data"}
       })
