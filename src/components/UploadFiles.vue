@@ -93,6 +93,7 @@ export default {
       this.files.splice(i, 1);
     },
     submitFiles() {
+      console.log("The Run Button Was pressed.")
       // Prepare Form Data Containing Files
       let formData = new FormData();
       for (let i = 0; i < this.files.length; i++) {
@@ -102,7 +103,7 @@ export default {
       // Axios Request to Back-End Server
       axios({
         method: "POST",
-        url: 'https://nemo-backend-flask.herokuapp.com/',
+        url: 'https://nemo-backend.herokuapp.com/',
         data: formData,
         headers: {"Content-Type": "multipart/form-data"}
       })
