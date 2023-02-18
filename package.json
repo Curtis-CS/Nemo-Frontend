@@ -1,46 +1,28 @@
 {
-  "name": "nemo-frontend",
+  "name": "nemo_frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "start": "node server.js"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@braid/vue-formulate": "^2.5.3",
-    "@xkeshi/image-compressor": "^0.5.3",
     "axios": "^1.3.3",
     "bootstrap": "^5.2.3",
-    "bootstrap-vue": "^2.23.1",
     "core-js": "^3.8.3",
-    "cropperjs": "^1.5.13",
-    "esbuild": "^0.17.8",
-    "express": "^4.18.2",
-    "serve-static": "^1.15.0",
-    "vue": "^2.6.14",
-    "vue-axios": "^3.5.2",
-    "vue-formulate": "^0.12.1",
-    "vue-router": "^3.5.1",
-    "vue-upload-component": "^2.8.23",
+    "vue": "^3.2.13",
+    "vue-router": "^4.1.6",
     "vue2-dropzone": "^3.6.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.4.0",
-    "@typescript-eslint/parser": "^5.4.0",
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-plugin-router": "~5.0.0",
-    "@vue/cli-plugin-typescript": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "@vue/eslint-config-typescript": "^9.1.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3",
-    "sass": "^1.58.1",
-    "sass-loader": "^12.0.0",
-    "typescript": "~4.5.5",
-    "vue-template-compiler": "^2.6.14"
+    "eslint-plugin-vue": "^8.0.3"
   },
   "eslintConfig": {
     "root": true,
@@ -48,20 +30,18 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended",
-      "@vue/typescript/recommended"
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
     ],
     "parserOptions": {
-      "ecmaVersion": 2020
+      "parser": "@babel/eslint-parser"
     },
-    "rules": {
-      "vue/multi-word-component-names": "off"
-    }
+    "rules": {"vue/multi-word-component-names": 0}
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead"
+    "not dead",
+    "not ie 11"
   ]
 }

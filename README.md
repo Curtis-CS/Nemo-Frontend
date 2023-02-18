@@ -1,4 +1,4 @@
-# nemo-frontend
+# nemo_frontend
 
 ## Project setup
 ```

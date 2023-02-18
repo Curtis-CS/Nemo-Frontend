@@ -1,3 +1,7 @@
+// import { createApp } from 'vue'
+// import App from './App.vue'
+
+// createApp(App).mount('#app')
 import { createApp } from 'vue'
 import {createRouter, createWebHistory} from 'vue-router'
 import App from './App.vue'
@@ -5,7 +9,7 @@ import Home from './views/Home.vue'
 import AboutUs from './views/AboutUs.vue'
 import Contribute from './views/Contribute.vue'
 import "bootstrap/dist/css/bootstrap.css"
-import "bootstrap/dist/js/bootstrap.js"
+
 //import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 const router = createRouter({
@@ -19,7 +23,6 @@ const router = createRouter({
 
 createApp(App)
     .use(router)
-    .use(bootstrap)
     .mount('#app')
 
-
+import "bootstrap/dist/js/bootstrap.js"

@@ -104,6 +104,7 @@ export default {
       axios({
         method: "POST",
         url: 'https://nemo-backend.herokuapp.com/',
+        //url: 'https://nemo-backend.herokuapp.com/',
         data: formData,
         headers: {"Content-Type": "multipart/form-data"}
       })
