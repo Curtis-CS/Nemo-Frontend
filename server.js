@@ -1,5 +1,4 @@
 
-import "bootstrap/dist/css/bootstrap.css"
 
 var express = require('express')
 var path = require('path')
@@ -11,5 +10,3 @@ app.use(serveStatic(path.join(__dirname, 'dist')))
 var port = process.env.PORT || 8000
 app.listen(port)
 console.log('server started ' + port)
-
-import "bootstrap/dist/js/bootstrap.js"
