@@ -95,25 +95,34 @@ export default {
     submitFiles() {
       console.log("The Run Button Was pressed.")
       // Prepare Form Data Containing Files
-      let formData = new FormData();
-      for (let i = 0; i < this.files.length; i++) {
-        let file = this.files[i];
-        formData.append(this.name, file);
-      }
-      // Axios Request to Back-End Server
-      axios({
-        method: "POST",
-        url: 'https://nemo-backend.herokuapp.com/',
-        //url: 'https://nemo-backend.herokuapp.com/',
-        data: formData,
-        headers: {"Content-Type": "multipart/form-data"}
-      })
-          .then(function () {
-            console.log("SUCCESS!!")
+      // var formData = new FormData();
+      // for (let i = 0; i < this.files.length; i++) {
+      //   formData.append(this.files[i].name, this.files[i]);
+      //   console.log('>> formData >>', formData)
+      // }
+      axios
+          //.post('http://127.0.0.1:5000', {
+          .post('https://nemo-backend.herokuapp.com/', {
+            firstName: 'Ben',
+            lastName: 'Kenobi'
           })
-          .catch(function () {
-            console.log("FAILURE!!")
-          });
+          .then(response => console.log(response))
+          .catch(error => console.log(error))
+      // Axios Request to Back-End Server
+
+      // axios({
+      //   method: "POST",
+      //   url: 'https://nemo-backend.herokuapp.com/',
+      //   //url: 'https://nemo-backend.herokuapp.com/',
+      //   data: formData,
+      //   headers: {"Content-Type": "multipart/form-data"}
+      // })
+      //     .then(function () {
+      //       console.log(this.FormData)
+      //     })
+      //     .catch(function () {
+      //       console.log("failure");
+      //     });
     }
   }
 }
