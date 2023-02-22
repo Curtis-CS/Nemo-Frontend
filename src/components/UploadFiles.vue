@@ -100,14 +100,26 @@ export default {
       //   formData.append(this.files[i].name, this.files[i]);
       //   console.log('>> formData >>', formData)
       // }
-      axios
-          //.post('http://127.0.0.1:5000', {
-          .post('https://nemo-backend.herokuapp.com/', {
-            firstName: 'Ben',
-            lastName: 'Kenobi'
-          })
-          .then(response => console.log(response))
-          .catch(error => console.log(error))
+      let formData = new FormData()
+      let selectedFile = this.files[0]
+      formData.append("fileNameCorrect", selectedFile)
+
+      axios.post('https://nemo-backend.herokuapp.com/', formData, {
+      // axios.post('http://127.0.0.1:5000', formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          }
+        })
+        .then(response => console.log(response))
+        .catch(error => console.log(error))
+      // axios
+      //     //.post('http://127.0.0.1:5000', {
+      //     .post('https://nemo-backend.herokuapp.com/', {
+      //       firstName: 'Ben',
+      //       lastName: 'Kenobi'
+      //     })
+      //     .then(response => console.log(response))
+      //     .catch(error => console.log(error))
       // Axios Request to Back-End Server
 
       // axios({
