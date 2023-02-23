@@ -6,7 +6,7 @@
 		<h4>Instructors---David Feil-Seifer---Devrin Lee</h4>
 		<h4>Advisors---Dr.Lei Yang---Amirhesam Yazdi</h4>
 		<p>Dr. Lei Yang: Associate Professor at UNR in Computer Science and Engineering</p>
-		<p>Amirhesam Yazdi: PhD graduate in Computer Science and Engineering, under advisement from Dr. Fnen Yan and Dr. Lei Yang </p>
+		<p>Amirhesam Yazdi: PhD graduate in Computer Science and Engineering, under advisement from Dr. Feng Yan and Dr. Lei Yang </p>
 		<h2>Abstract</h2>
 		<p>Deep-learning (DL) based object detection algorithms are beneficial to areas of climate science involving wildfire 
 			prevention, observation, and intelligence. As wildfires become more prevalent, the need for advanced techniques 
