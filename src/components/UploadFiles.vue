@@ -87,69 +87,123 @@ export default {
   },
   methods: {
     addFile(file) {
+    /**
+     * Function to add a file to the files list.
+     * Ensures duplicate files don't exist.
+     * Assigns valid or invalid file size to file.
+     * Assigns valid or invalid file type to file.
+     * @author: Michael Moosmuller
+     * @param file The file information and data.
+     */
       if (!(this.fileExists(file["name"]))) {
-        if (this.getFileExtension(file.name) in this.icons) {
+        if (this.getFileSizeStatus(file) && this.getFileExtension(file.name) in this.icons) {
+          file["valid_size"] = true
           file["valid_file"] = true
           this.files.push(file)
         } else {
+          file["valid_size"] = false
           file["valid_file"] = false
           this.run_status = true
           this.files.push(file)
         }
       }
     },
+    getFileSizeStatus(file) {
+    /**
+     * Function to check the size of a file.
+     * 1MB = 1048576 B's, 1GB = 1048576000 MB's
+     * @author: Michael Moosmuller
+     * @param file File being checked.
+     * @returns {boolean} File size is valid or not.
+     */
+      console.log(file.size <= 1048576000)
+      return file.size <= 1048576000;
+    },
     clearFiles() {
+    /**
+     * Function to delete the current files when the "Clear" button is pressed.
+     * @author: Michael Moosmuller
+     */
       this.files = []
       this.run_status = false
     },
     dragover(e) {
-      // Prevent Files From Being Opened
-      e.preventDefault();
+    /**
+     * Function to handle dragging files over the drop box area.
+     * @author: Michael Moosmuller
+     * @param e Event from user.
+     */
+      e.preventDefault()
       this.isDragging = true;
     },
     dragleave() {
+    /**
+     * Function to set isDragging property when files stop moving over drop box area.
+     * @author: Michael Moosmuller
+     */
       this.isDragging = false;
     },
     drop(e) {
-      // Prevent Files From Being Opened
+    /**
+     * Function to handle files being dropped into the drop box area.
+     * @author: Michael Moosmuller
+     * @param e Event of dropping files.
+     */
       e.preventDefault()
-      // Mark Valid / Invalid File Types
       if (e.dataTransfer.files) {
         [...e.dataTransfer.files].forEach((file) => {
           this.addFile(file)
         })
       }
       this.isDragging = false
-      console.log(this.files)
     },
     fileExists(name) {
-      console.log(name)
+    /**
+     * Function to verify if a file exists within the file list.
+     * @author: Michael Moosmuller
+     * @param name Name of the file.
+     * @returns {boolean} File exists or not.
+     */
       for (let i = 0; i < this.files.length; i++) {
         if (this.files[i]["name"] === name) {
           return true
         }
       }
+      return false
     },
     getFileExtension(filename) {
-      return filename.split('.').pop()
+    /**
+     * Function to get file extension type.
+     * @author: Michael Moosmuller
+     * @param filename Name of the file.
+     * @returns {*} File extension type.
+     */
+      return filename.split('.').pop().toLowerCase()
     },
     handleFileUpload() {
+    /**
+     * Function to handle file upload from selected files.
+     * @author: Michael Moosmuller
+     */
       let files = [...this.$refs.file.files]
       for (let i = 0; i < files.length; i++) {
         this.addFile(files[i])
       }
-
-      // this.files.push.apply(this.files, [...this.$refs.file.files])
-      console.log(this.files)
-
-
     },
     removeFile(i) {
+    /**
+     * Function to remove a file from the list.
+     * @author: Michael Moosmuller
+     * @param i Index of the file in the list.
+     */
       this.files.splice(i, 1);
       this.verifyFiles()
-      console.log(this.run_status)
     },
     submitFiles() {
+    /**
+     * Function to submit files through an axios post request to the backend server.
+     * @author: Michael Moosmuller, Curtis Burchfield
+     */
       console.log("The Run Button Was pressed.")
       // Prepare Form Data Containing Files
       // var formData = new FormData();
@@ -194,8 +248,12 @@ export default {
       //     });
     },
     verifyFiles() {
+    /**
+     * Function to verify if the list of files are all valid file types before submission.
+     * @author: Michael Moosmuller
+     */
       for (let i = 0; i < this.files.length; i++) {
-        if (!(this.files[i]["valid_file"])) {
+        if (!(this.files[i]["valid_file"]) && !(this.files[i]["valid_size"])) {
           this.run_status = true
           break
         }
@@ -219,11 +277,6 @@ export default {
   margin-top: 2rem;
   padding-right: 20px;
   padding-left: 20px;
-  background-color: #ffffff;
-}
-
-.min-card-width {
-  min-width: 15em;
 }
 
 .choose-file-button {
@@ -234,11 +287,12 @@ export default {
 
 .clear-button {
   float: left;
+  background-color: #ffffff;
 }
 
-.custom_thumbnail {
-  width: 30px;
-  height: 30px;
+.column-file-size {
+  width: 50px;
+  justify-content: left;
 }
 
 .column-file-type-icon {
@@ -246,9 +300,9 @@ export default {
   justify-content: center;
 }
 
-.column-file-size {
-  width: 50px;
-  justify-content: left;
+.custom_thumbnail {
+  width: 30px;
+  height: 30px;
 }
 
 .dropzone-container {
@@ -276,6 +330,10 @@ export default {
   color: red;
 }
 
+.min-card-width {
+  min-width: 15em;
+}
+
 .remove-file-button {
   border: none;
   background-color: white;
@@ -283,6 +341,12 @@ export default {
 
 .run-button {
   float: right;
+  background-color: #ffffff;
+}
+
+.run-button:disabled {
+  float: right;
+  background-color: grey;
 }
 
 .upload-icon {
@@ -297,4 +361,3 @@ export default {
 }
 
 </style>
-
