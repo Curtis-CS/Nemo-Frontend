@@ -1,5 +1,5 @@
 <template>
-  <div class="card mt-5" style="width: auto">
+  <div class="card mt-5 min-card-width" style="width: auto">
     <div class="card-body">
       <h5 class="card-title">Upload Files</h5>
       <div class="dropzone-container" @dragleave="dragleave" @dragover="dragover" @drop="drop">
@@ -15,7 +15,7 @@
         >
         <div><img alt="" class=upload-icon src="/upload-icon.png"/></div>
         <label class="" for="fileInput">
-          <span>Drag and Drop or <u class="choose-file-button">choose files</u></span>
+          <span>Drag and Drop or <u class="choose-file-button">choose files</u>.</span>
         </label>
       </div>
       <div v-if="files.length">
@@ -23,12 +23,15 @@
           <div class="container border-1 shadow-sm mt-3">
             <table width="100%">
               <tr>
-                <td rowspan="2">
-                  <img alt="" class="custom_thumbnail" v-bind:src="icons[file.name.split('.').pop()]"/>&nbsp;
+                <td rowspan="2" class="column-file-type-icon" v-if="file.valid_file">
+                  <img alt="" class="custom_thumbnail" v-bind:src="icons[file.name.split('.').pop()]"/>
+                </td>
+                <td rowspan="2" class="column-file-type-icon" v-else>
+                  <img alt="" class="custom_thumbnail" src="/invalid-filetype-icon.png"/>
                 </td>
                 <td>{{ file.name }}&nbsp;</td>
-                <td>{{ Math.round(file.size / 1000) + "Kb" }}&nbsp;</td>
-                <td rowspan="2" align="right">
+                <td rowspan="2" class="column-file-size">{{ Math.round(file.size / 1000) + "Kb" }}&nbsp;</td>
+                <td rowspan="2" class="column-file-type-icon">
                   <button class="remove-file-button" type="button" @click="removeFile(files.indexOf(file))">
                     <img alt="" class="custom_thumbnail" src="/red_x.png"/>&nbsp;
                   </button>
@@ -36,14 +39,22 @@
               </tr>
               <tr>
                 <td>
-                  Success!!!!
+                  <div v-if="file.valid_file" class="file-upload valid-file-type">
+                    Valid file.
+                  </div>
+                  <div v-else class="file-upload invalid-file-type">
+                    Invalid file.
+                  </div>
                 </td>
               </tr>
             </table>
           </div>
         </div>
         <div class="container bg-light">
-          <button class="run-button" type="button" @click="submitFiles">
+          <button class="base-button clear-button" type="button" @click="clearFiles">
+            Clear
+          </button>
+          <button :disabled="run_status" class="base-button run-button" type="button" @click="submitFiles">
             Run
           </button>
       </div>
@@ -58,8 +69,10 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      run_status: false,
       isDragging: false,
       files: [],
+      files2: {},
       icons: {
         gif: '/gif-icon.png',
         jpg: '/jpeg-icon.png',
@@ -73,7 +86,24 @@ export default {
     }
   },
   methods: {
+    addFile(file) {
+      if (!(this.fileExists(file["name"]))) {
+        if (this.getFileExtension(file.name) in this.icons) {
+          file["valid_file"] = true
+          this.files.push(file)
+        } else {
+          file["valid_file"] = false
+          this.run_status = true
+          this.files.push(file)
+        }
+      }
+    },
+    clearFiles() {
+      this.files = []
+      this.run_status = false
+    },
     dragover(e) {
+      // Prevent Files From Being Opened
       e.preventDefault();
       this.isDragging = true;
     },
@@ -81,16 +111,43 @@ export default {
       this.isDragging = false;
     },
     drop(e) {
-      e.preventDefault();
-      this.$refs.file.files = e.dataTransfer.files;
-      this.handleFileUpload();
-      this.isDragging = false;
+      // Prevent Files From Being Opened
+      e.preventDefault()
+      // Mark Valid / Invalid File Types
+      if (e.dataTransfer.files) {
+        [...e.dataTransfer.files].forEach((file) => {
+          this.addFile(file)
+        })
+      }
+      this.isDragging = false
+      console.log(this.files)
+    },
+    fileExists(name) {
+      console.log(name)
+      for (let i = 0; i < this.files.length; i++) {
+        if (this.files[i]["name"] === name) {
+          return true
+        }
+      }
+    },
+    getFileExtension(filename) {
+      return filename.split('.').pop()
     },
     handleFileUpload() {
-      this.files = [...this.$refs.file.files];
+      let files = [...this.$refs.file.files]
+      for (let i = 0; i < files.length; i++) {
+        this.addFile(files[i])
+      }
+
+      // this.files.push.apply(this.files, [...this.$refs.file.files])
+      console.log(this.files)
+
+
     },
     removeFile(i) {
       this.files.splice(i, 1);
+      this.verifyFiles()
+      console.log(this.run_status)
     },
     submitFiles() {
       console.log("The Run Button Was pressed.")
@@ -135,6 +192,17 @@ export default {
       //     .catch(function () {
       //       console.log("failure");
       //     });
+    },
+    verifyFiles() {
+      for (let i = 0; i < this.files.length; i++) {
+        if (!(this.files[i]["valid_file"])) {
+          this.run_status = true
+          break
+        }
+        else {
+          this.run_status = false
+        }
+      }
     }
   }
 }
@@ -142,11 +210,20 @@ export default {
 
 <style scoped>
 
-.upload-icon {
-  opacity: 0.5;
-  width: 40px;
-  height: 40px;
-  margin-bottom: 0.5em;
+.base-button {
+  color:black;
+  border-radius: 25px;
+  border-style: solid;
+  border-color: #d8d8d8;
+  border-width: thin;
+  margin-top: 2rem;
+  padding-right: 20px;
+  padding-left: 20px;
+  background-color: #ffffff;
+}
+
+.min-card-width {
+  min-width: 15em;
 }
 
 .choose-file-button {
@@ -155,26 +232,23 @@ export default {
   color: #adcdec;
 }
 
-.remove-file-button {
-  border: none;
-  background-color: white;
-  justify-content: center;
-}
-
-.run-button {
-  border: dashed;
-  border-radius: 25px;
-  margin-top: 2rem;
-  padding-right: 20px;
-  padding-left: 20px;
-  background-color: #f7fafc;
-  float: right;
+.clear-button {
+  float: left;
 }
 
 .custom_thumbnail {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
+}
 
+.column-file-type-icon {
+  width: 50px;
+  justify-content: center;
+}
+
+.column-file-size {
+  width: 50px;
+  justify-content: left;
 }
 
 .dropzone-container {
@@ -185,12 +259,41 @@ export default {
     text-align: center;
 }
 
+.file-upload {
+    font-style: italic;
+    font-size: 12px;
+}
+
 .hidden-input {
     opacity: 0;
     overflow: hidden;
     position: absolute;
     width: 1px;
     height: 1px;
+}
+
+.invalid-file-type {
+  color: red;
+}
+
+.remove-file-button {
+  border: none;
+  background-color: white;
+}
+
+.run-button {
+  float: right;
+}
+
+.upload-icon {
+  opacity: 0.5;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0.5em;
+}
+
+.valid-file-type {
+  color: green;
 }
 
 </style>
