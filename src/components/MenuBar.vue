@@ -18,7 +18,7 @@
               <router-link class="nav-link me-lg-3" to="/aboutus">About Us</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link me-lg-3" to="/contribute">Contribute</router-link>
+              <router-link class="nav-link me-lg-3" to="/howto">How To Use</router-link>
             </li>
           </ul>
       </div>

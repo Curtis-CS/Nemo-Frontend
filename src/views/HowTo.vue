@@ -3,7 +3,7 @@
       <div class="container px-5 mt-custom">
         <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
           <div class="col-12 col-lg-5">
-            <h2 class="display-6 lh-1 mb-5">Contribute</h2>
+            <h2 class="display-6 lh-1 mb-5">How To Use</h2>
             <p class="lead fw-normal text-muted mb-5 mb-lg-0">
               The Nemo wildfire smoke detection system is hoping to expand and improve over time.
               We could use any assistance in furthering the devolopment of Nemo. We are accepting 
@@ -36,7 +36,7 @@
   import UploadFiles from "@/components/UploadFiles.vue";
   
   export default {
-    name: "Contribute",
+    name: "HowTo",
     components: {UploadFiles}
   }
   </script>
