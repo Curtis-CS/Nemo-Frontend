@@ -1,5 +1,5 @@
 <template>
-  <div class="card mt-5" style="width: auto">
+  <div class="card mt-5 min-card-width" style="width: auto">
     <div class="card-body">
       <h5 class="card-title">Upload Files</h5>
       <div class="dropzone-container" @dragleave="dragleave" @dragover="dragover" @drop="drop">
@@ -54,7 +54,7 @@
           <button class="base-button clear-button" type="button" @click="clearFiles">
             Clear
           </button>
-          <button class="base-button run-button" type="button" @click="submitFiles">
+          <button :disabled="run_status" class="base-button run-button" type="button" @click="submitFiles">
             Run
           </button>
       </div>
@@ -69,7 +69,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      status: false,
+      run_status: false,
       isDragging: false,
       files: [],
       files2: {},
@@ -86,8 +86,21 @@ export default {
     }
   },
   methods: {
+    addFile(file) {
+      if (!(this.fileExists(file["name"]))) {
+        if (this.getFileExtension(file.name) in this.icons) {
+          file["valid_file"] = true
+          this.files.push(file)
+        } else {
+          file["valid_file"] = false
+          this.run_status = true
+          this.files.push(file)
+        }
+      }
+    },
     clearFiles() {
       this.files = []
+      this.run_status = false
     },
     dragover(e) {
       // Prevent Files From Being Opened
@@ -103,25 +116,38 @@ export default {
       // Mark Valid / Invalid File Types
       if (e.dataTransfer.files) {
         [...e.dataTransfer.files].forEach((file) => {
-          if (this.getFileExtension(file.name) in this.icons) {
-            file["valid_file"] = true
-            this.files.push(file)
-          } else {
-            file["valid_file"] = false
-            this.files.push(file)
-          }
+          this.addFile(file)
         })
       }
       this.isDragging = false
+      console.log(this.files)
+    },
+    fileExists(name) {
+      console.log(name)
+      for (let i = 0; i < this.files.length; i++) {
+        if (this.files[i]["name"] === name) {
+          return true
+        }
+      }
     },
     getFileExtension(filename) {
       return filename.split('.').pop()
     },
     handleFileUpload() {
-      this.files.push.apply(this.files, [...this.$refs.file.files])
+      let files = [...this.$refs.file.files]
+      for (let i = 0; i < files.length; i++) {
+        this.addFile(files[i])
+      }
+
+      // this.files.push.apply(this.files, [...this.$refs.file.files])
+      console.log(this.files)
+
+
     },
     removeFile(i) {
       this.files.splice(i, 1);
+      this.verifyFiles()
+      console.log(this.run_status)
     },
     submitFiles() {
       console.log("The Run Button Was pressed.")
@@ -166,6 +192,17 @@ export default {
       //     .catch(function () {
       //       console.log("failure");
       //     });
+    },
+    verifyFiles() {
+      for (let i = 0; i < this.files.length; i++) {
+        if (!(this.files[i]["valid_file"])) {
+          this.run_status = true
+          break
+        }
+        else {
+          this.run_status = false
+        }
+      }
     }
   }
 }
@@ -174,13 +211,19 @@ export default {
 <style scoped>
 
 .base-button {
-  color:white;
+  color:black;
+  border-radius: 25px;
   border-style: solid;
-  border-color: #2d53af;
+  border-color: #d8d8d8;
+  border-width: thin;
   margin-top: 2rem;
   padding-right: 20px;
   padding-left: 20px;
-  background-color: #2d53af;
+  background-color: #ffffff;
+}
+
+.min-card-width {
+  min-width: 15em;
 }
 
 .choose-file-button {
@@ -204,7 +247,7 @@ export default {
 }
 
 .column-file-size {
-  width: 100px;
+  width: 50px;
   justify-content: left;
 }
 
