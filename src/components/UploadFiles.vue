@@ -150,48 +150,24 @@ export default {
       console.log(this.run_status)
     },
     submitFiles() {
-      console.log("The Run Button Was pressed.")
-      // Prepare Form Data Containing Files
-      // var formData = new FormData();
-      // for (let i = 0; i < this.files.length; i++) {
-      //   formData.append(this.files[i].name, this.files[i]);
-      //   console.log('>> formData >>', formData)
-      // }
       let formData = new FormData()
-      let selectedFile = this.files[0]
-      formData.append("fileNameCorrect", selectedFile)
-
-      axios.post('https://nemo-backend.herokuapp.com/', formData, {
-      // axios.post('http://127.0.0.1:5000', formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          }
-        })
-        .then(response => console.log(response))
-        .catch(error => console.log(error))
-      // axios
-      //     //.post('http://127.0.0.1:5000', {
-      //     .post('https://nemo-backend.herokuapp.com/', {
-      //       firstName: 'Ben',
-      //       lastName: 'Kenobi'
-      //     })
-      //     .then(response => console.log(response))
-      //     .catch(error => console.log(error))
+      for (let i = 0; i < this.files.length; i++) {
+        let file = this.files[i]
+        formData.append(this.name, file)
+      }
       // Axios Request to Back-End Server
-
-      // axios({
-      //   method: "POST",
-      //   url: 'https://nemo-backend.herokuapp.com/',
-      //   //url: 'https://nemo-backend.herokuapp.com/',
-      //   data: formData,
-      //   headers: {"Content-Type": "multipart/form-data"}
-      // })
-      //     .then(function () {
-      //       console.log(this.FormData)
-      //     })
-      //     .catch(function () {
-      //       console.log("failure");
-      //     });
+      axios({
+        method: "POST",
+        url: 'http://127.0.0.1:5000',
+        data: formData,
+        headers: {"Content-Type": "multipart/form-data"}
+      })
+          .then(function () {
+            console.log("SUCCESS!!")
+          })
+          .catch(function () {
+            console.log("FAILURE!!")
+          });
     },
     verifyFiles() {
       for (let i = 0; i < this.files.length; i++) {
