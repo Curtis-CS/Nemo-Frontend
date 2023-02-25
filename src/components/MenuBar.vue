@@ -15,6 +15,9 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
             <li class="nav-item">
+              <router-link class="nav-link me-lg-3" to="/configurenemo">Configure Nemo</router-link>
+            </li>
+            <li class="nav-item">
               <router-link class="nav-link me-lg-3" to="/results">Results</router-link>
             </li>
             <li class="nav-item">
