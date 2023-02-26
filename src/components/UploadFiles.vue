@@ -212,8 +212,9 @@ export default {
         data: formData,
         headers: {"Content-Type": "multipart/form-data"}
       })
-          .then(function () {
+          .then(function (response) {
             console.log("SUCCESS!!")
+            console.log(response)
           })
           .catch(function () {
             console.log("FAILURE!!")
