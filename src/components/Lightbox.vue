@@ -126,8 +126,10 @@ export default {
 }
 
 .thumbnailPadding {
-	padding-left: 1vw;
+	margin-left: 1vw;
+	margin-right: 1vw;
 	background-color: whitesmoke;
+	text-align: center;
 }
 
 .XButton {
@@ -155,12 +157,9 @@ export default {
 }
 .thumbnailFormatting {
 	padding-left: 1vw;
-	padding-right: 1vw;
 	padding-top: 1vw;
 }
 .thumbnailFormattingMore {
-	/* border-style: solid;
-	border-color: gray; */
 	padding-top: 1vw;
 	width: 20vw;
 	height: 15vw;

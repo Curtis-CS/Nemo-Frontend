@@ -18,7 +18,7 @@ export default {
 			'/TumbleWeed_fire_CA_2021Jul.png', '/CaughlinRanch_PineHaven_fire_Nov2020.png',
 			'/neat.gif', '/TumbleWeed_fire_CA_2021Jul.png',
 			'/CaughlinRanch_PineHaven_fire_Nov2020.png', '/TumbleWeed_fire_CA_2021Jul.png', 
-			'/CaughlinRanch_PineHaven_fire_Nov2020.png', '/thumbsUp.gif'
+			'/CaughlinRanch_PineHaven_fire_Nov2020.png', '/thumbsUp.gif', 
 		]
 	}
   }

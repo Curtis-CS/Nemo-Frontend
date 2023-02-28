@@ -15,20 +15,22 @@
 			<button class="SelectedSingleClass" @click="SingleClassToggleOff">Single Class Detection</button>
 		</div>
 		<div class="LeftSideButton" v-else>
-			<button class="UnselectedSingleClass" @click="SingleClassToggleOn">Single Class Detection</button>
+			<button class="UnselectedSingleClass" @mouseenter="SingleClassHoverOn" @mouseleave="SingleClassHoverOff" 
+					@click="SingleClassToggleOn">Single Class Detection</button>
 		</div>
 		<div class="RightSideButton" v-if="this.densityToggle">
 			<button class="SelectedDensity" @click="DensityToggleOff">Density Detection</button>
 		</div>
 		<div class="RightSideButton" v-else>
-			<button class="UnselectedDensity" @click="DensityToggleOn">Density Detection</button>
+			<button class="UnselectedDensity" @mouseenter="DensityHoverOn" @mouseleave="DensityHoverOff" 
+					@click="DensityToggleOn">Density Detection</button>
 		</div>
 	</div>
 	<div style="padding-bottom: 10vw; padding-top: 3vw;">
-		<div class="LeftSideText" v-if="this.singleToggle">
+		<div class="LeftSideText" v-if="this.singleToggle || this.singleHover">
 			<p style="font-size: 1.2vw; color: gray;">NEEDS READOVER Single Class detection will only deliver results of either ture or false. This being yes or no to whether or not wildfire smoke was detected.</p>
 		</div>
-		<div class="RightSideText" v-if="this.densityToggle">
+		<div class="RightSideText" v-if="this.densityToggle || this.densityHover">
 			<p style="font-size: 1.2vw; color: gray;">NEEDS READOVER Density Detection will detect wildfire smoke, and provide an estimate to how dense the smoke is. This can be helpful for studyin wildfire smoke.</p>
 		</div>
 	</div>
@@ -40,23 +42,41 @@ export default {
   data() {
 	return {
 	singleToggle: true,
-	densityToggle: false
+	densityToggle: false,
+	singleHover: false,
+	densityHover: false,
 	}
   },
   methods: {
 	SingleClassToggleOn() {
 		this.singleToggle = true
 		this.densityToggle = false
+		this.densityHover = false
 	},
 	SingleClassToggleOff() {
 		this.singleToggle = false
+		this.densityToggle = true
 	},
 	DensityToggleOn() {
 		this.densityToggle = true
 		this.singleToggle = false
+		this.singleHover = false
 	},
 	DensityToggleOff() {
 		this.densityToggle = false
+		this.singleToggle = true
+	},
+	SingleClassHoverOn() {
+		this.singleHover = true
+	},
+	SingleClassHoverOff() {
+		this.singleHover = false
+	},
+	DensityHoverOn() {
+		this.densityHover = true
+	},
+	DensityHoverOff() {
+		this.densityHover = false
 	}
   }
 }
