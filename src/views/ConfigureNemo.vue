@@ -12,27 +12,59 @@
 	</div>
 	<div style="padding-bottom: 12vw;">
 		<div class="LeftSideButton" v-if="this.singleToggle">
-			<button class="SelectedSingleClass" @click="SingleClassToggleOff">Single Class Detection</button>
+			<button class="SelectedText" @click="SingleClassToggleOff">Single Class Detection</button>
 		</div>
 		<div class="LeftSideButton" v-else>
-			<button class="UnselectedSingleClass" @mouseenter="SingleClassHoverOn" @mouseleave="SingleClassHoverOff" 
+			<button class="UnselectedText" @mouseenter="SingleClassHoverOn" @mouseleave="SingleClassHoverOff" 
 					@click="SingleClassToggleOn">Single Class Detection</button>
 		</div>
 		<div class="RightSideButton" v-if="this.densityToggle">
-			<button class="SelectedDensity" @click="DensityToggleOff">Density Detection</button>
+			<button class="SelectedText" @click="DensityToggleOff">Density Detection</button>
 		</div>
 		<div class="RightSideButton" v-else>
-			<button class="UnselectedDensity" @mouseenter="DensityHoverOn" @mouseleave="DensityHoverOff" 
+			<button class="UnselectedText" @mouseenter="DensityHoverOn" @mouseleave="DensityHoverOff" 
 					@click="DensityToggleOn">Density Detection</button>
 		</div>
 	</div>
-	<div style="padding-bottom: 10vw; padding-top: 3vw;">
+	<div style="padding-bottom: 10vw; padding-top: 2vw;">
 		<div class="LeftSideText" v-if="this.singleToggle || this.singleHover">
 			<p style="font-size: 1.2vw; color: gray;">NEEDS READOVER Single Class detection will only deliver results of either ture or false. This being yes or no to whether or not wildfire smoke was detected.</p>
 		</div>
 		<div class="RightSideText" v-if="this.densityToggle || this.densityHover">
 			<p style="font-size: 1.2vw; color: gray;">NEEDS READOVER Density Detection will detect wildfire smoke, and provide an estimate to how dense the smoke is. This can be helpful for studyin wildfire smoke.</p>
 		</div>
+	</div>
+	<div class="MoreOptionsButton" v-if="this.moreOptions">
+			<button class="SelectedText" @click="MoreOptionsToggleOff">More Options</button>
+	</div>
+		<div class="MoreOptionsButton" v-else>
+			<button class="UnselectedText" @click="MoreOptionsToggleOn">More Options</button>
+		</div>
+	<div v-if="moreOptions">
+		<div style="padding-bottom: 12vw;">
+			<div class="LeftSideButton" v-if="this.extraOption1">
+				<button class="SelectedText" @click="ExtraOption1ToggleOff">ExtraOption1</button>
+			</div>
+			<div class="LeftSideButton" v-else>
+				<button class="UnselectedText" @mouseenter="ExtraOption1HoverOn" @mouseleave="ExtraOption1HoverOff" 
+						@click="ExtraOption1ToggleOn">ExtraOption1</button>
+			</div>
+			<div class="RightSideButton" v-if="this.extraOption2">
+				<button class="SelectedText" @click="ExtraOption2ToggleOff">ExtraOption2</button>
+			</div>
+			<div class="RightSideButton" v-else>
+				<button class="UnselectedText" @mouseenter="ExtraOption2HoverOn" @mouseleave="ExtraOption2HoverOff" 
+						@click="ExtraOption2ToggleOn">ExtraOption2</button>
+			</div>
+		</div>
+		<div style="padding-bottom: 10vw; padding-top: 2vw;">
+		<div class="LeftSideText" v-if="this.extraOption1 || this.extraOption1Hover">
+			<p style="font-size: 1.2vw; color: gray;">Extra Option 1</p>
+		</div>
+		<div class="RightSideText" v-if="this.extraOption2 || this.extraOption2Hover">
+			<p style="font-size: 1.2vw; color: gray;">Extra Option 2</p>
+		</div>
+	</div>
 	</div>
 </template>
 
@@ -45,6 +77,11 @@ export default {
 	densityToggle: false,
 	singleHover: false,
 	densityHover: false,
+	moreOptions: false,
+	extraOption1: false,
+	extraOption2: false,
+	extraOption1Hover: false,
+	extraOption2Hover: false
 	}
   },
   methods: {
@@ -77,6 +114,38 @@ export default {
 	},
 	DensityHoverOff() {
 		this.densityHover = false
+	},
+	MoreOptionsToggleOn() {
+		this.moreOptions = true
+	},
+	MoreOptionsToggleOff() {
+		this.moreOptions = false
+	},
+	ExtraOption1ToggleOn() {
+		this.extraOption1 = true
+		this.extraOption2Hover = false
+	},
+	ExtraOption1ToggleOff() {
+		this.extraOption1 = false
+	},
+	ExtraOption2ToggleOn() {
+		this.extraOption2 = true
+		this.extraOption1Hover = false
+	},
+	ExtraOption2ToggleOff() {
+		this.extraOption2 = false
+	},
+	ExtraOption1HoverOn() {
+		this.extraOption1Hover = true
+	},
+	ExtraOption1HoverOff() {
+		this.extraOption1Hover = false
+	},
+	ExtraOption2HoverOn() {
+		this.extraOption2Hover = true
+	},
+	ExtraOption2HoverOff() {
+		this.extraOption2Hover = false
 	}
   }
 }
@@ -88,15 +157,7 @@ export default {
 .InitialPadding {
 	padding-top: 100px;
 }
-.UnselectedSingleClass {
-	background-color: white;
-	color: black;
-	border-style: solid;
-	border-color: black;
-	font-size: 2vw;
-	width: 25vw;
-}
-.SelectedSingleClass {
+.SelectedText {
 	background-color: gray;
 	color: white;
 	border-style: solid;
@@ -104,17 +165,9 @@ export default {
 	font-size: 2vw;
 	width: 25vw;
 }
-.UnselectedDensity {
+.UnselectedText {
 	background-color: white;
 	color: black;
-	border-style: solid;
-	border-color: black;
-	font-size: 2vw;
-	width: 25vw;
-}
-.SelectedDensity {
-	background-color: gray;
-	color: white;
 	border-style: solid;
 	border-color: black;
 	font-size: 2vw;
@@ -122,12 +175,17 @@ export default {
 }
 .LeftSideButton {
 	padding-left: 10vw;
-	padding-top: 5vw;
+	padding-top: 3vw;
 	float: left;
+}
+.MoreOptionsButton {
+	text-align: center;
+	padding-top: 6vw;
+	padding-bottom: 6vw;
 }
 .RightSideButton {
 	padding-right: 10vw;
-	padding-top: 5vw;
+	padding-top: 3vw;
 	float: right;
 }
 .LeftSideText {
@@ -145,7 +203,7 @@ export default {
 	width: 35vw;
 }
 .Images {
-	width: 45vw;
+	width: 40vw;
 	height: auto;
 }
 
