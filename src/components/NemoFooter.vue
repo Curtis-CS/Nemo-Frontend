@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="container min-column-width">
   <footer class="py-3 my-4">
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
       <li class="nav-item">
@@ -30,5 +30,8 @@ export default {
   width: 35px;
   height: 35px;
   margin-left: 1rem;
+}
+.min-column-width {
+  min-width: 500px;
 }
 </style>

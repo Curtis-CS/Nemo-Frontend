@@ -1,7 +1,7 @@
 <template>
   <section class="bg-white">
     <div class="container px-5 mt-custom">
-      <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between">
+      <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between min-column-width">
         <div class="col-12 col-lg-5">
           <h2 class="display-6 lh-1 mb-5">Wildfire Smoke Detection</h2>
           <p class="lead fw-normal text-muted mb-5 mb-lg-0">
@@ -45,5 +45,8 @@ export default {
 .mt-custom {
   margin-top: 6rem;
   margin-bottom: 6rem;
+}
+.min-column-width {
+  min-width: 500px;
 }
 </style>

@@ -24,13 +24,13 @@
             <table width="100%">
               <tr>
                 <td rowspan="2" class="column-file-type-icon" v-if="file.valid_file">
-                  <img alt="" class="custom_thumbnail" v-bind:src="icons[file.name.split('.').pop()]"/>
+                  <img alt="" class="custom_thumbnail" v-bind:src="icons[file.name.split('.').pop().toLowerCase()]"/>
                 </td>
                 <td rowspan="2" class="column-file-type-icon" v-else>
                   <img alt="" class="custom_thumbnail" src="/invalid-filetype-icon.png"/>
                 </td>
-                <td>{{ file.name }}&nbsp;</td>
-                <td rowspan="2" class="column-file-size">{{ Math.round(file.size / 1000) + "Kb" }}&nbsp;</td>
+                <td class="column-file-name">{{ file.name }}&nbsp;</td>
+                <td rowspan="2" class="column-file-size">{{ bytesToSize(file.size, 0) }}&nbsp;</td>
                 <td rowspan="2" class="column-file-type-icon">
                   <button class="remove-file-button" type="button" @click="removeFile(files.indexOf(file))">
                     <img alt="" class="custom_thumbnail" src="/red_x.png"/>&nbsp;
@@ -73,6 +73,7 @@ export default {
       isDragging: false,
       files: [],
       files2: {},
+      filesize: '',
       icons: {
         gif: '/gif-icon.png',
         jpg: '/jpeg-icon.png',
@@ -108,17 +109,6 @@ export default {
         }
       }
     },
-    getFileSizeStatus(file) {
-    /**
-     * Function to check the size of a file.
-     * 1MB = 1048576 B's, 1GB = 1048576000 MB's
-     * @author: Michael Moosmuller
-     * @param file File being checked.
-     * @returns {boolean} File size is valid or not.
-     */
-      console.log(file.size <= 1048576000)
-      return file.size <= 1048576000;
-    },
     clearFiles() {
     /**
      * Function to delete the current files when the "Clear" button is pressed.
@@ -126,6 +116,13 @@ export default {
      */
       this.files = []
       this.run_status = false
+    },
+    dragleave() {
+    /**
+     * Function to set isDragging property when files stop moving over drop box area.
+     * @author: Michael Moosmuller
+     */
+      this.isDragging = false;
     },
     dragover(e) {
     /**
@@ -135,13 +132,6 @@ export default {
      */
       e.preventDefault()
       this.isDragging = true;
-    },
-    dragleave() {
-    /**
-     * Function to set isDragging property when files stop moving over drop box area.
-     * @author: Michael Moosmuller
-     */
-      this.isDragging = false;
     },
     drop(e) {
     /**
@@ -180,6 +170,48 @@ export default {
      */
       return filename.split('.').pop().toLowerCase()
     },
+    bytesToSize(bytes, precision) {
+      /**
+       * Function to convert file size to proper notation.
+       * @author Andris Causs
+       * @param size Size of the file.
+       * @source https://web.archive.org/web/20120507054320/http://codeaid.net/javascript/convert-size-in-bytes-to-human-readable-format-(javascript)
+       */
+      var kilobyte = 1024;
+      var megabyte = kilobyte * 1024;
+      var gigabyte = megabyte * 1024;
+      var terabyte = gigabyte * 1024;
+
+      if ((bytes >= 0) && (bytes < kilobyte)) {
+          return bytes + ' B';
+
+      } else if ((bytes >= kilobyte) && (bytes < megabyte)) {
+          return (bytes / kilobyte).toFixed(precision) + ' KB';
+
+      } else if ((bytes >= megabyte) && (bytes < gigabyte)) {
+          return (bytes / megabyte).toFixed(precision) + ' MB';
+
+      } else if ((bytes >= gigabyte) && (bytes < terabyte)) {
+          return (bytes / gigabyte).toFixed(precision) + ' GB';
+
+      } else if (bytes >= terabyte) {
+          return (bytes / terabyte).toFixed(precision) + ' TB';
+
+      } else {
+          return bytes + ' B';
+      }
+    },
+    getFileSizeStatus(file) {
+    /**
+     * Function to check the size of a file.
+     * 1MB = 1048576 B's, 1GB = 1048576000 MB's
+     * @author: Michael Moosmuller
+     * @param file File being checked.
+     * @returns {boolean} File size is valid or not.
+     */
+      console.log(file.size <= 1048576000)
+      return file.size <= 1048576000;
+    },
     handleFileUpload() {
     /**
      * Function to handle file upload from selected files.
@@ -200,6 +232,11 @@ export default {
       this.verifyFiles()
     },
     submitFiles() {
+      /**
+       * Function to submit files to the back-end server.
+       * @author: Michael Moosmuller
+       * @type {FormData}
+       */
       let formData = new FormData()
       for (let i = 0; i < this.files.length; i++) {
         let file = this.files[i]
@@ -263,15 +300,23 @@ export default {
   background-color: #ffffff;
 }
 
+
+.column-file-name {
+  min-width: 100px;
+}
+
 .column-file-size {
-  width: 50px;
-  justify-content: left;
+  min-width: 65px;
+  text-align: right;
 }
 
 .column-file-type-icon {
   width: 50px;
-  justify-content: center;
+  vertical-align: middle;
+  text-align: center;
 }
+
+
 
 .custom_thumbnail {
   width: 30px;
@@ -304,7 +349,7 @@ export default {
 }
 
 .min-card-width {
-  min-width: 15em;
+  min-width: 280px;
 }
 
 .remove-file-button {

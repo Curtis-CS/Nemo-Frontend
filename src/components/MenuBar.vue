@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm" id="mainNav">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm min-column-width" id="mainNav">
     <div class="container px-5">
         <router-link class="navbar-brand fw-bold" to="/">NEMO</router-link>
         <button class="navbar-toggler"
@@ -31,3 +31,9 @@
     </div>
   </nav>
 </template>
+
+<style scoped>
+.min-column-width {
+  min-width: 500px;
+}
+</style>
