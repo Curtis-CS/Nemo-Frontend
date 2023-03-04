@@ -87,6 +87,9 @@ export default {
     }
   },
   methods: {
+    testFunction() {
+      return true
+    },
     addFile(file) {
     /**
      * Function to add a file to the files list.
