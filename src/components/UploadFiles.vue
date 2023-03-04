@@ -112,7 +112,7 @@ export default {
     clearFiles() {
     /**
      * Function to delete the current files when the "Clear" button is pressed.
-     * @author: Michael Moosmuller
+     * @author: Ian Ayers
      */
       this.files = []
       this.run_status = false
