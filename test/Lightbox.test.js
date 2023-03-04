@@ -18,7 +18,6 @@ describe('Checking Props input into Lightbox', () => {
                 imagesLength: 4
             }
         })
-        //expect(wrapper.vm.UnitTestIndexOutOfRangeTestIncrement).equals(true)
         expect(wrapper.props().images).toStrictEqual([
             '/TumbleWeed_fire_CA_2021Jul.png', '/CaughlinRanch_PineHaven_fire_Nov2020.png',
             '/neat.gif', '/TumbleWeed_fire_CA_2021Jul.png'
