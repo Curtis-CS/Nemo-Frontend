@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="container bg-light">
-          <button class="base-button clear-button" type="button" @click="clearFiles">
+          <button id="clear" class="base-button clear-button" type="button" @click="clearFiles">
             Clear
           </button>
           <button :disabled="run_status" class="base-button run-button" type="button" @click="submitFiles">
