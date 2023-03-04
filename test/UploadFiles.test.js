@@ -6,9 +6,9 @@ import { mount } from "@vue/test-utils"
 import UploadFiles from "@/components/UploadFiles.vue"
 import { describe, expect, test } from "vitest"
 
-describe("UploadFiles.vue", () => {
+describe("UploadFiles.vue", (file) => {
     test("gets file size status for error", () => {
-        expect(file.size <= 1048576000).toBe
+        expect().toBe)
     }
 )
 
