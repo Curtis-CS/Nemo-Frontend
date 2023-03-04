@@ -119,6 +119,7 @@ export default {
      */
       this.files = []
       this.run_status = false
+      return this.files === [] && this.run_status === false;
     },
     dragleave() {
     /**

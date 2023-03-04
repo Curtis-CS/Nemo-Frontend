@@ -9,4 +9,6 @@ import { describe, expect, test } from "vitest"
 test("get file size status", async ()=> {
     expect(UploadFiles.methods.testFunction()).equals(true)
 })
-
+test("check file clear", async ()=> {
+    expect(UploadFiles.methods.clearFiles()).equals(false)
+})
