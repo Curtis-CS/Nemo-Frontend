@@ -2,8 +2,8 @@
   <section class="bg-white">
     <div class="container px-5 mt-custom">
       <div class="row gx-5 align-items-center justify-content-center justify-content-lg-between min-column-width">
+        <h2 class="display-6 lh-1 mb-5">Wildfire Smoke Detection</h2>
         <div class="col-12 col-lg-5">
-          <h2 class="display-6 lh-1 mb-5">Wildfire Smoke Detection</h2>
           <p class="lead fw-normal text-muted mb-5 mb-lg-0">
             The Nemo wildfire smoke detection benchmark is a set of evolving preprocessed datasets in standard
             COCO format and pretrained wildfire smoke detectors based on Facebook AI's DETR that aims to detect
