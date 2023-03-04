@@ -61,6 +61,10 @@ export default {
 		images: {
 			type: Array,
 			required: true
+		},
+		imagesLength: {
+			type: Number,
+			required: true
 		}
 	},
 	data() {
@@ -68,7 +72,7 @@ export default {
 			visibleLightbox: false,
 			visibleThumbnails: true,
 			resultsRecieved: false,
-			index: 0,
+			index: 0
 		}
 	},
 	created() {
@@ -89,7 +93,7 @@ export default {
 			this.visibleThumbnails = true
 		},
 		goToNextFile() {
-			if (this.index < this.images.length - 1)
+			if (this.index < this.imagesLength - 1)
 			{
 				this.index += 1
 			}
@@ -106,7 +110,7 @@ export default {
 			}
 			else
 			{
-				this.index = this.images.length -1
+				this.index = this.imagesLength -1
 			}
 		},
 		testResults() {
@@ -115,23 +119,10 @@ export default {
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //----------------------Unit Testing Functions---------------------------
-
-		RunUnitTests(e) {
-			let cmd = String.fromCharCode(e.keyCode).toLowerCase();
-			//console.log(cmd)
-			if (cmd == "=")
-			{
-				console.log("------------------------------------------------------")
-				this.UnitTestIndexOutOfRangeTest()
-				console.log("------------------------------------------------------")
-			}
-		},
-
-		UnitTestIndexOutOfRangeTest() {
+		UnitTestIndexOutOfRangeTestIncrement() {
+			console.log("------------------------------------------------------")
 			console.log("Initiating Index Out Of Bounds Unit Test")
-			let arraySize = this.images.length - 1
-			let TestIndex1 = arraySize
-			let TestIndex2 = 0
+			let TestIndex1 = this.imagesLength - 1
 			this.index = TestIndex1
 			console.log("Test Index 1: ", this.index)
 			this.goToNextFile()
@@ -139,23 +130,32 @@ export default {
 			if (this.index == 0)
 			{
 				console.log("SUCCESS!")
+				return true
+
 			}
 			else 
 			{
 				console.log("FAIL!")
+				return false
 			}
+
+		},
+		UnitTestIndexOutOfRangeTestDecrement() {
 			console.log("------------------------------------------------------")
+			let TestIndex2 = 0
 			this.index = TestIndex2
 			console.log("Test Index 2: ", this.index)
 			this.goToPrevFile()
-			console.log("Index after Decrement: Expected: ", this.images.length - 1, "---Recieved: ", this.index)
-			if (this.images.length - 1 == this.index)
+			console.log("Index after Decrement: Expected: ", this.imagesLength - 1, "---Recieved: ", this.index)
+			if (this.imagesLength - 1 == this.index)
 			{
 				console.log("SUCCESS!")
+				return true
 			}
 			else 
 			{
 				console.log("FAIL!")
+				return false
 			}
 		}
 
