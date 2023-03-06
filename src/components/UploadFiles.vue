@@ -61,6 +61,7 @@
       </div>
     </div>
   </div>
+  <img v-if="imageB64Data" :src="imageB64Data"/>
 </template>
 
 <script>
@@ -74,6 +75,7 @@ export default {
       files: [],
       files2: {},
       filesize: '',
+      imageB64Data: null,
       icons: {
         gif: '/gif-icon.png',
         jpg: '/jpeg-icon.png',
@@ -96,7 +98,6 @@ export default {
      * Ensures duplicate files don't exist.
      * Assigns valid or invalid file size to file.
      * Assigns valid or invalid file type to file.
-     * @author: Michael Moosmuller
      * @param file The file information and data.
      */
       if (!(this.fileExists(file["name"]))) {
@@ -115,7 +116,6 @@ export default {
     clearFiles() {
     /**
      * Function to delete the current files when the "Clear" button is pressed.
-     * @author: Ian Ayers
      */
       this.files = []
       this.run_status = false
@@ -124,14 +124,12 @@ export default {
     dragleave() {
     /**
      * Function to set isDragging property when files stop moving over drop box area.
-     * @author: Michael Moosmuller
      */
       this.isDragging = false;
     },
     dragover(e) {
     /**
      * Function to handle dragging files over the drop box area.
-     * @author: Michael Moosmuller
      * @param e Event from user.
      */
       e.preventDefault()
@@ -140,7 +138,6 @@ export default {
     drop(e) {
     /**
      * Function to handle files being dropped into the drop box area.
-     * @author: Michael Moosmuller
      * @param e Event of dropping files.
      */
       e.preventDefault()
@@ -154,7 +151,6 @@ export default {
     fileExists(name) {
     /**
      * Function to verify if a file exists within the file list.
-     * @author: Michael Moosmuller
      * @param name Name of the file.
      * @returns {boolean} File exists or not.
      */
@@ -168,7 +164,6 @@ export default {
     getFileExtension(filename) {
     /**
      * Function to get file extension type.
-     * @author: Michael Moosmuller
      * @param filename Name of the file.
      * @returns {*} File extension type.
      */
@@ -209,7 +204,6 @@ export default {
     /**
      * Function to check the size of a file.
      * 1MB = 1048576 B's, 1GB = 1048576000 MB's
-     * @author: Michael Moosmuller
      * @param file File being checked.
      * @returns {boolean} File size is valid or not.
      */
@@ -219,7 +213,6 @@ export default {
     handleFileUpload() {
     /**
      * Function to handle file upload from selected files.
-     * @author: Michael Moosmuller
      */
       let files = [...this.$refs.file.files]
       for (let i = 0; i < files.length; i++) {
@@ -229,7 +222,6 @@ export default {
     removeFile(i) {
     /**
      * Function to remove a file from the list.
-     * @author: Michael Moosmuller
      * @param i Index of the file in the list.
      */
       this.files.splice(i, 1);
@@ -238,33 +230,37 @@ export default {
     submitFiles() {
       /**
        * Function to submit files to the back-end server.
-       * @author: Michael Moosmuller
        * @type {FormData}
        */
-      let formData = new FormData()
-      for (let i = 0; i < this.files.length; i++) {
-        let file = this.files[i]
-        formData.append(this.name, file)
+      var image = this.files[0]
+      var reader = new FileReader()
+      reader.readAsDataURL(image)
+      reader.onload = () => {
+        this.imageB64Data = reader.result
       }
-      // Axios Request to Back-End Server
-      axios({
-        method: "POST",
-        url: 'http://127.0.0.1:5000',
-        data: formData,
-        headers: {"Content-Type": "multipart/form-data"}
+
+      axios.post('http://127.0.0.1:5000', { imageB64Data: this.imageB64Data }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
-          .then(function (response) {
-            console.log("SUCCESS!!")
-            console.log(response)
-          })
-          .catch(function () {
-            console.log("FAILURE!!")
-          });
+      .then(function(response) {
+        console.log(response)
+      })
+      .catch(function(error) {
+        console.log(error)
+      })
+
+      // let formData = new FormData()
+      // for (let i = 0; i < this.files.length; i++) {
+      //   let file = this.files[i]
+      //   formData.append(this.name, file)
+      // }
+      // // Axios Request to Back-End Server
     },
     verifyFiles() {
     /**
      * Function to verify if the list of files are all valid file types before submission.
-     * @author: Michael Moosmuller
      */
       for (let i = 0; i < this.files.length; i++) {
         if (!(this.files[i]["valid_file"]) && !(this.files[i]["valid_size"])) {
