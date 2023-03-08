@@ -65,6 +65,18 @@
 			<p style="font-size: 1.2vw; color: gray;">Extra Option 2</p>
 		</div>
 	</div>
+  <div id="cacheTest">
+    <h2>Options</h2>
+    <div v-for="(option,n) in options">
+      <p>
+      <span class="cat">{{option}}</span> <button @click="removeOption(n)">Remove</button>
+      </p>
+    </div>
+    <p>
+      <input v-model="newOption">
+      <button @click="addOption">Add Option</button>
+    </p>
+</div>
 	</div>
 </template>
 
@@ -72,81 +84,112 @@
 export default {
   name: "ConfigureNemo",
   data() {
-	return {
-	singleToggle: true,
-	densityToggle: false,
-	singleHover: false,
-	densityHover: false,
-	moreOptions: false,
-	extraOption1: false,
-	extraOption2: false,
-	extraOption1Hover: false,
-	extraOption2Hover: false
-	}
+    return {
+      singleToggle: true,
+      densityToggle: false,
+      singleHover: false,
+      densityHover: false,
+      moreOptions: false,
+      extraOption1: false,
+      extraOption2: false,
+      extraOption1Hover: false,
+      extraOption2Hover: false,
+      options:[],
+      newOption:null,
+      optionDict: {
+        option1: false,
+        option2: false,
+        option3: true
+      }
+    }
   },
+  mounted() {
+    if(localStorage.getItem('options')) {
+      try {
+        this.options = JSON.parse(localStorage.getItem('options'));
+      } catch(e) {
+        localStorage.removeItem('options');
+      }
+    }
+  },
+
   methods: {
-	SingleClassToggleOn() {
-		this.singleToggle = true
-		this.densityToggle = false
-		this.densityHover = false
-	},
-	SingleClassToggleOff() {
-		this.singleToggle = false
-		this.densityToggle = true
-	},
-	DensityToggleOn() {
-		this.densityToggle = true
-		this.singleToggle = false
-		this.singleHover = false
-	},
-	DensityToggleOff() {
-		this.densityToggle = false
-		this.singleToggle = true
-	},
-	SingleClassHoverOn() {
-		this.singleHover = true
-	},
-	SingleClassHoverOff() {
-		this.singleHover = false
-	},
-	DensityHoverOn() {
-		this.densityHover = true
-	},
-	DensityHoverOff() {
-		this.densityHover = false
-	},
-	MoreOptionsToggleOn() {
-		this.moreOptions = true
-	},
-	MoreOptionsToggleOff() {
-		this.moreOptions = false
-	},
-	ExtraOption1ToggleOn() {
-		this.extraOption1 = true
-		this.extraOption2Hover = false
-	},
-	ExtraOption1ToggleOff() {
-		this.extraOption1 = false
-	},
-	ExtraOption2ToggleOn() {
-		this.extraOption2 = true
-		this.extraOption1Hover = false
-	},
-	ExtraOption2ToggleOff() {
-		this.extraOption2 = false
-	},
-	ExtraOption1HoverOn() {
-		this.extraOption1Hover = true
-	},
-	ExtraOption1HoverOff() {
-		this.extraOption1Hover = false
-	},
-	ExtraOption2HoverOn() {
-		this.extraOption2Hover = true
-	},
-	ExtraOption2HoverOff() {
-		this.extraOption2Hover = false
-	}
+    SingleClassToggleOn() {
+      this.singleToggle = true
+      this.densityToggle = false
+      this.densityHover = false
+    },
+    SingleClassToggleOff() {
+      this.singleToggle = false
+      this.densityToggle = true
+    },
+    DensityToggleOn() {
+      this.densityToggle = true
+      this.singleToggle = false
+      this.singleHover = false
+    },
+    DensityToggleOff() {
+      this.densityToggle = false
+      this.singleToggle = true
+    },
+    SingleClassHoverOn() {
+      this.singleHover = true
+    },
+    SingleClassHoverOff() {
+      this.singleHover = false
+    },
+    DensityHoverOn() {
+      this.densityHover = true
+    },
+    DensityHoverOff() {
+      this.densityHover = false
+    },
+    MoreOptionsToggleOn() {
+      this.moreOptions = true
+    },
+    MoreOptionsToggleOff() {
+      this.moreOptions = false
+    },
+    ExtraOption1ToggleOn() {
+      this.extraOption1 = true
+      this.extraOption2Hover = false
+    },
+    ExtraOption1ToggleOff() {
+      this.extraOption1 = false
+    },
+    ExtraOption2ToggleOn() {
+      this.extraOption2 = true
+      this.extraOption1Hover = false
+    },
+    ExtraOption2ToggleOff() {
+      this.extraOption2 = false
+    },
+    ExtraOption1HoverOn() {
+      this.extraOption1Hover = true
+    },
+    ExtraOption1HoverOff() {
+      this.extraOption1Hover = false
+    },
+    ExtraOption2HoverOn() {
+      this.extraOption2Hover = true
+    },
+    ExtraOption2HoverOff() {
+      this.extraOption2Hover = false
+    },
+    addOption() {
+      if(!this.newOption) return;
+      this.options.push(this.newOption);
+      this.newOption = '';
+      this.saveOptions();
+    },
+    removeOption(x) {
+      this.options.splice(x,1);
+      this.saveOptions();
+    },
+    saveOptions() {
+      let parsed = JSON.stringify(this.options);
+      localStorage.setItem('options', parsed);
+    }
   }
 }
 </script>
