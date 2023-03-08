@@ -72,6 +72,7 @@ export default {
       run_status: false,
       isDragging: false,
       files: [],
+      filesNames: [],
       filesize: '',
       imageB64Data: null,
       icons: {
@@ -103,11 +104,13 @@ export default {
           file["valid_size"] = true
           file["valid_file"] = true
           this.files.push(file)
+          this.filesNames.push(file.name)
         } else {
           file["valid_size"] = false
           file["valid_file"] = false
           this.run_status = true
           this.files.push(file)
+          this.filesNames.push(file.name)
         }
       }
     },
@@ -116,6 +119,7 @@ export default {
      * Function to delete the current files when the "Clear" button is pressed.
      */
       this.files = []
+      this.filesNames = []
       this.run_status = false
       return this.files === [] && this.run_status === false;
     },
@@ -223,6 +227,7 @@ export default {
      * @param i Index of the file in the list.
      */
       this.files.splice(i, 1);
+      this.filesNames.splice(i, 1);
       this.verifyFiles()
     },
     submitFiles() {
@@ -235,19 +240,20 @@ export default {
       reader.readAsDataURL(image)
       reader.onload = () => {
         this.imageB64Data = reader.result
-      }
-
-      axios.post('http://127.0.0.1:5000', { imageB64Data: this.imageB64Data }, {
+        axios.post('http://127.0.0.1:5000', { imageB64Data: this.imageB64Data }, {
         headers: {
           'Content-Type': 'application/json',
         },
-      })
-      .then(function(response) {
-        console.log(response)
-      })
-      .catch(function(error) {
-        console.log(error)
-      })
+        })
+        .then(function(response) {
+          console.log(response)
+        })
+        .catch(function(error) {
+          console.log(error)
+        })
+      }
+
+
 
       // let formData = new FormData()
       // for (let i = 0; i < this.files.length; i++) {
