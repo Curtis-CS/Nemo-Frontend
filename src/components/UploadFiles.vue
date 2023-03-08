@@ -61,7 +61,6 @@
       </div>
     </div>
   </div>
-  <img v-if="imageB64Data" :src="imageB64Data"/>
 </template>
 
 <script>
@@ -73,7 +72,6 @@ export default {
       run_status: false,
       isDragging: false,
       files: [],
-      files2: {},
       filesize: '',
       imageB64Data: null,
       icons: {
