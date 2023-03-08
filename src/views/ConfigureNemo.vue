@@ -87,6 +87,10 @@
     <input type="checkbox" id="opt3" value="Option 3" v-model="selectedOptions">
     <label for="opt3">Option 3</label>
 
+    <input type="checkbox" id="optx" v-model="optionDict" @click="addDictopt('option1', true)">
+    <label for="optx">Option Test</label>
+
+
 </div>
 	</div>
 </template>
@@ -121,6 +125,15 @@ export default {
         this.options = JSON.parse(localStorage.getItem('options'));
       } catch(e) {
         localStorage.removeItem('options');
+      }
+    }
+  },
+  dictMount() {
+    if (localStorage.getItem('optionDict')){
+      try {
+        this.optionDict = JSON.parse(localStorage.getItem('optionDict'));
+      } catch(e) {
+        localStorage.removeItem('optionDict')
       }
     }
   },
@@ -194,13 +207,27 @@ export default {
       this.newOption = '';
       this.saveOptions();
     },
+    addDictopt(key, val) {
+      this.optionDict.update({key: val});
+      this.saveDictopt();
+    },
     removeOption(x) {
       this.options.splice(x,1);
       this.saveOptions();
     },
+    rmvDictopt(key) {
+      this.optionDict.delete(key);
+      this.saveDictopt();
+
+    },
     saveOptions() {
       let parsed = JSON.stringify(this.options);
       localStorage.setItem('options', parsed);
+    },
+    saveDictopt() {
+      let parsed = JSON.stringify(this.optionDict);
+      localStorage.setItem('optionDict', parsed);
+      console.log(this.optionDict);
     }
   }
 }
