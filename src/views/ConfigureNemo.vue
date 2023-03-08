@@ -28,10 +28,10 @@
 	</div>
 	<div style="padding-bottom: 10vw; padding-top: 2vw;">
 		<div class="LeftSideText" v-if="this.singleToggle || this.singleHover">
-			<p style="font-size: 1.2vw; color: gray;">NEEDS READOVER Single Class detection will only deliver results of either ture or false. This being yes or no to whether or not wildfire smoke was detected.</p>
+			<p style="font-size: 1.2vw; color: gray;">NEEDS READOVER Single Class detection will only deliver results of either true or false. This being yes or no to whether or not wildfire smoke was detected.</p>
 		</div>
 		<div class="RightSideText" v-if="this.densityToggle || this.densityHover">
-			<p style="font-size: 1.2vw; color: gray;">NEEDS READOVER Density Detection will detect wildfire smoke, and provide an estimate to how dense the smoke is. This can be helpful for studyin wildfire smoke.</p>
+			<p style="font-size: 1.2vw; color: gray;">NEEDS READOVER Density Detection will detect wildfire smoke, and provide an estimate to how dense the smoke is. This can be helpful for studying wildfire smoke.</p>
 		</div>
 	</div>
 	<div class="MoreOptionsButton" v-if="this.moreOptions">
@@ -76,6 +76,17 @@
       <input v-model="newOption">
       <button @click="addOption">Add Option</button>
     </p>
+    <div>Selected Options: {{ selectedOptions }}</div>
+
+    <input type="checkbox" id="opt1" value="Option 1" v-model="selectedOptions">
+    <label for="opt1">Option 1</label>
+
+    <input type="checkbox" id="opt2" value="Option 2" v-model="selectedOptions">
+    <label for="opt2">Option 2</label>
+
+    <input type="checkbox" id="opt3" value="Option 3" v-model="selectedOptions">
+    <label for="opt3">Option 3</label>
+
 </div>
 	</div>
 </template>
@@ -100,7 +111,8 @@ export default {
         option1: false,
         option2: false,
         option3: true
-      }
+      },
+      selectedOptions:[]
     }
   },
   mounted() {
