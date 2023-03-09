@@ -2,6 +2,9 @@
 	<div class="Results" style="padding-bottom: 3rem;">
 		<Lightbox :images="images"/>
 	</div>
+<!--  <div>-->
+<!--    <img :src="imageSrc" alt=""/>-->
+<!--  </div>-->
 </template>
 
 <script>
@@ -9,19 +12,27 @@ import Lightbox from "@/components/Lightbox.vue"
 export default {
   name: "Results",
   components: {
-	Lightbox,
+	  Lightbox,
   },
   data() {
-	return {
-		//Just an array of images
-		images: [
-			'/TumbleWeed_fire_CA_2021Jul.png', '/CaughlinRanch_PineHaven_fire_Nov2020.png',
-			'/neat.gif', '/TumbleWeed_fire_CA_2021Jul.png',
-			'/CaughlinRanch_PineHaven_fire_Nov2020.png', '/TumbleWeed_fire_CA_2021Jul.png', 
-			'/CaughlinRanch_PineHaven_fire_Nov2020.png', '/thumbsUp.gif', 
-		]
-	}
-  }
+    return {
+      //Just an array of images
+      images: [
+        '/TumbleWeed_fire_CA_2021Jul.png', '/CaughlinRanch_PineHaven_fire_Nov2020.png',
+        '/neat.gif', '/TumbleWeed_fire_CA_2021Jul.png',
+        '/CaughlinRanch_PineHaven_fire_Nov2020.png', '/TumbleWeed_fire_CA_2021Jul.png',
+        '/CaughlinRanch_PineHaven_fire_Nov2020.png', '/thumbsUp.gif',
+      ]
+    }
+  },
+  // computed: {
+  //   imageSrc() {
+  //     let files = this.$store.getters.result_files
+  //     if (files) {
+  //         return URL.createObjectURL(files[0])
+  //     }
+  //   }
+  // }
 }
 </script>
 <style scoped>
