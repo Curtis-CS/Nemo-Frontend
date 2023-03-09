@@ -88,9 +88,6 @@ export default {
     }
   },
   methods: {
-    testFunction() {
-      return true
-    },
     addFile(file) {
     /**
      * Function to add a file to the files list.
@@ -178,10 +175,10 @@ export default {
        * @param size Size of the file.
        * @source https://web.archive.org/web/20120507054320/http://codeaid.net/javascript/convert-size-in-bytes-to-human-readable-format-(javascript)
        */
-      var kilobyte = 1024;
-      var megabyte = kilobyte * 1024;
-      var gigabyte = megabyte * 1024;
-      var terabyte = gigabyte * 1024;
+      const kilobyte = 1024;
+      const megabyte = kilobyte * 1024;
+      const gigabyte = megabyte * 1024;
+      const terabyte = gigabyte * 1024;
 
       if ((bytes >= 0) && (bytes < kilobyte)) {
           return bytes + ' B';
@@ -235,10 +232,10 @@ export default {
        * Function to submit files to the back-end server.
        * @type {FormData}
        */
-      for (let i=0;i<this.files.length;i++)
+      for (let i = 0; i < this.files.length; i++)
       {
-        var file = this.files[i]
-        var formData = new FormData()
+        let file = this.files[i]
+        let formData = new FormData()
         formData.append('file', file)
         axios.post('http://127.0.0.1:5000', formData )
         .then(function(response) {
