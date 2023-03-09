@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 import {createRouter, createWebHistory} from 'vue-router'
+import {createStore} from 'vuex'
+
 //Importing our views and components
 import App from './App.vue'
 import Home from './views/Home.vue'
@@ -21,8 +23,27 @@ const router = createRouter({
     ]
 })
 
+const store = createStore({
+    state: {
+        result_files: []
+    },
+    getters: {
+        result_files (state) {
+            return state.result_files
+        }
+    },
+    mutations: {
+        addFile(state, file) {
+            state.result_files.append(file)
+        }
+    },
+    actions: {}
+})
+
 createApp(App)
-    .use(router)
+    .use(router, store)
     .mount('#app')
+
+
 
 import "bootstrap/dist/js/bootstrap.js"

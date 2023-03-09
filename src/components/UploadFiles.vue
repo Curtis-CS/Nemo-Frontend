@@ -65,6 +65,7 @@
 
 <script>
 import axios from 'axios';
+import {saveAs} from 'file-saver';
 
 export default {
   data() {
@@ -241,8 +242,9 @@ export default {
         formData.append('file', file)
         filesLeftToSend = filesLeftToSend -1
         axios.post('http://127.0.0.1:5000', formData )
-        .then(function(response) {
-          console.log(response)
+        .then(function(file) {
+          console.log(file)
+          //this.$store.commit("addFile", file)
         })
         .catch(function(error) {
           console.log(error)
