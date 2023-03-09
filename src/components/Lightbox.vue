@@ -6,9 +6,9 @@
 				<h2 class="display-6 lh-1 mb-5" style="margin-left: 5vw;">Results</h2>
 			</div>
 			<!-- The padding and background behind the thumbnails -->
-			<div class="thumbnailPadding">
+			<div class="thumbnailPadding" v-if="visibleThumbnails">
 				<!-- This is the box that the thumbnail is in, that when clicked sends the index of the thumbnail, also generates thumbnails using v-for -->
-				<a href="#" class="thumbnailFormatting" @click.prevent="showLightbox(index)" v-if="visibleThumbnails" v-for="(image, index) in images" :key="index">
+				<a href="#" class="thumbnailFormatting" @click.prevent="showLightbox(index)" v-for="(image, index) in images" :key="index">
 					<!-- These are the thumbnails -->
 					<img class="thumbnailFormattingMore" :src="image" :key="index">
 				</a>

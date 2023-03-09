@@ -232,11 +232,14 @@ export default {
        * Function to submit files to the back-end server.
        * @type {FormData}
        */
+      var filesLeftToSend = this.files.length
       for (let i = 0; i < this.files.length; i++)
       {
         let file = this.files[i]
         let formData = new FormData()
+        formData.append('filesLeft', filesLeftToSend)
         formData.append('file', file)
+        filesLeftToSend = filesLeftToSend -1
         axios.post('http://127.0.0.1:5000', formData )
         .then(function(response) {
           console.log(response)
