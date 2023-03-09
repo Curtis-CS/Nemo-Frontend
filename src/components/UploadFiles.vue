@@ -235,16 +235,12 @@ export default {
        * Function to submit files to the back-end server.
        * @type {FormData}
        */
-      var image = this.files[0]
-      var reader = new FileReader()
-      reader.readAsDataURL(image)
-      reader.onload = () => {
-        this.imageB64Data = reader.result
-        axios.post('http://127.0.0.1:5000', { imageB64Data: this.imageB64Data }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        })
+      for (let i=0;i<this.files.length;i++)
+      {
+        var file = this.files[i]
+        var formData = new FormData()
+        formData.append('file', file)
+        axios.post('http://127.0.0.1:5000', formData )
         .then(function(response) {
           console.log(response)
         })
@@ -252,15 +248,6 @@ export default {
           console.log(error)
         })
       }
-
-
-
-      // let formData = new FormData()
-      // for (let i = 0; i < this.files.length; i++) {
-      //   let file = this.files[i]
-      //   formData.append(this.name, file)
-      // }
-      // // Axios Request to Back-End Server
     },
     verifyFiles() {
     /**
