@@ -60,18 +60,22 @@
       </div>
       </div>
     </div>
+    <div class="InitialPadding" v-if="processingFiles" >
+      <h2 class="display-6 lh-1 mb-5" style="margin-left: 5vw;">Processing</h2>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import {saveAs} from 'file-saver';
+//import {saveAs} from 'file-saver';
 
 export default {
   data() {
     return {
       run_status: false,
       isDragging: false,
+      processingFiles: false,
       files: [],
       filesNames: [],
       filesize: '',
@@ -241,10 +245,25 @@ export default {
         formData.append('filesLeft', filesLeftToSend)
         formData.append('file', file)
         filesLeftToSend = filesLeftToSend -1
-        axios.post('http://127.0.0.1:5000', formData )
-        .then(function(file) {
-          console.log(file)
+        axios.post('http://127.0.0.1:5000', formData, {
+          responseType: 'blob'
+        } )
+        .then(function(response) {
+          //console.log(response)
+          console.log("Results Recieved")
           //this.$store.commit("addFile", file)
+          var recievedFileSize = response.data.size
+          if (recievedFileSize > 25)
+          {
+            var blob = new Blob([response.data])
+            var url = window.URL.createObjectURL(blob)
+            var link = document.createElement('a')
+            link.href = url
+            link.setAttribute('download', 'results.zip')
+            document.body.appendChild(link)
+            link.click()
+          }
+          //saveAs(response.data, filename)
         })
         .catch(function(error) {
           console.log(error)

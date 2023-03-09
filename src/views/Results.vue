@@ -18,10 +18,9 @@ export default {
     return {
       //Just an array of images
       images: [
-        '/TumbleWeed_fire_CA_2021Jul.png', '/CaughlinRanch_PineHaven_fire_Nov2020.png',
-        '/neat.gif', '/TumbleWeed_fire_CA_2021Jul.png',
-        '/CaughlinRanch_PineHaven_fire_Nov2020.png', '/TumbleWeed_fire_CA_2021Jul.png',
-        '/CaughlinRanch_PineHaven_fire_Nov2020.png', '/thumbsUp.gif',
+        '/nemo_smokeV2..png', '/nemo_smokeV3.png',
+        '/nemo_wildfiresmoke..png', '/nemo_smokeV2..png', '/nemo_smokeV3.png',
+        '/nemo_wildfiresmoke..png', '/thumbsUp.gif',
       ]
     }
   },

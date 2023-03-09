@@ -15,15 +15,15 @@
         </div>
         <div class="col-sm-8 col-md-6">
           <figure>
-            <img alt="..." class="img-thumbnail mt-5" src="/CaughlinRanch_PineHaven_fire_Nov2020.png">
+            <img alt="..." class="img-thumbnail mt-5" src="/nemo_smokeV3.png">
             <figcaption class="figure-caption mt-3">
-              <b>Figure 1:</b> Annotated frame with confirmed flame detection.
+              <b>Figure 1:</b> Annotated frame with confirmed smoke detection and estimated density.
             </figcaption>
           </figure>
           <figure>
-            <img alt="..." class="img-thumbnail mt-5" src="/TumbleWeed_fire_CA_2021Jul.png">
+            <img alt="..." class="img-thumbnail mt-5" src="/nemo_smokeV2..png">
             <figcaption class="figure-caption mt-3">
-              <b>Figure 2:</b> Annotated frame with confirmed fire detection.
+              <b>Figure 2:</b> Annotated frame with confirmed smoke detection and estimated density.
             </figcaption>
           </figure>
         </div>

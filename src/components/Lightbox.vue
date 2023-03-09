@@ -62,10 +62,6 @@ export default {
 			type: Array,
 			required: true
 		},
-		imagesLength: {
-			type: Number,
-			required: true
-		}
 	},
 	data() {
 		return {
@@ -93,7 +89,7 @@ export default {
 			this.visibleThumbnails = true
 		},
 		goToNextFile() {
-			if (this.index < this.imagesLength - 1)
+			if (this.index < this.images.length - 1)
 			{
 				this.index += 1
 			}
@@ -110,54 +106,54 @@ export default {
 			}
 			else
 			{
-				this.index = this.imagesLength -1
+				this.index = this.images.length -1
 			}
 		},
 		testResults() {
 			this.resultsRecieved = true
-		},
+		}
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //----------------------Unit Testing Functions---------------------------
-		UnitTestIndexOutOfRangeTestIncrement() {
-			console.log("------------------------------------------------------")
-			console.log("Initiating Index Out Of Bounds Unit Test")
-			let TestIndex1 = this.imagesLength - 1
-			this.index = TestIndex1
-			console.log("Test Index 1: ", this.index)
-			this.goToNextFile()
-			console.log("Index after Increment: Expected: 0---Recieved: ", this.index)
-			if (this.index == 0)
-			{
-				console.log("SUCCESS!")
-				return true
+		// UnitTestIndexOutOfRangeTestIncrement() {
+		// 	console.log("------------------------------------------------------")
+		// 	console.log("Initiating Index Out Of Bounds Unit Test")
+		// 	let TestIndex1 = this.imagesLength - 1
+		// 	this.index = TestIndex1
+		// 	console.log("Test Index 1: ", this.index)
+		// 	this.goToNextFile()
+		// 	console.log("Index after Increment: Expected: 0---Recieved: ", this.index)
+		// 	if (this.index == 0)
+		// 	{
+		// 		console.log("SUCCESS!")
+		// 		return true
 
-			}
-			else 
-			{
-				console.log("FAIL!")
-				return false
-			}
+		// 	}
+		// 	else 
+		// 	{
+		// 		console.log("FAIL!")
+		// 		return false
+		// 	}
 
-		},
-		UnitTestIndexOutOfRangeTestDecrement() {
-			console.log("------------------------------------------------------")
-			let TestIndex2 = 0
-			this.index = TestIndex2
-			console.log("Test Index 2: ", this.index)
-			this.goToPrevFile()
-			console.log("Index after Decrement: Expected: ", this.imagesLength - 1, "---Recieved: ", this.index)
-			if (this.imagesLength - 1 == this.index)
-			{
-				console.log("SUCCESS!")
-				return true
-			}
-			else 
-			{
-				console.log("FAIL!")
-				return false
-			}
-		}
+		// },
+		// UnitTestIndexOutOfRangeTestDecrement() {
+		// 	console.log("------------------------------------------------------")
+		// 	let TestIndex2 = 0
+		// 	this.index = TestIndex2
+		// 	console.log("Test Index 2: ", this.index)
+		// 	this.goToPrevFile()
+		// 	console.log("Index after Decrement: Expected: ", this.imagesLength - 1, "---Recieved: ", this.index)
+		// 	if (this.imagesLength - 1 == this.index)
+		// 	{
+		// 		console.log("SUCCESS!")
+		// 		return true
+		// 	}
+		// 	else 
+		// 	{
+		// 		console.log("FAIL!")
+		// 		return false
+		// 	}
+		// }
 
 //----------------------Unit Testing Functions---------------------------
 //-----------------------------------------------------------------------
