@@ -23,15 +23,15 @@
           <div class="container border-1 shadow-sm mt-3">
             <table width="100%">
               <tr>
-                <td rowspan="2" class="column-file-type-icon" v-if="file.valid_file">
+                <td v-if="file.valid_file" class="column-file-type-icon" rowspan="2">
                   <img alt="" class="custom_thumbnail" v-bind:src="icons[file.name.split('.').pop().toLowerCase()]"/>
                 </td>
-                <td rowspan="2" class="column-file-type-icon" v-else>
+                <td v-else class="column-file-type-icon" rowspan="2">
                   <img alt="" class="custom_thumbnail" src="/invalid-filetype-icon.png"/>
                 </td>
                 <td class="column-file-name">{{ file.name }}&nbsp;</td>
-                <td rowspan="2" class="column-file-size">{{ bytesToSize(file.size, 0) }}&nbsp;</td>
-                <td rowspan="2" class="column-file-type-icon">
+                <td class="column-file-size" rowspan="2">{{ bytesToSize(file.size, 0) }}&nbsp;</td>
+                <td class="column-file-type-icon" rowspan="2">
                   <button class="remove-file-button" type="button" @click="removeFile(files.indexOf(file))">
                     <img alt="" class="custom_thumbnail" src="/red_x.png"/>&nbsp;
                   </button>
@@ -57,10 +57,10 @@
           <button :disabled="run_status" class="base-button run-button" type="button" @click="submitFiles">
             Run
           </button>
-      </div>
+        </div>
       </div>
     </div>
-    <div class="InitialPadding" v-if="processingFiles" >
+    <div v-if="processingFiles" class="InitialPadding">
       <h2 class="display-6 lh-1 mb-5" style="margin-left: 5vw;">Processing</h2>
     </div>
   </div>
@@ -94,13 +94,13 @@ export default {
   },
   methods: {
     addFile(file) {
-    /**
-     * Function to add a file to the files list.
-     * Ensures duplicate files don't exist.
-     * Assigns valid or invalid file size to file.
-     * Assigns valid or invalid file type to file.
-     * @param file The file information and data.
-     */
+      /**
+       * Function to add a file to the files list.
+       * Ensures duplicate files don't exist.
+       * Assigns valid or invalid file size to file.
+       * Assigns valid or invalid file type to file.
+       * @param file The file information and data.
+       */
       if (!(this.fileExists(file["name"]))) {
         if (this.getFileSizeStatus(file) && this.getFileExtension(file.name) in this.icons) {
           file["valid_size"] = true
@@ -117,33 +117,33 @@ export default {
       }
     },
     clearFiles() {
-    /**
-     * Function to delete the current files when the "Clear" button is pressed.
-     */
+      /**
+       * Function to delete the current files when the "Clear" button is pressed.
+       */
       this.files = []
       this.filesNames = []
       this.run_status = false
       return this.files === [] && this.run_status === false;
     },
     dragleave() {
-    /**
-     * Function to set isDragging property when files stop moving over drop box area.
-     */
+      /**
+       * Function to set isDragging property when files stop moving over drop box area.
+       */
       this.isDragging = false;
     },
     dragover(e) {
-    /**
-     * Function to handle dragging files over the drop box area.
-     * @param e Event from user.
-     */
+      /**
+       * Function to handle dragging files over the drop box area.
+       * @param e Event from user.
+       */
       e.preventDefault()
       this.isDragging = true;
     },
     drop(e) {
-    /**
-     * Function to handle files being dropped into the drop box area.
-     * @param e Event of dropping files.
-     */
+      /**
+       * Function to handle files being dropped into the drop box area.
+       * @param e Event of dropping files.
+       */
       e.preventDefault()
       if (e.dataTransfer.files) {
         [...e.dataTransfer.files].forEach((file) => {
@@ -153,11 +153,11 @@ export default {
       this.isDragging = false
     },
     fileExists(name) {
-    /**
-     * Function to verify if a file exists within the file list.
-     * @param name Name of the file.
-     * @returns {boolean} File exists or not.
-     */
+      /**
+       * Function to verify if a file exists within the file list.
+       * @param name Name of the file.
+       * @returns {boolean} File exists or not.
+       */
       for (let i = 0; i < this.files.length; i++) {
         if (this.files[i]["name"] === name) {
           return true
@@ -166,11 +166,11 @@ export default {
       return false
     },
     getFileExtension(filename) {
-    /**
-     * Function to get file extension type.
-     * @param filename Name of the file.
-     * @returns {*} File extension type.
-     */
+      /**
+       * Function to get file extension type.
+       * @param filename Name of the file.
+       * @returns {*} File extension type.
+       */
       return filename.split('.').pop().toLowerCase()
     },
     bytesToSize(bytes, precision) {
@@ -186,48 +186,48 @@ export default {
       const terabyte = gigabyte * 1024;
 
       if ((bytes >= 0) && (bytes < kilobyte)) {
-          return bytes + ' B';
+        return bytes + ' B';
 
       } else if ((bytes >= kilobyte) && (bytes < megabyte)) {
-          return (bytes / kilobyte).toFixed(precision) + ' KB';
+        return (bytes / kilobyte).toFixed(precision) + ' KB';
 
       } else if ((bytes >= megabyte) && (bytes < gigabyte)) {
-          return (bytes / megabyte).toFixed(precision) + ' MB';
+        return (bytes / megabyte).toFixed(precision) + ' MB';
 
       } else if ((bytes >= gigabyte) && (bytes < terabyte)) {
-          return (bytes / gigabyte).toFixed(precision) + ' GB';
+        return (bytes / gigabyte).toFixed(precision) + ' GB';
 
       } else if (bytes >= terabyte) {
-          return (bytes / terabyte).toFixed(precision) + ' TB';
+        return (bytes / terabyte).toFixed(precision) + ' TB';
 
       } else {
-          return bytes + ' B';
+        return bytes + ' B';
       }
     },
     getFileSizeStatus(file) {
-    /**
-     * Function to check the size of a file.
-     * 1MB = 1048576 B's, 1GB = 1048576000 MB's
-     * @param file File being checked.
-     * @returns {boolean} File size is valid or not.
-     */
+      /**
+       * Function to check the size of a file.
+       * 1MB = 1048576 B's, 1GB = 1048576000 MB's
+       * @param file File being checked.
+       * @returns {boolean} File size is valid or not.
+       */
       console.log(file.size <= 1048576000)
       return file.size <= 1048576000;
     },
     handleFileUpload() {
-    /**
-     * Function to handle file upload from selected files.
-     */
+      /**
+       * Function to handle file upload from selected files.
+       */
       let files = [...this.$refs.file.files]
       for (let i = 0; i < files.length; i++) {
         this.addFile(files[i])
       }
     },
     removeFile(i) {
-    /**
-     * Function to remove a file from the list.
-     * @param i Index of the file in the list.
-     */
+      /**
+       * Function to remove a file from the list.
+       * @param i Index of the file in the list.
+       */
       this.files.splice(i, 1);
       this.filesNames.splice(i, 1);
       this.verifyFiles()
@@ -238,48 +238,45 @@ export default {
        * @type {FormData}
        */
       var filesLeftToSend = this.files.length
-      for (let i = 0; i < this.files.length; i++)
-      {
+      for (let i = 0; i < this.files.length; i++) {
         let file = this.files[i]
         let formData = new FormData()
         formData.append('filesLeft', filesLeftToSend)
         formData.append('file', file)
-        filesLeftToSend = filesLeftToSend -1
+        filesLeftToSend = filesLeftToSend - 1
         axios.post('http://127.0.0.1:5000', formData, {
           responseType: 'blob'
-        } )
-        .then(function(response) {
-          //console.log(response)
-          console.log("Results Recieved")
-          //this.$store.commit("addFile", file)
-          var recievedFileSize = response.data.size
-          if (recievedFileSize > 25)
-          {
-            var blob = new Blob([response.data])
-            var url = window.URL.createObjectURL(blob)
-            var link = document.createElement('a')
-            link.href = url
-            link.setAttribute('download', 'results.zip')
-            document.body.appendChild(link)
-            link.click()
-          }
-          //saveAs(response.data, filename)
         })
-        .catch(function(error) {
-          console.log(error)
-        })
+            .then(function (response) {
+              //console.log(response)
+              console.log("Results Recieved")
+              //this.$store.commit("addFile", file)
+              var recievedFileSize = response.data.size
+              if (recievedFileSize > 25) {
+                var blob = new Blob([response.data])
+                var url = window.URL.createObjectURL(blob)
+                var link = document.createElement('a')
+                link.href = url
+                link.setAttribute('download', 'results.zip')
+                document.body.appendChild(link)
+                link.click()
+              }
+              //saveAs(response.data, filename)
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
       }
     },
     verifyFiles() {
-    /**
-     * Function to verify if the list of files are all valid file types before submission.
-     */
+      /**
+       * Function to verify if the list of files are all valid file types before submission.
+       */
       for (let i = 0; i < this.files.length; i++) {
         if (!(this.files[i]["valid_file"]) && !(this.files[i]["valid_size"])) {
           this.run_status = true
           break
-        }
-        else {
+        } else {
           this.run_status = false
         }
       }
@@ -291,7 +288,7 @@ export default {
 <style scoped>
 
 .base-button {
-  color:black;
+  color: black;
   border-radius: 25px;
   border-style: solid;
   border-color: #d8d8d8;
@@ -329,31 +326,30 @@ export default {
 }
 
 
-
 .custom_thumbnail {
   width: 30px;
   height: 30px;
 }
 
 .dropzone-container {
-    padding: 1rem;
-    background: #f7fafc;
-    border: 2px dashed #e2e8f0;
-    margin-top: 1rem;
-    text-align: center;
+  padding: 1rem;
+  background: #f7fafc;
+  border: 2px dashed #e2e8f0;
+  margin-top: 1rem;
+  text-align: center;
 }
 
 .file-upload {
-    font-style: italic;
-    font-size: 12px;
+  font-style: italic;
+  font-size: 12px;
 }
 
 .hidden-input {
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    width: 1px;
-    height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+  height: 1px;
 }
 
 .invalid-file-type {
