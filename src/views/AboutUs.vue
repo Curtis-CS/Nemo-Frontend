@@ -18,9 +18,9 @@
         </p>
       </div>
       <div class="row gx-5 align-items-start justify-content-center justify-content-lg-between mt-5">
-        <h5 class="fw-bold text-center lh-1 mb-4 mt-5 min-width" > Abstract </h5>
-          <p class="fw-normal text-muted text-center mb-5 mb-lg-0" >
-            Deep-learning (DL) based object detection algorithms are beneficial to areas of climate science involving
+        <h5 class="fw-bold text-center lh-1 mb-4 mt-5 min-width"> Abstract </h5>
+        <p class="fw-normal text-muted text-center mb-5 mb-lg-0">
+          Deep-learning (DL) based object detection algorithms are beneficial to areas of climate science involving
           wildfire prevention, observation, and intelligence. As wildfires become more prevalent, the need for
           advanced techniques in processing video feeds has become crucial for smoke detection. Existing DL-based
           techniques have been developed based on convolution networks and are proven to be effective in wildfire
@@ -29,7 +29,7 @@
           Using this model as a basis, our team intends to collaborate with its authors to build a convenient user
           interface and refined data preprocessing for accurately detecting wildfire smoke in adverse weather or
           nighttime conditions.
-          </p>
+        </p>
       </div>
       <div class="row gx-5 align-items-start justify-content-center justify-content-lg-between">
         <h5 class="fw-bold text-center lh-1 mb-4 mt-5 min-width"> Instructors </h5>
@@ -58,31 +58,16 @@ export default {
 </script>
 
 <style scoped>
-/* Initial padding of Top Menu bar */
-.InitialPadding {
-  padding-top: 75px;
-}
-
-.OtherPadding {
-  padding-bottom: 5px;
-  font-size: 1.25vw;
-}
-
-.AbstractPadding {
-  padding-top: 3px;
-  width: 75vw;
-  height: 14vw;
-}
-
 .mt-custom {
   margin-top: 6rem;
   margin-bottom: 6rem;
 }
+
 .max-column-width {
   max-width: 900px;
 }
+
 .min-column-width {
   min-width: 530px;
 }
-
 </style>
