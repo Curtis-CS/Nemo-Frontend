@@ -2,9 +2,8 @@ import { createApp } from 'vue'
 import {createRouter, createWebHistory} from 'vue-router'
 import {createStore} from 'vuex'
 
-//Importing our views and components
 import App from './App.vue'
-import Home from './views/Home.vue'
+import RunNemo from "./views/RunNemo.vue";
 import AboutUs from './views/AboutUs.vue'
 import ConfigureNemo from './views/ConfigureNemo.vue'
 import Results from './views/Results.vue'
@@ -13,13 +12,12 @@ import "bootstrap/dist/css/bootstrap.css"
 
 const router = createRouter({
     history: createWebHistory(),
-    //Configuring our routes, with names and mathcing imports
     routes: [
-        {path: '/', name: 'Home', component: Home},
+        {path: '/', name: 'HowTo', component: HowTo},
         {path: '/aboutus', name: 'AboutUs', component: AboutUs},
-        {path: '/results', name: 'Results', component: Results},
         {path: '/configurenemo', name: 'ConfigureNemo', component: ConfigureNemo},
-        {path: '/howto', name: 'HowTo', component: HowTo}
+        {path: '/results', name: 'Results', component: Results},
+        {path: '/runnemo', name: 'RunNemo', component: RunNemo}
     ]
 })
 
@@ -43,7 +41,5 @@ const store = createStore({
 createApp(App)
     .use(router, store)
     .mount('#app')
-
-
 
 import "bootstrap/dist/js/bootstrap.js"

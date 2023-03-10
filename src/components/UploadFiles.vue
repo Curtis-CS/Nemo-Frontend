@@ -19,37 +19,39 @@
         </label>
       </div>
       <div v-if="files.length">
-        <div v-for="file in files" :key="file.name">
-          <div class="container border-1 shadow-sm mt-3">
-            <table width="100%">
-              <tr>
-                <td v-if="file.valid_file" class="column-file-type-icon" rowspan="2">
-                  <img alt="" class="custom_thumbnail" v-bind:src="icons[file.name.split('.').pop().toLowerCase()]"/>
-                </td>
-                <td v-else class="column-file-type-icon" rowspan="2">
-                  <img alt="" class="custom_thumbnail" src="/invalid-filetype-icon.png"/>
-                </td>
-                <td class="column-file-name">{{ file.name }}&nbsp;</td>
-                <td class="column-file-size" rowspan="2">{{ bytesToSize(file.size, 0) }}&nbsp;</td>
-                <td class="column-file-type-icon" rowspan="2">
-                  <button class="remove-file-button" type="button" @click="removeFile(files.indexOf(file))">
-                    <img alt="" class="custom_thumbnail" src="/red_x.png"/>&nbsp;
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div v-if="file.valid_file" class="file-upload valid-file-type">
-                    Valid file.
-                  </div>
-                  <div v-else class="file-upload invalid-file-type">
-                    Invalid file.
-                  </div>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
+        <ul class="ul mt-1">
+          <li v-for="file in files">
+            <div class="container border-1 shadow-sm mt-3">
+              <table width="100%">
+                <tr>
+                  <td v-if="file.valid_file" class="column-file-type-icon" rowspan="2">
+                    <img alt="" class="custom_thumbnail" v-bind:src="icons[file.name.split('.').pop().toLowerCase()]"/>
+                  </td>
+                  <td v-else class="column-file-type-icon" rowspan="2">
+                    <img alt="" class="custom_thumbnail" src="/invalid-filetype-icon.png"/>
+                  </td>
+                  <td class="column-file-name">{{ file.name }}&nbsp;</td>
+                  <td class="column-file-size" rowspan="2">{{ bytesToSize(file.size, 0) }}&nbsp;</td>
+                  <td class="column-file-type-icon" rowspan="2">
+                    <button class="remove-file-button" type="button" @click="removeFile(files.indexOf(file))">
+                      <img alt="" class="custom_thumbnail" src="/red_x.png"/>&nbsp;
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div v-if="file.valid_file" class="file-upload valid-file-type">
+                      Valid file.
+                    </div>
+                    <div v-else class="file-upload invalid-file-type">
+                      Invalid file.
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </li>
+        </ul>
         <div class="container bg-light">
           <button id="clear" class="base-button clear-button" type="button" @click="clearFiles">
             Clear
@@ -116,6 +118,37 @@ export default {
         }
       }
     },
+    bytesToSize(bytes, precision) {
+      /**
+       * Function to convert file size to proper notation.
+       * @author Andris Causs
+       * @param size Size of the file.
+       * @source https://web.archive.org/web/20120507054320/http://codeaid.net/javascript/convert-size-in-bytes-to-human-readable-format-(javascript)
+       */
+      const kilobyte = 1024;
+      const megabyte = kilobyte * 1024;
+      const gigabyte = megabyte * 1024;
+      const terabyte = gigabyte * 1024;
+
+      if ((bytes >= 0) && (bytes < kilobyte)) {
+        return bytes + ' B';
+
+      } else if ((bytes >= kilobyte) && (bytes < megabyte)) {
+        return (bytes / kilobyte).toFixed(precision) + ' KB';
+
+      } else if ((bytes >= megabyte) && (bytes < gigabyte)) {
+        return (bytes / megabyte).toFixed(precision) + ' MB';
+
+      } else if ((bytes >= gigabyte) && (bytes < terabyte)) {
+        return (bytes / gigabyte).toFixed(precision) + ' GB';
+
+      } else if (bytes >= terabyte) {
+        return (bytes / terabyte).toFixed(precision) + ' TB';
+
+      } else {
+        return bytes + ' B';
+      }
+    },
     clearFiles() {
       /**
        * Function to delete the current files when the "Clear" button is pressed.
@@ -173,37 +206,6 @@ export default {
        */
       return filename.split('.').pop().toLowerCase()
     },
-    bytesToSize(bytes, precision) {
-      /**
-       * Function to convert file size to proper notation.
-       * @author Andris Causs
-       * @param size Size of the file.
-       * @source https://web.archive.org/web/20120507054320/http://codeaid.net/javascript/convert-size-in-bytes-to-human-readable-format-(javascript)
-       */
-      const kilobyte = 1024;
-      const megabyte = kilobyte * 1024;
-      const gigabyte = megabyte * 1024;
-      const terabyte = gigabyte * 1024;
-
-      if ((bytes >= 0) && (bytes < kilobyte)) {
-        return bytes + ' B';
-
-      } else if ((bytes >= kilobyte) && (bytes < megabyte)) {
-        return (bytes / kilobyte).toFixed(precision) + ' KB';
-
-      } else if ((bytes >= megabyte) && (bytes < gigabyte)) {
-        return (bytes / megabyte).toFixed(precision) + ' MB';
-
-      } else if ((bytes >= gigabyte) && (bytes < terabyte)) {
-        return (bytes / gigabyte).toFixed(precision) + ' GB';
-
-      } else if (bytes >= terabyte) {
-        return (bytes / terabyte).toFixed(precision) + ' TB';
-
-      } else {
-        return bytes + ' B';
-      }
-    },
     getFileSizeStatus(file) {
       /**
        * Function to check the size of a file.
@@ -211,7 +213,7 @@ export default {
        * @param file File being checked.
        * @returns {boolean} File size is valid or not.
        */
-      console.log(file.size <= 1048576000)
+      // console.log(file.size <= 1048576000)
       return file.size <= 1048576000;
     },
     handleFileUpload() {
@@ -237,7 +239,7 @@ export default {
        * Function to submit files to the back-end server.
        * @type {FormData}
        */
-      var filesLeftToSend = this.files.length
+      let filesLeftToSend = this.files.length
       for (let i = 0; i < this.files.length; i++) {
         let file = this.files[i]
         let formData = new FormData()
@@ -373,6 +375,14 @@ export default {
 .run-button:disabled {
   float: right;
   background-color: grey;
+}
+
+.ul {
+  overflow: scroll;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 630px;
 }
 
 .upload-icon {

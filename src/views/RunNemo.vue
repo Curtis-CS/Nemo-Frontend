@@ -38,7 +38,7 @@
 import UploadFiles from "@/components/UploadFiles.vue";
 
 export default {
-  name: "Home",
+  name: "RunNemo",
   components: {UploadFiles}
 }
 </script>
