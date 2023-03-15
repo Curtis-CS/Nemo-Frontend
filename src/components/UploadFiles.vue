@@ -11,52 +11,78 @@
             multiple
             name="file"
             type="file"
-            @change="handleFileUpload"
-        >
+            @change="handleFileUpload">
         <div><img alt="" class=upload-icon src="/upload-icon.png"/></div>
         <label class="" for="fileInput">
           <span>Drag and Drop or <u class="choose-file-button">choose files</u>.</span>
         </label>
       </div>
-      <div v-if="files.length">
+      <div v-if="uploadFiles.length">
+        <!--List of File Uploads-->
         <ul class="ul mt-1">
-          <li v-for="file in files">
+          <li v-for="file in uploadFiles">
             <div class="container border-1 shadow-sm mt-3">
-              <table width="100%">
+              <table class="custom_table">
                 <tr>
-                  <td v-if="file.valid_file" class="column-file-type-icon" rowspan="2">
+                  <!--File Type Icon-->
+                  <td v-if="file.valid_type" class="column-file-type-icon" rowspan="2">
                     <img alt="" class="custom_thumbnail" v-bind:src="icons[file.name.split('.').pop().toLowerCase()]"/>
                   </td>
                   <td v-else class="column-file-type-icon" rowspan="2">
                     <img alt="" class="custom_thumbnail" src="/invalid-filetype-icon.png"/>
                   </td>
+                  <!--File Name-->
                   <td class="column-file-name">{{ file.name }}&nbsp;</td>
+                  <!--File Size-->
                   <td class="column-file-size" rowspan="2">{{ bytesToSize(file.size, 0) }}&nbsp;</td>
+                  <!--Remove File Icon-->
                   <td class="column-file-type-icon" rowspan="2">
-                    <button class="remove-file-button" type="button" @click="removeFile(files.indexOf(file))">
+                    <button class="remove-file-button" type="button" @click="removeFile(uploadFiles.indexOf(file))">
                       <img alt="" class="custom_thumbnail" src="/red_x.png"/>&nbsp;
                     </button>
                   </td>
                 </tr>
                 <tr>
-                  <td>
-                    <div v-if="file.valid_file" class="file-upload valid-file-type">
-                      Valid file.
-                    </div>
-                    <div v-else class="file-upload invalid-file-type">
-                      Invalid file.
-                    </div>
+                  <!--File Status-->
+                  <td v-if="file.valid_type" class="file-upload valid-file-type">
+                    Valid file.
+                  </td>
+                  <td v-else class="file-upload invalid-file-type">
+                    Invalid file.
                   </td>
                 </tr>
               </table>
             </div>
           </li>
         </ul>
-        <div class="container bg-light">
+        <!--Upload information-->
+        <div class="container border-top status min-container-height">
+          <table class="custom_table1 mt-2">
+            <tr>
+              <td class="custom_table_column"> Status: </td>
+              <!--Number of Files-->
+              <td v-if="invalidNumUploadFiles" class="custom_table_column align-right invalid-file-type">
+                {{ getNumFiles() }} / 25
+              </td>
+              <td v-else class="custom_table_column align-right valid-file-type">
+                {{ getNumFiles() }} / 25
+              </td>
+              <!--Total Upload Size-->
+              <td v-if="invalidSizeUploadFiles" class="custom_table_column1 align-right invalid-file-type">
+                {{ bytesToSize(totalUploadSize, 0) }} / 1 GB
+              </td>
+              <td v-else class="custom_table_column1 align-right valid-file-type">
+                {{ bytesToSize(totalUploadSize, 0) }} / 1 GB
+              </td>
+            </tr>
+          </table>
+        </div>
+        <!--File Submission-->
+        <div class="container min-container-height mt-4">
           <button id="clear" class="base-button clear-button" type="button" @click="clearFiles">
             Clear
           </button>
-          <button :disabled="run_status" class="base-button run-button" type="button" @click="submitFiles">
+          <button :disabled="runStatus" class="base-button run-button align-right" type="button" @click="submitFiles">
             Run
           </button>
         </div>
@@ -69,19 +95,17 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 //import {saveAs} from 'file-saver';
+
+const kilobyte = 1024
+const megabyte = kilobyte * 1024
+const gigabyte = megabyte * 1024
+const terabyte = gigabyte * 1024
 
 export default {
   data() {
     return {
-      run_status: false,
-      isDragging: false,
-      processingFiles: false,
-      files: [],
-      filesNames: [],
-      filesize: '',
-      imageB64Data: null,
       icons: {
         gif: '/gif-icon.png',
         jpg: '/jpeg-icon.png',
@@ -91,7 +115,14 @@ export default {
         mp4: '/mp4-icon.png',
         mpeg: '/mpeg-icon.png',
         png: '/png-icon.png'
-      }
+      },
+      invalidNumUploadFiles: false,
+      invalidSizeUploadFiles: false,
+      isDragging: false,
+      processingFiles: false,
+      runStatus: false,
+      totalUploadSize: 0,   // bytes
+      uploadFiles: [],
     }
   },
   methods: {
@@ -105,18 +136,23 @@ export default {
        */
       if (!(this.fileExists(file["name"]))) {
         if (this.getFileSizeStatus(file) && this.getFileExtension(file.name) in this.icons) {
-          file["valid_size"] = true
-          file["valid_file"] = true
-          this.files.push(file)
-          this.filesNames.push(file.name)
+          file["valid_type"] = true
+          this.uploadFiles.push(file)
         } else {
-          file["valid_size"] = false
-          file["valid_file"] = false
-          this.run_status = true
-          this.files.push(file)
-          this.filesNames.push(file.name)
+          file["valid_type"] = false
+          this.runStatus = true
+          this.uploadFiles.push(file)
         }
+        this.verifyFiles()
       }
+    },
+    bytesToGB(bytes) {
+      /**
+       * Function to convert bytes to GB.
+       * Adapted from function "bytesToSize."
+       */
+      console.log(bytes / gigabyte.toFixed(1))
+      return bytes / gigabyte
     },
     bytesToSize(bytes, precision) {
       /**
@@ -125,26 +161,16 @@ export default {
        * @param size Size of the file.
        * @source https://web.archive.org/web/20120507054320/http://codeaid.net/javascript/convert-size-in-bytes-to-human-readable-format-(javascript)
        */
-      const kilobyte = 1024;
-      const megabyte = kilobyte * 1024;
-      const gigabyte = megabyte * 1024;
-      const terabyte = gigabyte * 1024;
-
       if ((bytes >= 0) && (bytes < kilobyte)) {
         return bytes + ' B';
-
       } else if ((bytes >= kilobyte) && (bytes < megabyte)) {
         return (bytes / kilobyte).toFixed(precision) + ' KB';
-
       } else if ((bytes >= megabyte) && (bytes < gigabyte)) {
         return (bytes / megabyte).toFixed(precision) + ' MB';
-
       } else if ((bytes >= gigabyte) && (bytes < terabyte)) {
         return (bytes / gigabyte).toFixed(precision) + ' GB';
-
       } else if (bytes >= terabyte) {
         return (bytes / terabyte).toFixed(precision) + ' TB';
-
       } else {
         return bytes + ' B';
       }
@@ -153,10 +179,9 @@ export default {
       /**
        * Function to delete the current files when the "Clear" button is pressed.
        */
-      this.files = []
-      this.filesNames = []
-      this.run_status = false
-      return this.files === [] && this.run_status === false;
+      this.uploadFiles = []
+      this.runStatus = false
+      return this.uploadFiles === [] && this.runStatus === false;
     },
     dragleave() {
       /**
@@ -191,8 +216,8 @@ export default {
        * @param name Name of the file.
        * @returns {boolean} File exists or not.
        */
-      for (let i = 0; i < this.files.length; i++) {
-        if (this.files[i]["name"] === name) {
+      for (let i = 0; i < this.uploadFiles.length; i++) {
+        if (this.uploadFiles[i]["name"] === name) {
           return true
         }
       }
@@ -209,12 +234,26 @@ export default {
     getFileSizeStatus(file) {
       /**
        * Function to check the size of a file.
-       * 1MB = 1048576 B's, 1GB = 1048576000 MB's
+       * 1GB = 1048576000 MB's
        * @param file File being checked.
        * @returns {boolean} File size is valid or not.
        */
-      // console.log(file.size <= 1048576000)
       return file.size <= 1048576000;
+    },
+    getNumFiles() {
+      /**
+       * Function to return number of files in upload.
+       */
+      return this.uploadFiles.length
+    },
+    getTotalUploadSize() {
+      /**
+       * Function to return total size of file uploads.
+       */
+      this.totalUploadSize = 0
+      for (let i = 0; i < this.uploadFiles.length; i++) {
+        this.totalUploadSize += this.uploadFiles[i].size
+      }
     },
     handleFileUpload() {
       /**
@@ -230,8 +269,7 @@ export default {
        * Function to remove a file from the list.
        * @param i Index of the file in the list.
        */
-      this.files.splice(i, 1);
-      this.filesNames.splice(i, 1);
+      this.uploadFiles.splice(i, 1)
       this.verifyFiles()
     },
     submitFiles() {
@@ -239,9 +277,9 @@ export default {
        * Function to submit files to the back-end server.
        * @type {FormData}
        */
-      let filesLeftToSend = this.files.length
-      for (let i = 0; i < this.files.length; i++) {
-        let file = this.files[i]
+      let filesLeftToSend = this.uploadFiles.length
+      for (let i = 0; i < this.uploadFiles.length; i++) {
+        let file = this.uploadFiles[i]
         let formData = new FormData()
         formData.append('filesLeft', filesLeftToSend)
         formData.append('file', file)
@@ -253,11 +291,11 @@ export default {
               //console.log(response)
               console.log("Results Recieved")
               //this.$store.commit("addFile", file)
-              var recievedFileSize = response.data.size
+              let recievedFileSize = response.data.size
               if (recievedFileSize > 25) {
-                var blob = new Blob([response.data])
-                var url = window.URL.createObjectURL(blob)
-                var link = document.createElement('a')
+                let blob = new Blob([response.data])
+                let url = window.URL.createObjectURL(blob)
+                let link = document.createElement('a')
                 link.href = url
                 link.setAttribute('download', 'results.zip')
                 document.body.appendChild(link)
@@ -272,14 +310,28 @@ export default {
     },
     verifyFiles() {
       /**
-       * Function to verify if the list of files are all valid file types before submission.
+       * Function to verify input before submission.
+       * When runStatus is true, the "Run" button is disabled.
+       * Correct Filetypes: this.icons.
+       * Max number of files: 25
+       * Max upload size: 1GB
        */
-      for (let i = 0; i < this.files.length; i++) {
-        if (!(this.files[i]["valid_file"]) && !(this.files[i]["valid_size"])) {
-          this.run_status = true
-          break
-        } else {
-          this.run_status = false
+      this.invalidNumUploadFiles = this.uploadFiles.length > 25
+      if (this.invalidNumUploadFiles) {
+        this.runStatus = true
+        return
+      }
+      this.getTotalUploadSize()
+      this.invalidSizeUploadFiles = this.bytesToGB(this.totalUploadSize, 2) > 1
+      if (this.invalidSizeUploadFiles) {
+        this.runStatus = true
+        return
+      }
+      for (let i = 0; i < this.uploadFiles.length; i++) {
+        this.runStatus = !(this.uploadFiles[i]["valid_type"])
+        if (this.runStatus) {
+          this.runStatus = true
+          return
         }
       }
     }
@@ -289,13 +341,17 @@ export default {
 
 <style scoped>
 
+.align-right {
+  text-align: right;
+}
+
 .base-button {
   color: black;
   border-radius: 25px;
   border-style: solid;
   border-color: #d8d8d8;
   border-width: thin;
-  margin-top: 2rem;
+  /*margin-top: 2rem;*/
   padding-right: 20px;
   padding-left: 20px;
 }
@@ -310,7 +366,6 @@ export default {
   float: left;
   background-color: #ffffff;
 }
-
 
 .column-file-name {
   min-width: 100px;
@@ -327,10 +382,25 @@ export default {
   text-align: center;
 }
 
-
 .custom_thumbnail {
   width: 30px;
   height: 30px;
+}
+
+.custom_table {
+  width: 100%;
+}
+
+.custom_table1 {
+  float: right;
+}
+
+.custom_table_column {
+  width: 50px;
+}
+
+.custom_table_column1 {
+  width: 90px;
 }
 
 .dropzone-container {
@@ -362,6 +432,10 @@ export default {
   min-width: 280px;
 }
 
+.min-container-height {
+  min-height: 35px;
+}
+
 .remove-file-button {
   border: none;
   background-color: white;
@@ -375,6 +449,11 @@ export default {
 .run-button:disabled {
   float: right;
   background-color: grey;
+}
+
+.status {
+  font-size: 12px;
+  font-style: italic;
 }
 
 .ul {
