@@ -151,7 +151,6 @@ export default {
        * Function to convert bytes to GB.
        * Adapted from function "bytesToSize."
        */
-      console.log(bytes / gigabyte.toFixed(1))
       return bytes / gigabyte
     },
     bytesToSize(bytes, precision) {
