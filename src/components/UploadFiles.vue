@@ -96,7 +96,7 @@
 
 <script>
 import axios from 'axios'
-//import {saveAs} from 'file-saver';
+import {store} from "../store"
 
 const kilobyte = 1024
 const megabyte = kilobyte * 1024
@@ -273,7 +273,7 @@ export default {
     },
     submitFiles() {
       /**
-       * Function to submit files to the back-end server.
+       * Function to submit files to the back-end server and save results.
        * @type {FormData}
        */
       let filesLeftToSend = this.uploadFiles.length
@@ -286,25 +286,33 @@ export default {
         axios.post('http://127.0.0.1:5000', formData, {
           responseType: 'blob'
         })
-            .then(function (response) {
-              //console.log(response)
-              console.log("Results Recieved")
-              //this.$store.commit("addFile", file)
-              let recievedFileSize = response.data.size
-              if (recievedFileSize > 25) {
-                let blob = new Blob([response.data])
-                let url = window.URL.createObjectURL(blob)
-                let link = document.createElement('a')
-                link.href = url
-                link.setAttribute('download', 'results.zip')
-                document.body.appendChild(link)
-                link.click()
-              }
-              //saveAs(response.data, filename)
-            })
-            .catch(function (error) {
-              console.log(error)
-            })
+          .then(function (response) {
+            console.log("Results Received")
+            // Reset Result Images Before Next Batch
+            console.log(store.state.result_images.length)
+            store.commit('clearFiles')
+            console.log(store.state.result_images.length)
+            // Add Result Images of this Run
+            store.commit('insertFile', response.data)
+            console.log(store.state.result_images.length)
+            console.log(store.state.resultsExist)
+            store.commit('exist')
+            console.log(store.state.resultsExist)
+            // Demonstration Code
+            // let recievedFileSize = response.data.size
+            // if (recievedFileSize > 25) {
+            //   let blob = new Blob([response.data])
+            //   let url = window.URL.createObjectURL(blob)
+            //   let link = document.createElement('a')
+            //   link.href = url
+            //   link.setAttribute('download', 'results.zip')
+            //   document.body.appendChild(link)
+            //   link.click()
+            // }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
       }
     },
     verifyFiles() {

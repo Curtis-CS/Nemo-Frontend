@@ -29,15 +29,8 @@
           <li class="nav-item">
             <router-link class="nav-link me-lg-3" to="/aboutus">About Us</router-link>
           </li>
-
         </ul>
       </div>
     </div>
   </nav>
 </template>
-
-<style scoped>
-.min-column-width {
-  min-width: 500px;
-}
-</style>

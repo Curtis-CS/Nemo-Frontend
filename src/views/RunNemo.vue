@@ -44,16 +44,11 @@ export default {
 </script>
 
 <style scoped>
+.min-width {
+  min-width: 407px;
+}
 .mt-custom {
   margin-top: 6rem;
   margin-bottom: 6rem;
-}
-
-.min-column-width {
-  min-width: 530px;
-}
-
-.min-width {
-  min-width: 407px;
 }
 </style>

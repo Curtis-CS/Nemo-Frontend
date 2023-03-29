@@ -1,10 +1,11 @@
 <template>
-	<div class="Results" style="padding-bottom: 3rem;">
-		<Lightbox :images="images"/>
-	</div>
-<!--  <div>-->
-<!--    <img :src="imageSrc" alt=""/>-->
-<!--  </div>-->
+  <section class="bg-white">
+    <div class="container px-5 mt-custom max-column-width min-column-width">
+      	<div class="Results">
+		      <Lightbox :images="images"/>
+	      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -21,7 +22,7 @@ export default {
         '/nemo_smokeV2..png', '/nemo_smokeV3.png',
         '/nemo_wildfiresmoke..png', '/nemo_smokeV2..png', '/nemo_smokeV3.png',
         '/nemo_wildfiresmoke..png', '/thumbsUp.gif',
-      ]
+      ],
     }
   },
   // computed: {
@@ -34,7 +35,3 @@ export default {
   // }
 }
 </script>
-<style scoped>
-
-
-</style>

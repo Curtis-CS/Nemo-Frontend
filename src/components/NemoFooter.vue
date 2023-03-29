@@ -30,8 +30,4 @@ export default {
   height: 30px;
   margin-left: 1rem;
 }
-
-.min-column-width {
-  min-width: 500px;
-}
 </style>

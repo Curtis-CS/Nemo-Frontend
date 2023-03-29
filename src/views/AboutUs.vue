@@ -62,12 +62,4 @@ export default {
   margin-top: 6rem;
   margin-bottom: 6rem;
 }
-
-.max-column-width {
-  max-width: 900px;
-}
-
-.min-column-width {
-  min-width: 530px;
-}
 </style>
