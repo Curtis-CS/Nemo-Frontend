@@ -1,104 +1,110 @@
 <template>
-  <div class="InitialPadding">
-    <h2 class="display-6 lh-1 mb-5" style="margin-left: 5vw; font-size: 2.5vw;">Configure Nemo</h2>
-  </div>
-  <div style="padding-bottom: 15vw;">
-    <div style="float: left; padding-left: 2vw;">
-      <img class="Images" src="/NemoSingleClass.png">
-    </div>
-    <div style="float: right; padding-right: 2vw;">
-      <img class="Images" src="/NemoDensity.png">
-    </div>
-  </div>
-  <div style="padding-bottom: 12vw;">
-    <div v-if="this.singleToggle" class="LeftSideButton">
-      <button class="SelectedText" @click="SingleClassToggleOff">Single Class Detection</button>
-    </div>
-    <div v-else class="LeftSideButton">
-      <button class="UnselectedText" @click="SingleClassToggleOn" @mouseenter="SingleClassHoverOn"
-              @mouseleave="SingleClassHoverOff">Single Class Detection
-      </button>
-    </div>
-    <div v-if="this.densityToggle" class="RightSideButton">
-      <button class="SelectedText" @click="DensityToggleOff">Density Detection</button>
-    </div>
-    <div v-else class="RightSideButton">
-      <button class="UnselectedText" @click="DensityToggleOn" @mouseenter="DensityHoverOn"
-              @mouseleave="DensityHoverOff">Density Detection
-      </button>
-    </div>
-  </div>
-  <div style="padding-bottom: 10vw; padding-top: 2vw;">
-    <div v-if="this.singleToggle || this.singleHover" class="LeftSideText">
-      <p style="font-size: 1.2vw; color: gray;">Single Class detection will only deliver results of either true or
-        false. This being yes or no to whether or not wildfire smoke was detected.</p>
-    </div>
-    <div v-if="this.densityToggle || this.densityHover" class="RightSideText">
-      <p style="font-size: 1.2vw; color: gray;">Density Detection will detect wildfire smoke, and provide an estimate to
-        how dense the smoke is. This can be helpful for studying wildfire smoke.</p>
-    </div>
-  </div>
-  <div v-if="this.moreOptions" class="MoreOptionsButton">
-    <button class="SelectedText" @click="MoreOptionsToggleOff">More Options</button>
-  </div>
-  <div v-else class="MoreOptionsButton">
-    <button class="UnselectedText" @click="MoreOptionsToggleOn">More Options</button>
-  </div>
-  <div v-if="moreOptions">
-    <div style="padding-bottom: 12vw;">
-      <div v-if="this.extraOption1" class="LeftSideButton">
-        <button class="SelectedText" @click="ExtraOption1ToggleOff">ExtraOption1</button>
+  <div class="ConfigureNemo">
+    <section class="bg-white">
+      <div class="InitialPadding">
+        <h2 class="display-6 lh-1 mb-5" style="margin-left: 5vw; font-size: 2.5vw;">Configure Nemo</h2>
       </div>
-      <div v-else class="LeftSideButton">
-        <button class="UnselectedText" @click="ExtraOption1ToggleOn" @mouseenter="ExtraOption1HoverOn"
-                @mouseleave="ExtraOption1HoverOff">ExtraOption1
-        </button>
+      <div style="padding-bottom: 15vw;">
+        <div style="float: left; padding-left: 2vw;">
+          <img class="Images" src="/NemoSingleClass.png">
+        </div>
+        <div style="float: right; padding-right: 2vw;">
+          <img class="Images" src="/NemoDensity.png">
+        </div>
       </div>
-      <div v-if="this.extraOption2" class="RightSideButton">
-        <button class="SelectedText" @click="ExtraOption2ToggleOff">ExtraOption2</button>
+      <div style="padding-bottom: 12vw;">
+        <div v-if="this.singleToggle" class="LeftSideButton">
+          <button class="SelectedText" @click="SingleClassToggleOff">Single Class Detection</button>
+        </div>
+        <div v-else class="LeftSideButton">
+          <button class="UnselectedText" @click="SingleClassToggleOn" @mouseenter="SingleClassHoverOn"
+                  @mouseleave="SingleClassHoverOff">Single Class Detection
+          </button>
+        </div>
+        <div v-if="this.densityToggle" class="RightSideButton">
+          <button class="SelectedText" @click="DensityToggleOff">Density Detection</button>
+        </div>
+        <div v-else class="RightSideButton">
+          <button class="UnselectedText" @click="DensityToggleOn" @mouseenter="DensityHoverOn"
+                  @mouseleave="DensityHoverOff">Density Detection
+          </button>
+        </div>
       </div>
-      <div v-else class="RightSideButton">
-        <button class="UnselectedText" @click="ExtraOption2ToggleOn" @mouseenter="ExtraOption2HoverOn"
-                @mouseleave="ExtraOption2HoverOff">ExtraOption2
-        </button>
+      <div style="padding-bottom: 10vw; padding-top: 2vw;">
+        <div v-if="this.singleToggle || this.singleHover" class="LeftSideText">
+          <p style="font-size: 1.2vw; color: gray;">Single Class detection will only deliver results of either true or
+            false. This being yes or no to whether or not wildfire smoke was detected.</p>
+        </div>
+        <div v-if="this.densityToggle || this.densityHover" class="RightSideText">
+          <p style="font-size: 1.2vw; color: gray;">Density Detection will detect wildfire smoke, and provide an estimate to
+            how dense the smoke is. This can be helpful for studying wildfire smoke.</p>
+        </div>
       </div>
-    </div>
-    <div style="padding-bottom: 10vw; padding-top: 2vw;">
-      <div v-if="this.extraOption1 || this.extraOption1Hover" class="LeftSideText">
-        <p style="font-size: 1.2vw; color: gray;">Extra Option 1</p>
+      <div v-if="this.moreOptions" class="MoreOptionsButton">
+        <button class="SelectedText" @click="MoreOptionsToggleOff">More Options</button>
       </div>
-      <div v-if="this.extraOption2 || this.extraOption2Hover" class="RightSideText">
-        <p style="font-size: 1.2vw; color: gray;">Extra Option 2</p>
+      <div v-else class="MoreOptionsButton">
+        <button class="UnselectedText" @click="MoreOptionsToggleOn">More Options</button>
       </div>
-    </div>
-    <div id="cacheTest">
-      <h2>Options</h2>
-      <div v-for="(option,n) in options">
-        <p>
-          <span class="cat">{{ option }}</span>
-          <button @click="removeOption(n)">Remove</button>
-        </p>
+      <div v-if="moreOptions">
+        <div style="padding-bottom: 12vw;">
+          <div v-if="this.extraOption1" class="LeftSideButton">
+            <button class="SelectedText" @click="ExtraOption1ToggleOff">ExtraOption1</button>
+          </div>
+          <div v-else class="LeftSideButton">
+            <button class="UnselectedText" @click="ExtraOption1ToggleOn" @mouseenter="ExtraOption1HoverOn"
+                    @mouseleave="ExtraOption1HoverOff">ExtraOption1
+            </button>
+          </div>
+          <div v-if="this.extraOption2" class="RightSideButton">
+            <button class="SelectedText" @click="ExtraOption2ToggleOff">ExtraOption2</button>
+          </div>
+          <div v-else class="RightSideButton">
+            <button class="UnselectedText" @click="ExtraOption2ToggleOn" @mouseenter="ExtraOption2HoverOn"
+                    @mouseleave="ExtraOption2HoverOff">ExtraOption2
+            </button>
+          </div>
+        </div>
+        <div style="padding-bottom: 10vw; padding-top: 2vw;">
+          <div v-if="this.extraOption1 || this.extraOption1Hover" class="LeftSideText">
+            <p style="font-size: 1.2vw; color: gray;">Extra Option 1</p>
+          </div>
+          <div v-if="this.extraOption2 || this.extraOption2Hover" class="RightSideText">
+            <p style="font-size: 1.2vw; color: gray;">Extra Option 2</p>
+          </div>
+        </div>
+        <div id="cacheTest">
+          <h2>Options</h2>
+          <div v-for="(option,n) in options">
+            <p>
+              <span class="cat">{{ option }}</span>
+              <button @click="removeOption(n)">Remove</button>
+            </p>
+          </div>
+          <p>
+            <input v-model="newOption">
+            <button @click="addOption">Add Option</button>
+          </p>
+          <div>Selected Options: {{ selectedOptions }}</div>
+          <input id="opt1" v-model="selectedOptions" type="checkbox" value="Option 1">
+          <label for="opt1">Option 1</label>
+          <input id="opt2" v-model="selectedOptions" type="checkbox" value="Option 2">
+          <label for="opt2">Option 2</label>
+          <input id="opt3" v-model="selectedOptions" type="checkbox" value="Option 3">
+          <label for="opt3">Option 3</label>
+          <input id="optx" v-model="optionDict" type="checkbox" @click="addDictopt('option1', true)">
+          <label for="optx">Option Test</label>
+        </div>
       </div>
-      <p>
-        <input v-model="newOption">
-        <button @click="addOption">Add Option</button>
-      </p>
-      <div>Selected Options: {{ selectedOptions }}</div>
-      <input id="opt1" v-model="selectedOptions" type="checkbox" value="Option 1">
-      <label for="opt1">Option 1</label>
-      <input id="opt2" v-model="selectedOptions" type="checkbox" value="Option 2">
-      <label for="opt2">Option 2</label>
-      <input id="opt3" v-model="selectedOptions" type="checkbox" value="Option 3">
-      <label for="opt3">Option 3</label>
-      <input id="optx" v-model="optionDict" type="checkbox" @click="addDictopt('option1', true)">
-      <label for="optx">Option Test</label>
-    </div>
+    </section>
   </div>
 </template>
 
 <script>
+import UploadFiles from "../components/UploadFiles.vue";
 export default {
   name: "ConfigureNemo",
+  components: {UploadFiles},
   data() {
     return {
       singleToggle: true,

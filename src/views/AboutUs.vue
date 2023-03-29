@@ -1,4 +1,5 @@
 <template>
+  <div class="AboutUs">
   <section class="bg-white">
     <div class="container px-5 mt-custom max-column-width min-column-width">
       <div class="row gx-5 align-items-start justify-content-center justify-content-lg-between">
@@ -49,6 +50,7 @@
       </div>
     </div>
   </section>
+  </div>
 </template>
 
 <script>
@@ -56,10 +58,3 @@ export default {
   name: "AboutUs"
 }
 </script>
-
-<style scoped>
-.mt-custom {
-  margin-top: 6rem;
-  margin-bottom: 6rem;
-}
-</style>

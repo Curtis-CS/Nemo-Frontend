@@ -5,3 +5,8 @@
 .min-column-width {
   min-width: 530px;
 }
+
+.mt-custom {
+  margin-top: 6rem;
+  margin-bottom: 6rem;
+}

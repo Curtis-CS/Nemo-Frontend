@@ -12,6 +12,7 @@
               created for object detection. It has a CNN backbone along with encoder-decoder transformers. It also
               uses bipartite matching loss function.
             </p>
+            <h4 class="display-8 lh-1 mb-3 mt-5 min-width">Run Nemo</h4>
             <UploadFiles/>
           </div>
           <div class="col-sm-8 col-md-6">
@@ -46,9 +47,5 @@ export default {
 <style scoped>
 .min-width {
   min-width: 407px;
-}
-.mt-custom {
-  margin-top: 6rem;
-  margin-bottom: 6rem;
 }
 </style>
