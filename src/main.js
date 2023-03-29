@@ -3,7 +3,6 @@ import {createRouter, createWebHistory} from 'vue-router'
 import { store } from "./store"
 
 import App from './App.vue'
-import Nemo from "./views/Nemo.vue"
 import RunNemo from "./views/RunNemo.vue"
 import AboutUs from './views/AboutUs.vue'
 import ConfigureNemo from './views/ConfigureNemo.vue'
