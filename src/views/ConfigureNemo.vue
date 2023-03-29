@@ -114,8 +114,7 @@ export default {
       newOption: null,
       optionDict: {
         option1: false,
-        option2: false,
-        option3: true
+        option2: false
       },
       selectedOptions: []
     }
