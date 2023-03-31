@@ -242,10 +242,6 @@ export default {
 <!-- This is all of our styling using bootstrap/css -->
 <style scoped>
 /* Initial padding of Top Menu bar */
-.InitialPadding {
-  padding-top: 100px;
-}
-
 .SelectedText {
   background-color: gray;
   color: white;

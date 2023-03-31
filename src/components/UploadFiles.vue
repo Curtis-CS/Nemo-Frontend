@@ -97,6 +97,7 @@
 <script>
 import axios from 'axios'
 import {store} from "../store"
+import JSZip from 'jszip'
 
 const kilobyte = 1024
 const megabyte = kilobyte * 1024
@@ -289,8 +290,39 @@ export default {
         })
           .then(function (response) {
             console.log("Results Received")
-            store.commit('insertFile', new Blob([response.data]))
-            // Demonstration Code
+            
+            const zip = new JSZip()
+            try
+            {
+              zip.loadAsync(response.data).then((zipContents) => {
+                //Get each file in zip
+                zipContents.forEach((path, curZippedFile) => {
+                  //if file or directory
+                  if (!curZippedFile.dir) {
+                    //get the file as a blob
+                    curZippedFile.async("blob").then((fileBlob) => {
+                      const file = new File([fileBlob], curZippedFile.name)
+                      if (file.name == "Data")
+                      {
+                        //The special file sent containing the data
+                      }
+                      const imageGotten = document.createElement("img")
+                      imageGotten.src = URL.createObjectURL(file)
+                      //document.body.appendChild(imageGotten)
+                      store.commit('insertFile', imageGotten.src)
+                      console.log(store.state.result_images)
+                    })
+                  }
+                })
+              })
+            }
+            catch
+            {
+              console.log("Error unzipping file, happens everytime there is mulitple files uploaded. all good.")
+            }
+
+            //store.commit('insertFile', new Blob([response.data]))
+            // Demonstration Code, downloading zip file
             // let recievedFileSize = response.data.size
             // if (recievedFileSize > 25) {
             //   let blob = new Blob([response.data])
@@ -300,7 +332,7 @@ export default {
             //   link.setAttribute('download', 'results.zip')
             //   document.body.appendChild(link)
             //   link.click()
-            // }
+            //}
           })
           .catch(function (error) {
             console.log(error)

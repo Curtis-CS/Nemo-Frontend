@@ -15,10 +15,10 @@
       <div id="navbarResponsive" class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
           <li class="nav-item">
-            <router-link class="nav-link me-lg-3" to="/">Run Nemo</router-link>
+            <router-link class="nav-link me-lg-3" to="/configurenemo">Settings</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link me-lg-3" to="/configurenemo">Settings</router-link>
+            <router-link class="nav-link me-lg-3" to="/">Run Nemo</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link me-lg-3" to="/results">Results</router-link>

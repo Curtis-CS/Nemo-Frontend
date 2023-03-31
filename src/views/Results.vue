@@ -1,12 +1,10 @@
 <template>
   <section class="bg-white">
-    <div class="container px-5 mt-custom max-column-width min-column-width">
-      <div v-if="checkResults">
-        <h2>No Results Received.</h2>
-      </div>
-      <div v-else>
-<!--      <Lightbox :images="images"/>-->
-      </div>
+    <div class="container px-5 mt-custom max-column-width min-column-width" v-if="checkResults()">
+      <h2>No Results Received.</h2>
+    </div>
+    <div v-else>
+      <Lightbox :images="images"/>
     </div>
   </section>
 </template>
@@ -22,16 +20,15 @@ export default {
   data() {
     return {
       //Just an array of images
-      images: [
-        '/nemo_smokeV2..png', '/nemo_smokeV3.png',
-        '/nemo_wildfiresmoke..png', '/nemo_smokeV2..png', '/nemo_smokeV3.png',
-        '/nemo_wildfiresmoke..png', '/thumbsUp.gif',
-      ],
+      images: store.state.result_images
     }
   },
   methods: {
+    //Checks if there are any results yet
     checkResults() {
-      return store.state.result_images === null;
+      console.log(this.images)
+      console.log(this.images.length)
+      return store.state.result_images.length === 0;
     }
   }
   // computed: {
