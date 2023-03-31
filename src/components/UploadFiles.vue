@@ -274,6 +274,7 @@ export default {
     submitFiles() {
       /**
        * Function to submit files to the back-end server and save results.
+       * Files are send one at a time.
        * @type {FormData}
        */
       let filesLeftToSend = this.uploadFiles.length
@@ -288,16 +289,7 @@ export default {
         })
           .then(function (response) {
             console.log("Results Received")
-            // Reset Result Images Before Next Batch
-            console.log(store.state.result_images.length)
-            store.commit('clearFiles')
-            console.log(store.state.result_images.length)
-            // Add Result Images of this Run
-            store.commit('insertFile', response.data)
-            console.log(store.state.result_images.length)
-            console.log(store.state.resultsExist)
-            store.commit('exist')
-            console.log(store.state.resultsExist)
+            store.commit('insertFile', new Blob([response.data]))
             // Demonstration Code
             // let recievedFileSize = response.data.size
             // if (recievedFileSize > 25) {

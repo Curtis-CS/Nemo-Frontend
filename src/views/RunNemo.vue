@@ -17,7 +17,7 @@
           </div>
           <div class="col-sm-8 col-md-6">
             <figure>
-              <img alt="..." class="img-thumbnail mt-5" src="/nemo_smokeV3.png">
+              <img alt="..." class="img-thumbnail mt-5" src="/nemo_chris-leboutillier-be8mnFXzBgo-unsplash.png">
               <figcaption class="figure-caption mt-3">
                 <b>Figure 1:</b> Annotated frame with confirmed smoke detection and estimated density.
               </figcaption>

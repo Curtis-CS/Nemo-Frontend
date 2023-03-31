@@ -1,14 +1,18 @@
 <template>
   <section class="bg-white">
     <div class="container px-5 mt-custom max-column-width min-column-width">
-      	<div class="Results">
-		      <Lightbox :images="images"/>
-	      </div>
+      <div v-if="checkResults">
+        <h2>No Results Received.</h2>
+      </div>
+      <div v-else>
+<!--      <Lightbox :images="images"/>-->
+      </div>
     </div>
   </section>
 </template>
 
 <script>
+import { store } from "../store"
 import Lightbox from "@/components/Lightbox.vue"
 export default {
   name: "Results",
@@ -25,6 +29,11 @@ export default {
       ],
     }
   },
+  methods: {
+    checkResults() {
+      return store.state.result_images === null;
+    }
+  }
   // computed: {
   //   imageSrc() {
   //     let files = this.$store.getters.result_files
