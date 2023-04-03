@@ -20,7 +20,7 @@
           <li class="nav-item">
             <router-link class="nav-link me-lg-3" to="/">Run Nemo</router-link>
           </li>
-          <li class="nav-item">
+          <li v-if="checkStatus()" class="nav-item">
             <router-link class="nav-link me-lg-3" to="/results">Results</router-link>
           </li>
           <li class="nav-item">
@@ -34,3 +34,17 @@
     </div>
   </nav>
 </template>
+
+<script>
+import {store} from "../store";
+export default {
+  methods: {
+    checkStatus() {
+      /**
+       * Function to check the status of the post request.
+       */
+      return !!store.state.status;
+    }
+  }
+}
+</script>
