@@ -59,6 +59,11 @@
         <div class="container border-top status min-container-height">
           <table class="custom_table1 mt-2">
             <tr>
+              <!--Run Status-->
+              <td v-if="getStatus() === 'pending'" class="custom_table_column2 align-left valid-file-type">Files submitted.</td>
+              <td v-if="getStatus() === 'success' && submitted"> {{ redirect() }} </td>
+              <td v-if="getStatus() === 'failed'" class="custom_table_column2 align-left invalid-file-type">Can't process files!</td>
+
               <td class="custom_table_column"> Status: </td>
               <!--Number of Files-->
               <td v-if="invalidNumUploadFiles" class="custom_table_column align-right invalid-file-type">
@@ -76,12 +81,6 @@
               </td>
             </tr>
           </table>
-        </div>
-        <!--Upload Status-->
-        <div v-if="submitted" class="container status">
-          <p class="valid-file-type align-right">Files submitted.</p>
-          <p v-if="getStatus() === 'success'" class="valid-file-type">{{redirect()}}</p>
-          <p v-if="getStatus() === 'failed'" class="invalid-file-type align-right">File processing failed.</p>
         </div>
         <!--File Submission-->
         <div class="container min-container-height mt-4">
@@ -189,6 +188,7 @@ export default {
        */
       this.uploadFiles = []
       this.runStatus = false
+      store.commit('setStatus', "")
       return this.uploadFiles === [] && this.runStatus === false;
     },
     dragleave() {
@@ -256,9 +256,9 @@ export default {
     },
     getStatus() {
       /**
-       * Function to get status.
+       * Function to return status.
        */
-      return store.state.status
+      return store.state.status;
     },
     getTotalUploadSize() {
       /**
@@ -278,7 +278,7 @@ export default {
         this.addFile(files[i])
       }
     },
-    redirect() {
+    redirect () {
       /**
        * Function to redirect to results page.
        */
@@ -307,6 +307,7 @@ export default {
         formData.append('file', file)
         filesLeftToSend = filesLeftToSend - 1
         this.submitted = true
+        store.commit('setStatus', "pending")
         axios.post('http://127.0.0.1:5000', formData, {
           responseType: 'blob'
         })
@@ -363,8 +364,7 @@ export default {
           })
           .catch(function (error) {
             store.commit('setStatus', "failed")
-            // store.state.status = "failed"
-            console.log(error)
+
           })
       }
     },
@@ -463,6 +463,10 @@ export default {
   width: 90px;
 }
 
+.custom_table_column2 {
+  width: 226px;
+}
+
 .dropzone-container {
   padding: 1rem;
   background: #f7fafc;
@@ -489,7 +493,7 @@ export default {
 }
 
 .min-card-width {
-  min-width: 280px;
+  min-width: 400px;
 }
 
 .min-container-height {
