@@ -77,6 +77,12 @@
             </tr>
           </table>
         </div>
+        <!--Upload Status-->
+        <div v-if="submitted" class="container border-top">
+          <p class="valid-file-type">Files submitted.</p>
+          <p v-if="getStatus() === 'success'" class="valid-file-type">{{redirect()}}</p>
+          <p v-if="getStatus() === 'failed'" class="invalid-file-type">Files processing failed.</p>
+        </div>
         <!--File Submission-->
         <div class="container min-container-height mt-4">
           <button id="clear" class="base-button clear-button" type="button" @click="clearFiles">
@@ -96,7 +102,8 @@
 
 <script>
 import axios from 'axios'
-import {store} from "../store"
+import { store } from "../store"
+import { router } from "../router"
 import JSZip from 'jszip'
 
 const kilobyte = 1024
@@ -122,6 +129,7 @@ export default {
       isDragging: false,
       processingFiles: false,
       runStatus: false,
+      submitted: false,
       totalUploadSize: 0,   // bytes
       uploadFiles: [],
     }
@@ -175,6 +183,12 @@ export default {
         return bytes + ' B';
       }
     },
+    // checkStatus() {
+    //   /**
+    //    * Function to check the status of the post request.
+    //    */
+    //   return store.state.status
+    // },
     clearFiles() {
       /**
        * Function to delete the current files when the "Clear" button is pressed.
@@ -246,6 +260,12 @@ export default {
        */
       return this.uploadFiles.length
     },
+    getStatus() {
+      /**
+       * Function to get status.
+       */
+      return store.state.status
+    },
     getTotalUploadSize() {
       /**
        * Function to return total size of file uploads.
@@ -264,6 +284,13 @@ export default {
         this.addFile(files[i])
       }
     },
+    redirect() {
+      /**
+       * Function to redirect to results page.
+       */
+      router.push('/results')
+      return true
+    },
     removeFile(i) {
       /**
        * Function to remove a file from the list.
@@ -276,7 +303,6 @@ export default {
       /**
        * Function to submit files to the back-end server and save results.
        * Files are send one at a time.
-       * @type {FormData}
        */
       let filesLeftToSend = this.uploadFiles.length
       for (let i = 0; i < this.uploadFiles.length; i++) {
@@ -286,15 +312,15 @@ export default {
         formData.append('runType', store.state.single_class_option)
         formData.append('file', file)
         filesLeftToSend = filesLeftToSend - 1
+        this.submitted = true
         axios.post('http://127.0.0.1:5000', formData, {
           responseType: 'blob'
         })
           .then(function (response) {
-            console.log("Results Received")
-            
+            store.commit('setStatus', "success")
+            // store.state.status = "success"
             const zip = new JSZip()
-            try
-            {
+            try {
               zip.loadAsync(response.data).then((zipContents) => {
                 //Get each file in zip
                 zipContents.forEach((path, curZippedFile) => {
@@ -326,11 +352,9 @@ export default {
                 })
               })
             }
-            catch
-            {
+            catch {
               console.log("Error unzipping file, happens everytime there is mulitple files uploaded. all good.")
             }
-
             //store.commit('insertFile', new Blob([response.data]))
             // Demonstration Code, downloading zip file
             // let recievedFileSize = response.data.size
@@ -345,6 +369,8 @@ export default {
             //}
           })
           .catch(function (error) {
+            store.commit('setStatus', "failed")
+            // store.state.status = "failed"
             console.log(error)
           })
       }

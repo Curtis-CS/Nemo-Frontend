@@ -28,9 +28,9 @@
             <p class="lead fw-bold mb-5 mb-lg-0" style="float: left; padding-bottom: 10px">
               Step: 3 - Get Results
             </p>
-            <div style="float: left; padding-top: 2vw; padding-bottom: 2vw">
-              <img class="Images" src="/nemoResults.png">
-            </div>
+<!--            <div style="float: left; padding-top: 2vw; padding-bottom: 2vw">-->
+<!--              <img class="Images" src="/nemoResults.png">-->
+<!--            </div>-->
             <p class="lead fw-normal text-muted mb-5 mb-lg-0"
                style="float: left; padding-bottom: 10px; padding-top: 5px">
               Wait patiently for NEMOs response, and view the results!
