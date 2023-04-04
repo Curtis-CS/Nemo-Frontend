@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import UploadFiles from "@/components/UploadFiles.vue";
+import UploadFiles from "../components/UploadFiles.vue"
 
 export default {
   name: "RunNemo",

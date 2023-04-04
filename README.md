@@ -1,6 +1,6 @@
 # Nemo-Frontend
 
-Front end server for NEMO interface.
+Front end server for Nemo interface.
 
 ### Project Setup
 ```sh

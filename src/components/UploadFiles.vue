@@ -12,7 +12,7 @@
             name="file"
             type="file"
             @change="handleFileUpload">
-        <div><img alt="" class=upload-icon src="/upload-icon.png"/></div>
+        <div><img alt="" class=upload-icon src="/file_types/upload-icon.png"/></div>
         <label class="" for="fileInput">
           <span>Drag and Drop or <u class="choose-file-button">choose files</u>.</span>
         </label>
@@ -29,7 +29,7 @@
                     <img alt="" class="custom_thumbnail" v-bind:src="icons[file.name.split('.').pop().toLowerCase()]"/>
                   </td>
                   <td v-else class="column-file-type-icon" rowspan="2">
-                    <img alt="" class="custom_thumbnail" src="/invalid-filetype-icon.png"/>
+                    <img alt="" class="custom_thumbnail" src="/file_types/invalid-filetype-icon.png"/>
                   </td>
                   <!--File Name-->
                   <td class="column-file-name">{{ file.name }}&nbsp;</td>
@@ -78,10 +78,10 @@
           </table>
         </div>
         <!--Upload Status-->
-        <div v-if="submitted" class="container border-top">
-          <p class="valid-file-type">Files submitted.</p>
+        <div v-if="submitted" class="container status">
+          <p class="valid-file-type align-right">Files submitted.</p>
           <p v-if="getStatus() === 'success'" class="valid-file-type">{{redirect()}}</p>
-          <p v-if="getStatus() === 'failed'" class="invalid-file-type">Files processing failed.</p>
+          <p v-if="getStatus() === 'failed'" class="invalid-file-type align-right">File processing failed.</p>
         </div>
         <!--File Submission-->
         <div class="container min-container-height mt-4">
@@ -115,14 +115,14 @@ export default {
   data() {
     return {
       icons: {
-        gif: '/gif-icon.png',
-        jpg: '/jpeg-icon.png',
-        jpeg: '/jpeg-icon.png',
-        mkv: '/mkv-icon.png',
-        mov: '/mov-icon.png',
-        mp4: '/mp4-icon.png',
-        mpeg: '/mpeg-icon.png',
-        png: '/png-icon.png'
+        gif: '/file_types/gif-icon.png',
+        jpg: '/file_types/jpeg-icon.png',
+        jpeg: '/file_types/jpeg-icon.png',
+        mkv: '/file_types/mkv-icon.png',
+        mov: '/file_types/mov-icon.png',
+        mp4: '/file_types/mp4-icon.png',
+        mpeg: '/file_types/mpeg-icon.png',
+        png: '/file_types/png-icon.png'
       },
       invalidNumUploadFiles: false,
       invalidSizeUploadFiles: false,
@@ -183,12 +183,6 @@ export default {
         return bytes + ' B';
       }
     },
-    // checkStatus() {
-    //   /**
-    //    * Function to check the status of the post request.
-    //    */
-    //   return store.state.status
-    // },
     clearFiles() {
       /**
        * Function to delete the current files when the "Clear" button is pressed.
@@ -329,7 +323,7 @@ export default {
                     //get the file as a blob
                     curZippedFile.async("blob").then((fileBlob) => {
                       const file = new File([fileBlob], curZippedFile.name)
-                      var fileName = file.name
+                      let fileName = file.name
                       console.log(typeof(fileName))
                       const lastSlashIndex = fileName.lastIndexOf("/") + 1
                       console.log(lastSlashIndex)
@@ -337,8 +331,7 @@ export default {
                       console.log(fileName)
                       //fileName = fileName.substring(lastSlashIndex + 1)
 
-                      if (fileName == "Data")
-                      {
+                      if (fileName === "Data") {
                         //The special file sent containing the data
                       }
                       const imageGotten = document.createElement("img")

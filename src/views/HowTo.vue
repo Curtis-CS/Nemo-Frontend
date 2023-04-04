@@ -9,7 +9,7 @@
               Step: 1 - Uploading Data
             </p>
             <div style="float: left; padding-top: 2vw; padding-bottom: 2vw;">
-              <img class="Images" src="/emptyUpload.png">
+              <img class="Images" src="/emptyUpload.png" alt="Image depicting the home page with an empty upload box.">
             </div>
             <p class="lead fw-normal text-muted mb-5 mb-lg-0" style="float: left; padding-bottom: 10px">
               Press "Choose Files" or drag and drop a file into the dropbox.
@@ -18,7 +18,7 @@
               Step: 2 - Running the Model
             </p>
             <div style="float: right; padding-top: 7vw; padding-bottom: 2vw">
-              <img class="Images" src="/nemoUpload.png">
+              <img class="Images" src="/nemoUpload.png" alt="Image depicting the home page with a populated upload box.">
             </div>
             <p class="lead fw-normal text-muted mb-5 mb-lg-0" style="float: right; padding-bottom: 5vw">
               Once you've uploaded your image(s), you should see the files you selected in the drop box as well as a

@@ -11,7 +11,7 @@
 
 <script>
 import { store } from "../store"
-import Lightbox from "@/components/Lightbox.vue"
+import Lightbox from "../components/Lightbox.vue"
 export default {
   name: "Results",
   components: {

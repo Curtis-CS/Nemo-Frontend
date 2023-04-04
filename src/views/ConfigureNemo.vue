@@ -6,10 +6,12 @@
       </div>
       <div style="padding-bottom: 15vw;">
         <div style="float: left; padding-left: 2vw;">
-          <img class="Images" src="/NemoSingleClass.png">
+          <img class="Images" src="/NemoSingleClass.png"
+               alt="Image with bounding boxes detecting smoke in two locations.">
         </div>
         <div style="float: right; padding-right: 2vw;">
-          <img class="Images" src="/NemoDensity.png">
+          <img class="Images" src="/NemoDensity.png"
+               alt="Image with bounding boxes detecting smoke density in three different locations.">
         </div>
       </div>
       <div style="padding-bottom: 12vw;">
