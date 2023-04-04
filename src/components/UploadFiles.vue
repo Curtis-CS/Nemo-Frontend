@@ -105,11 +105,6 @@ import { store } from "../store"
 import { router } from "../router"
 import JSZip from 'jszip'
 
-const kilobyte = 1024
-const megabyte = kilobyte * 1024
-const gigabyte = megabyte * 1024
-const terabyte = gigabyte * 1024
-
 export default {
   data() {
     return {
@@ -159,6 +154,7 @@ export default {
        * Function to convert bytes to GB.
        * Adapted from function "bytesToSize."
        */
+      let gigabyte = 1024 * 1024 *1024
       return bytes / gigabyte
     },
     bytesToSize(bytes, precision) {
@@ -168,18 +164,28 @@ export default {
        * @param size Size of the file.
        * @source https://web.archive.org/web/20120507054320/http://codeaid.net/javascript/convert-size-in-bytes-to-human-readable-format-(javascript)
        */
+      let kilobyte = 1024
+      let megabyte = kilobyte * 1024
+      let gigabyte = megabyte * 1024
+      let terabyte = gigabyte * 1024
+
       if ((bytes >= 0) && (bytes < kilobyte)) {
-        return bytes + ' B';
+          return bytes + ' B';
+
       } else if ((bytes >= kilobyte) && (bytes < megabyte)) {
-        return (bytes / kilobyte).toFixed(precision) + ' KB';
+          return (bytes / kilobyte).toFixed(precision) + ' KB';
+
       } else if ((bytes >= megabyte) && (bytes < gigabyte)) {
-        return (bytes / megabyte).toFixed(precision) + ' MB';
+          return (bytes / megabyte).toFixed(precision) + ' MB';
+
       } else if ((bytes >= gigabyte) && (bytes < terabyte)) {
-        return (bytes / gigabyte).toFixed(precision) + ' GB';
+          return (bytes / gigabyte).toFixed(precision) + ' GB';
+
       } else if (bytes >= terabyte) {
-        return (bytes / terabyte).toFixed(precision) + ' TB';
+          return (bytes / terabyte).toFixed(precision) + ' TB';
+
       } else {
-        return bytes + ' B';
+          return bytes + ' B';
       }
     },
     clearFiles() {
