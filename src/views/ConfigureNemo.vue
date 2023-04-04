@@ -104,7 +104,7 @@ export default {
   components: {UploadFiles},
   data() {
     return {
-      typeToggle: true, //True for single class, false for density
+      typeToggle: store.state.single_class_option, //True for single class, false for density
       moreOptions: false,
       extraOption1: false,
       extraOption2: false
