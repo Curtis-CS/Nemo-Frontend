@@ -3,6 +3,7 @@
     <!--Initial formatting for Results title-->
     <div class="InitialPadding">
       <h2 class="display-6 lh-1 mb-5" style="padding-left: 5rem;">Results</h2>
+      <h2 style="text-align: right;">Download All</h2>
     </div>
     <!-- The padding and background behind the thumbnails -->
     <div class="Center">
