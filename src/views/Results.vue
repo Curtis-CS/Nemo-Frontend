@@ -4,7 +4,7 @@
       <h2>No Results Received.</h2>
     </div>
     <div v-else>
-      <Lightbox :images="images"/>
+      <Lightbox :images="images" :imagesNames="imagesNames"/>
     </div>
   </section>
 </template>
@@ -20,14 +20,14 @@ export default {
   data() {
     return {
       //Just an array of images
-      images: store.state.result_images
+      images: store.state.result_images,
+      imagesNames: store.state.result_images_names
     }
   },
   methods: {
     //Checks if there are any results yet
     checkResults() {
-      console.log(this.images)
-      console.log(this.images.length)
+      console.log(this.imagesNames)
       return store.state.result_images.length === 0;
     }
   }

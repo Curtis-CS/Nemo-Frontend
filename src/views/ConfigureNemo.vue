@@ -13,29 +13,25 @@
         </div>
       </div>
       <div style="padding-bottom: 12vw;">
-        <div v-if="this.singleToggle" class="LeftSideButton">
-          <button class="SelectedText" @click="SingleClassToggleOff">Single Class Detection</button>
+        <div v-if="this.typeToggle" class="LeftSideButton">
+          <button class="SelectedText" @click="TypeToggleOff()">Single Class Detection</button>
         </div>
         <div v-else class="LeftSideButton">
-          <button class="UnselectedText" @click="SingleClassToggleOn" @mouseenter="SingleClassHoverOn"
-                  @mouseleave="SingleClassHoverOff">Single Class Detection
-          </button>
+          <button class="UnselectedText" @click="TypeToggleOn()">Single Class Detection</button>
         </div>
-        <div v-if="this.densityToggle" class="RightSideButton">
-          <button class="SelectedText" @click="DensityToggleOff">Density Detection</button>
+        <div v-if="!this.typeToggle" class="RightSideButton">
+          <button class="SelectedText" @click="TypeToggleOn()">Density Detection</button>
         </div>
         <div v-else class="RightSideButton">
-          <button class="UnselectedText" @click="DensityToggleOn" @mouseenter="DensityHoverOn"
-                  @mouseleave="DensityHoverOff">Density Detection
-          </button>
+          <button class="UnselectedText" @click="TypeToggleOff()">Density Detection</button>
         </div>
       </div>
       <div style="padding-bottom: 10vw; padding-top: 2vw;">
-        <div v-if="this.singleToggle || this.singleHover" class="LeftSideText">
+        <div class="LeftSideText">
           <p style="font-size: 1.2vw; color: gray;">Single Class detection will only deliver results of either true or
             false. This being yes or no to whether or not wildfire smoke was detected.</p>
         </div>
-        <div v-if="this.densityToggle || this.densityHover" class="RightSideText">
+        <div class="RightSideText">
           <p style="font-size: 1.2vw; color: gray;">Density Detection will detect wildfire smoke, and provide an estimate to
             how dense the smoke is. This can be helpful for studying wildfire smoke.</p>
         </div>
@@ -73,7 +69,7 @@
             <p style="font-size: 1.2vw; color: gray;">Extra Option 2</p>
           </div>
         </div>
-        <div id="cacheTest">
+        <!-- <div id="cacheTest">
           <h2>Options</h2>
           <div v-for="(option,n) in options">
             <p>
@@ -94,7 +90,7 @@
           <label for="opt3">Option 3</label>
           <input id="optx" v-model="optionDict" type="checkbox" @click="addDictopt('option1', true)">
           <label for="optx">Option Test</label>
-        </div>
+        </div> -->
       </div>
     </section>
   </div>
@@ -102,78 +98,54 @@
 
 <script>
 import UploadFiles from "../components/UploadFiles.vue";
+import {store} from "../store"
 export default {
   name: "ConfigureNemo",
   components: {UploadFiles},
   data() {
     return {
-      singleToggle: true,
-      densityToggle: false,
-      singleHover: false,
-      densityHover: false,
+      typeToggle: true, //True for single class, false for density
       moreOptions: false,
       extraOption1: false,
-      extraOption2: false,
-      extraOption1Hover: false,
-      extraOption2Hover: false,
-      options: [],
-      newOption: null,
-      optionDict: {
-        option1: false,
-        option2: false
-      },
-      selectedOptions: []
+      extraOption2: false
+      // options: [],
+      // newOption: null,
+      // optionDict: {
+      //   option1: false,
+      //   option2: false
+      // },
+      // selectedOptions: []
     }
   },
-  mounted() {
-    if (localStorage.getItem('options')) {
-      try {
-        this.options = JSON.parse(localStorage.getItem('options'));
-      } catch (e) {
-        localStorage.removeItem('options');
-      }
-    }
-  },
-  dictMount() {
-    if (localStorage.getItem('optionDict')) {
-      try {
-        this.optionDict = JSON.parse(localStorage.getItem('optionDict'));
-      } catch (e) {
-        localStorage.removeItem('optionDict')
-      }
-    }
-  },
+  // mounted() {
+  //   if (localStorage.getItem('options')) {
+  //     try {
+  //       this.options = JSON.parse(localStorage.getItem('options'));
+  //     } catch (e) {
+  //       localStorage.removeItem('options');
+  //     }
+  //   }
+  // },
+  // dictMount() {
+  //   if (localStorage.getItem('optionDict')) {
+  //     try {
+  //       this.optionDict = JSON.parse(localStorage.getItem('optionDict'));
+  //     } catch (e) {
+  //       localStorage.removeItem('optionDict')
+  //     }
+  //   }
+  // },
 
   methods: {
-    SingleClassToggleOn() {
-      this.singleToggle = true
-      this.densityToggle = false
-      this.densityHover = false
+    TypeToggleOn() {
+      this.typeToggle = true
+      store.state.single_class_option = this.typeToggle
+      console.log(store.state.single_class_option)
     },
-    SingleClassToggleOff() {
-      this.singleToggle = false
-      this.densityToggle = true
-    },
-    DensityToggleOn() {
-      this.densityToggle = true
-      this.singleToggle = false
-      this.singleHover = false
-    },
-    DensityToggleOff() {
-      this.densityToggle = false
-      this.singleToggle = true
-    },
-    SingleClassHoverOn() {
-      this.singleHover = true
-    },
-    SingleClassHoverOff() {
-      this.singleHover = false
-    },
-    DensityHoverOn() {
-      this.densityHover = true
-    },
-    DensityHoverOff() {
-      this.densityHover = false
+    TypeToggleOff() {
+      this.typeToggle = false
+      store.state.single_class_option = this.typeToggle
+      console.log(store.state.single_class_option)
     },
     MoreOptionsToggleOn() {
       this.moreOptions = true
@@ -194,47 +166,35 @@ export default {
     },
     ExtraOption2ToggleOff() {
       this.extraOption2 = false
-    },
-    ExtraOption1HoverOn() {
-      this.extraOption1Hover = true
-    },
-    ExtraOption1HoverOff() {
-      this.extraOption1Hover = false
-    },
-    ExtraOption2HoverOn() {
-      this.extraOption2Hover = true
-    },
-    ExtraOption2HoverOff() {
-      this.extraOption2Hover = false
-    },
-    addOption() {
-      if (!this.newOption) return;
-      this.options.push(this.newOption);
-      this.newOption = '';
-      this.saveOptions();
-    },
-    addDictopt(key, val) {
-      this.optionDict.update({key: val});
-      this.saveDictopt();
-    },
-    removeOption(x) {
-      this.options.splice(x, 1);
-      this.saveOptions();
-    },
-    rmvDictopt(key) {
-      this.optionDict.delete(key);
-      this.saveDictopt();
-
-    },
-    saveOptions() {
-      let parsed = JSON.stringify(this.options);
-      localStorage.setItem('options', parsed);
-    },
-    saveDictopt() {
-      let parsed = JSON.stringify(this.optionDict);
-      localStorage.setItem('optionDict', parsed);
-      console.log(this.optionDict);
     }
+    // addOption() {
+    //   if (!this.newOption) return;
+    //   this.options.push(this.newOption);
+    //   this.newOption = '';
+    //   this.saveOptions();
+    // },
+    // addDictopt(key, val) {
+    //   this.optionDict.update({key: val});
+    //   this.saveDictopt();
+    // },
+    // removeOption(x) {
+    //   this.options.splice(x, 1);
+    //   this.saveOptions();
+    // },
+    // rmvDictopt(key) {
+    //   this.optionDict.delete(key);
+    //   this.saveDictopt();
+
+    // },
+    // saveOptions() {
+    //   let parsed = JSON.stringify(this.options);
+    //   localStorage.setItem('options', parsed);
+    // },
+    // saveDictopt() {
+    //   let parsed = JSON.stringify(this.optionDict);
+    //   localStorage.setItem('optionDict', parsed);
+    //   console.log(this.optionDict);
+    // }
   }
 }
 </script>

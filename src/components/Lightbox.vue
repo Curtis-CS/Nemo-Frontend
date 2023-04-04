@@ -6,15 +6,20 @@
     </div>
     <!-- The padding and background behind the thumbnails -->
     <div class="Center">
-    <div v-if="visibleThumbnails" class="thumbnailPadding">
+    <div v-if="visibleThumbnails" style="background-color: whitesmoke; display: flex; justify-content: center; max-width: 98%; margin-left: 1vw; margin-right: 1vw; flex-wrap: wrap;">
       <!-- This is the box that the thumbnail is in, that when clicked sends the index of the thumbnail, also generates thumbnails using v-for -->
-      <a v-for="(image, index) in images" :key="index" class="thumbnailFormatting" href="#"
+      
+      <a v-for="(image, index) in images" :key="index" href="#"
           @click.prevent="showLightbox(index)">
+        <div style="text-align: center;width: 30rem; float:inline-end;">
         <!-- These are the thumbnails -->
         <img :key="index" :src="image" class="thumbnailFormattingMore">
+        <p style="width: 30rem; text-align: center; position: relative;">{{ imagesNames[index] }}</p>
+      </div>
       </a>
+      </div>
     </div>
-    </div>
+
     <!--This is the lightbox (pop up image) that is set to invisible by default-->
     <div v-if="visibleLightbox" class="grayBackground" style="padding-bottom: 1vw;" @click="hideLightbox">
       <!--The X button to close-->
@@ -44,6 +49,9 @@
           </svg>
         </div>
       </div>
+      <div style="text-align: center;" @click.stop="DownloadFile">
+        <p style="text-align: center; font-size: 1.5vw; color: white; cursor: pointer; background-color: gray; padding-top: 1px; margin-left: 38vw; margin-right: 38vw;">{{ imagesNames[index] }}</p>
+      </div>
     </div>
   <!-- </section> -->
 </template>
@@ -55,6 +63,10 @@ export default {
       type: Array,
       required: true
     },
+    imagesNames: {
+      type: Array,
+      required: true
+    }
   },
   data() {
     return {
@@ -92,8 +104,14 @@ export default {
         this.index = this.images.length - 1
       }
     },
-    testResults() {
-      this.resultsRecieved = true
+    DownloadFile() {
+      const link = document.createElement('a')
+      link.href = this.images[this.index]
+      link.setAttribute('download', this.imagesNames[this.index])
+
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
     }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
@@ -151,16 +169,8 @@ export default {
 .lightboxImage img {
 	width: 80rem;
 	height: 50rem;
-	margin-right: 1vw;
 	max-width: 90%;
 	max-height: calc(100vw - 100px);
-}
-.thumbnailPadding {
-	margin-left: 1vw;
-	margin-right: 1vw;
-	background-color: whitesmoke;
-	text-align: center;
-  max-width: 95%;
 }
 .XButton {
 	width: 3vw;
@@ -186,11 +196,12 @@ export default {
 	text-align: center;
 }
 .thumbnailFormatting {
-	padding-left: 1vw;
 	padding-top: 1vw;
 }
 .thumbnailFormattingMore {
 	padding-top: 1vw;
+  padding-left: .5vw;
+  padding-right: .5vw;
 	width: 30rem;
 	height: 25rem;
 }

@@ -283,6 +283,7 @@ export default {
         let file = this.uploadFiles[i]
         let formData = new FormData()
         formData.append('filesLeft', filesLeftToSend)
+        formData.append('runType', store.state.single_class_option)
         formData.append('file', file)
         filesLeftToSend = filesLeftToSend - 1
         axios.post('http://127.0.0.1:5000', formData, {
@@ -302,7 +303,15 @@ export default {
                     //get the file as a blob
                     curZippedFile.async("blob").then((fileBlob) => {
                       const file = new File([fileBlob], curZippedFile.name)
-                      if (file.name == "Data")
+                      var fileName = file.name
+                      console.log(typeof(fileName))
+                      const lastSlashIndex = fileName.lastIndexOf("/") + 1
+                      console.log(lastSlashIndex)
+                      fileName = fileName.substring(lastSlashIndex)
+                      console.log(fileName)
+                      //fileName = fileName.substring(lastSlashIndex + 1)
+
+                      if (fileName == "Data")
                       {
                         //The special file sent containing the data
                       }
@@ -310,7 +319,8 @@ export default {
                       imageGotten.src = URL.createObjectURL(file)
                       //document.body.appendChild(imageGotten)
                       store.commit('insertFile', imageGotten.src)
-                      console.log(store.state.result_images)
+                      store.commit('insertFileName', fileName)
+                      //console.log(store.state.result_images_names)
                     })
                   }
                 })
