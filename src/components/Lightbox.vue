@@ -59,23 +59,18 @@
 </template>
 
 <script>
+import JSZip from 'jszip'
+import { store } from "../store"
 export default {
-  props: {
-    images: {
-      type: Array,
-      required: true
-    },
-    imagesNames: {
-      type: Array,
-      required: true
-    }
-  },
   data() {
     return {
       visibleLightbox: false,
       visibleThumbnails: true,
       resultsRecieved: false,
-      index: 0
+      index: 0,
+      images: store.state.result_images,
+      imagesNames: store.state.result_images_names,
+      fileObjects: store.state.result_file_objects
     }
   },
   methods: {
@@ -115,16 +110,30 @@ export default {
       link.click()
       document.body.removeChild(link)
     },
-    DownloadAll() {
-      this.images.forEach(element => {
-        const link = document.createElement('a')
-        link.href = this.images[this.index]
-        link.setAttribute('download', this.imagesNames[this.index])
+    async DownloadAll() {
+      var x=0
+      const zip = new JSZip()
+      while (x < this.fileObjects.length)
+      {
+        zip.folder('results').file(this.imagesNames[x], this.fileObjects[x])
+        // const link = document.createElement('a')
+        // link.href = this.images[x]
+        // link.setAttribute('download', this.imagesNames[x])
 
+        // document.body.appendChild(link)
+        // link.click()
+        // document.body.removeChild(link)
+        x++
+      }
+      zip.generateAsync({type: "blob"}).then(function(content) {
+        let blob = new Blob([content], {type: "application/zip"})
+        const link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.setAttribute('download', 'results.zip')
         document.body.appendChild(link)
         link.click()
-        document.body.removeChild(link)          
-      });
+        document.body.removeChild(link)
+      })
     }
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------

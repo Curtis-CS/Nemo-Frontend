@@ -20,8 +20,9 @@ export default {
   data() {
     return {
       //Just an array of images
-      images: store.state.result_images,
-      imagesNames: store.state.result_images_names
+      // images: store.state.result_images,
+      // imagesNames: store.state.result_images_names,
+      // fileObjects: store.state.result_file_objects
     }
   },
   methods: {

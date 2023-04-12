@@ -4,6 +4,7 @@ export const store = createStore({
     state () {
         return {
             result_images: [],
+            result_file_objects: [],
             single_class_option: true,
             result_images_names: [],
             status: ""
@@ -18,6 +19,9 @@ export const store = createStore({
         },
         setStatus (state, msg) {
             state.status = msg
+        },
+        insertFileObject (state, file) {
+            state.result_file_objects.push(file)
         }
     }
   }

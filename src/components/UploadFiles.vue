@@ -330,12 +330,13 @@ export default {
                     //get the file as a blob
                     curZippedFile.async("blob").then((fileBlob) => {
                       const file = new File([fileBlob], curZippedFile.name)
+                      store.commit('insertFileObject', file)
                       let fileName = file.name
-                      console.log(typeof(fileName))
+                      //console.log(typeof(fileName))
                       const lastSlashIndex = fileName.lastIndexOf("/") + 1
-                      console.log(lastSlashIndex)
+                      //console.log(lastSlashIndex)
                       fileName = fileName.substring(lastSlashIndex)
-                      console.log(fileName)
+                      //console.log(fileName)
                       //fileName = fileName.substring(lastSlashIndex + 1)
 
                       if (fileName === "Data") {
