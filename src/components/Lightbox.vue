@@ -3,8 +3,7 @@
     <!--Initial formatting for Results title-->
     <div class="InitialPadding" style=" text-align: center; margin-left: 3vw; margin-right: 3vw;">
       <h2 class="display-6 lh-1 mb-5" style="display: inline-block; margin-right: 20vw;">Results</h2>
-      <h2 class="display-6 lh-1 mb-5" style="display: inline-block; margin-left: 20vw; background-color: gray; cursor: pointer; color: white;" @click="DownloadAll()">Download All</h2>
-      <!-- <h2 style="text-align: right;">Download All</h2> -->
+      <h2 class="display-6 lh-1 mb-5" style="display: inline-block; margin-left: 20vw; cursor: pointer;" @click="DownloadAll()">Download All</h2>
     </div>
     <!-- The padding and background behind the thumbnails -->
     <div class="Center">

@@ -4,7 +4,7 @@
       <h2>No Results Received.</h2>
     </div>
     <div v-else>
-      <Lightbox :images="images" :imagesNames="imagesNames"/>
+      <Lightbox/>
     </div>
   </section>
 </template>

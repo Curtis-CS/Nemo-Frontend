@@ -37,7 +37,16 @@
 
 <script>
 import {store} from "../store";
+import {openDB} from 'idb'
 export default {
+  // async created() {
+  //   const db = await openDB('resultsDatabase', 1, {
+  //     upgrade(db) {
+  //       db.createObjectStore('objectStore')
+  //     },
+  //   })
+
+  // },
   methods: {
     checkStatus() {
       /**
