@@ -47,27 +47,23 @@
       <div v-if="moreOptions">
         <div style="padding-bottom: 12vw;">
           <div v-if="this.extraOption1" class="LeftSideButton">
-            <button class="SelectedText" @click="ExtraOption1ToggleOff">ExtraOption1</button>
+            <button class="SelectedText" @click="ExtraOption1ToggleOff">Attention Weights</button>
           </div>
           <div v-else class="LeftSideButton">
-            <button class="UnselectedText" @click="ExtraOption1ToggleOn" @mouseenter="ExtraOption1HoverOn"
-                    @mouseleave="ExtraOption1HoverOff">ExtraOption1
-            </button>
+            <button class="UnselectedText" @click="ExtraOption1ToggleOn">Attention Weights</button>
           </div>
           <div v-if="this.extraOption2" class="RightSideButton">
             <button class="SelectedText" @click="ExtraOption2ToggleOff">ExtraOption2</button>
           </div>
           <div v-else class="RightSideButton">
-            <button class="UnselectedText" @click="ExtraOption2ToggleOn" @mouseenter="ExtraOption2HoverOn"
-                    @mouseleave="ExtraOption2HoverOff">ExtraOption2
-            </button>
+            <button class="UnselectedText" @click="ExtraOption2ToggleOn">ExtraOption2</button>
           </div>
         </div>
         <div style="padding-bottom: 10vw; padding-top: 2vw;">
-          <div v-if="this.extraOption1 || this.extraOption1Hover" class="LeftSideText">
-            <p style="font-size: 1.2vw; color: gray;">Extra Option 1</p>
+          <div class="LeftSideText">
+            <p style="font-size: 1.2vw; color: gray;">Encoder-Decoder Attention Weights</p>
           </div>
-          <div v-if="this.extraOption2 || this.extraOption2Hover" class="RightSideText">
+          <div class="RightSideText">
             <p style="font-size: 1.2vw; color: gray;">Extra Option 2</p>
           </div>
         </div>
@@ -107,16 +103,9 @@ export default {
   data() {
     return {
       typeToggle: store.state.single_class_option, //True for single class, false for density
-      moreOptions: false,
-      extraOption1: false,
+      moreOptions: store.state.more_options_toggle,
+      extraOption1: store.state.attention_weights_option,
       extraOption2: false
-      // options: [],
-      // newOption: null,
-      // optionDict: {
-      //   option1: false,
-      //   option2: false
-      // },
-      // selectedOptions: []
     }
   },
   // mounted() {
@@ -142,61 +131,35 @@ export default {
     TypeToggleOn() {
       this.typeToggle = true
       store.state.single_class_option = this.typeToggle
-      console.log(store.state.single_class_option)
+      //console.log(store.state.single_class_option)
     },
     TypeToggleOff() {
       this.typeToggle = false
       store.state.single_class_option = this.typeToggle
-      console.log(store.state.single_class_option)
+      //console.log(store.state.single_class_option)
     },
     MoreOptionsToggleOn() {
       this.moreOptions = true
+      store.state.more_options_toggle = this.moreOptions
     },
     MoreOptionsToggleOff() {
       this.moreOptions = false
+      store.state.more_options_toggle = this.moreOptions
     },
     ExtraOption1ToggleOn() {
       this.extraOption1 = true
-      this.extraOption2Hover = false
+      store.state.attention_weights_option = this.extraOption1
     },
     ExtraOption1ToggleOff() {
       this.extraOption1 = false
+      store.state.attention_weights_option = this.extraOption1
     },
     ExtraOption2ToggleOn() {
       this.extraOption2 = true
-      this.extraOption1Hover = false
     },
     ExtraOption2ToggleOff() {
       this.extraOption2 = false
     }
-    // addOption() {
-    //   if (!this.newOption) return;
-    //   this.options.push(this.newOption);
-    //   this.newOption = '';
-    //   this.saveOptions();
-    // },
-    // addDictopt(key, val) {
-    //   this.optionDict.update({key: val});
-    //   this.saveDictopt();
-    // },
-    // removeOption(x) {
-    //   this.options.splice(x, 1);
-    //   this.saveOptions();
-    // },
-    // rmvDictopt(key) {
-    //   this.optionDict.delete(key);
-    //   this.saveDictopt();
-
-    // },
-    // saveOptions() {
-    //   let parsed = JSON.stringify(this.options);
-    //   localStorage.setItem('options', parsed);
-    // },
-    // saveDictopt() {
-    //   let parsed = JSON.stringify(this.optionDict);
-    //   localStorage.setItem('optionDict', parsed);
-    //   console.log(this.optionDict);
-    // }
   }
 }
 </script>

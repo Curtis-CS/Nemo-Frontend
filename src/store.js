@@ -6,6 +6,8 @@ export const store = createStore({
             result_images: [],
             result_file_objects: [],
             single_class_option: true,
+            attention_weights_option: false,
+            more_options_toggle: false,
             result_images_names: [],
             status: ""
         }

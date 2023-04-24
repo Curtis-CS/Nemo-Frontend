@@ -37,7 +37,7 @@
 
 <script>
 import {store} from "../store";
-import {openDB} from 'idb'
+//import {openDB} from 'idb'
 export default {
   // async created() {
   //   const db = await openDB('resultsDatabase', 1, {

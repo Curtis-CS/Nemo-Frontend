@@ -17,18 +17,9 @@ export default {
   components: {
 	  Lightbox,
   },
-  data() {
-    return {
-      //Just an array of images
-      // images: store.state.result_images,
-      // imagesNames: store.state.result_images_names,
-      // fileObjects: store.state.result_file_objects
-    }
-  },
   methods: {
     //Checks if there are any results yet
     checkResults() {
-      console.log(this.imagesNames)
       return store.state.result_images.length === 0;
     }
   }

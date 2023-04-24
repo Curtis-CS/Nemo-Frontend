@@ -67,10 +67,10 @@
               <td class="custom_table_column"> Status: </td>
               <!--Number of Files-->
               <td v-if="invalidNumUploadFiles" class="custom_table_column align-right invalid-file-type">
-                {{ getNumFiles() }} / 25
+                {{ getNumFiles() }} / 20
               </td>
               <td v-else class="custom_table_column align-right valid-file-type">
-                {{ getNumFiles() }} / 25
+                {{ getNumFiles() }} / 20
               </td>
               <!--Total Upload Size-->
               <td v-if="invalidSizeUploadFiles" class="custom_table_column1 align-right invalid-file-type">
@@ -310,6 +310,7 @@ export default {
         let formData = new FormData()
         formData.append('filesLeft', filesLeftToSend)
         formData.append('runType', store.state.single_class_option)
+        formData.append('attention_weights', store.state.attention_weights_option)
         formData.append('file', file)
         filesLeftToSend = filesLeftToSend - 1
         this.submitted = true
@@ -318,10 +319,11 @@ export default {
           responseType: 'blob'
         })
           .then(function (response) {
-            store.commit('setStatus', "success")
             // store.state.status = "success"
-            const zip = new JSZip()
-            try {
+            //console.log(response.data.type)
+            if (response.data.type == "application/zip")
+            {
+              const zip = new JSZip()
               zip.loadAsync(response.data).then((zipContents) => {
                 //Get each file in zip
                 zipContents.forEach((path, curZippedFile) => {
@@ -332,46 +334,21 @@ export default {
                       const file = new File([fileBlob], curZippedFile.name)
                       store.commit('insertFileObject', file)
                       let fileName = file.name
-                      //console.log(typeof(fileName))
                       const lastSlashIndex = fileName.lastIndexOf("/") + 1
-                      //console.log(lastSlashIndex)
                       fileName = fileName.substring(lastSlashIndex)
-                      //console.log(fileName)
-                      //fileName = fileName.substring(lastSlashIndex + 1)
-
-                      if (fileName === "Data") {
-                        //The special file sent containing the data
-                      }
                       const imageGotten = document.createElement("img")
                       imageGotten.src = URL.createObjectURL(file)
-                      //document.body.appendChild(imageGotten)
                       store.commit('insertFile', imageGotten.src)
                       store.commit('insertFileName', fileName)
-                      //console.log(store.state.result_images_names)
                     })
                   }
                 })
+                store.commit('setStatus', "success")
               })
             }
-            catch {
-              console.log("Error unzipping file, happens everytime there is mulitple files uploaded. all good.")
-            }
-            //store.commit('insertFile', new Blob([response.data]))
-            // Demonstration Code, downloading zip file
-            // let recievedFileSize = response.data.size
-            // if (recievedFileSize > 25) {
-            //   let blob = new Blob([response.data])
-            //   let url = window.URL.createObjectURL(blob)
-            //   let link = document.createElement('a')
-            //   link.href = url
-            //   link.setAttribute('download', 'results.zip')
-            //   document.body.appendChild(link)
-            //   link.click()
-            //}
           })
           .catch(function (error) {
             store.commit('setStatus', "failed")
-
           })
       }
     },
@@ -383,7 +360,7 @@ export default {
        * Max number of files: 25
        * Max upload size: 1GB
        */
-      this.invalidNumUploadFiles = this.uploadFiles.length > 25
+      this.invalidNumUploadFiles = this.uploadFiles.length > 20
       if (this.invalidNumUploadFiles) {
         this.runStatus = true
         return

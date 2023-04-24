@@ -7,15 +7,15 @@
     </div>
     <!-- The padding and background behind the thumbnails -->
     <div class="Center">
-    <div v-if="visibleThumbnails" style="background-color: whitesmoke; display: flex; justify-content: center; max-width: 98%; margin-left: 1vw; margin-right: 1vw; flex-wrap: wrap;">
+    <div v-if="visibleThumbnails" style="background-color:lightgray; display: flex; justify-content: center; max-width: 98%; margin-left: 1vw; margin-right: 1vw; flex-wrap: wrap;">
       <!-- This is the box that the thumbnail is in, that when clicked sends the index of the thumbnail, also generates thumbnails using v-for -->
       
       <a v-for="(image, index) in images" :key="index" href="#"
           @click.prevent="showLightbox(index)">
-        <div style="text-align: center;width: 30rem; float:inline-end;">
+        <div style="text-align: center;width: 50rem; height: 35rem; float:inline-end;">
         <!-- These are the thumbnails -->
-        <img :key="index" :src="image" class="thumbnailFormattingMore">
-        <p style="width: 30rem; text-align: center; position: relative;">{{ imagesNames[index] }}</p>
+        <img :key="index" :src="image" style="padding-top: 1vw; padding-left: .5vw; padding-right: .5vw; width: 50rem; height: 35rem;">
+        <p style="width: 50rem; text-align: center; position: relative; background-color: lightgray;">{{ imagesNames[index] }}</p>
       </div>
       </a>
       </div>
@@ -188,10 +188,10 @@ export default {
 	background-color: whitesmoke;
 }
 .lightboxImage img {
-	width: 80rem;
-	height: 50rem;
-	max-width: 90%;
-	max-height: calc(100vw - 100px);
+	width: 60vw;
+	height: 39vw;
+	/* max-width: 90%;
+	max-height: calc(100vw - 100px); */
 }
 .XButton {
 	width: 3vw;
@@ -221,9 +221,9 @@ export default {
 }
 .thumbnailFormattingMore {
 	padding-top: 1vw;
-  padding-left: .5vw;
-  padding-right: .5vw;
-	width: 30rem;
-	height: 25rem;
+  padding-left: 2.5vw;
+  padding-right: 2.5vw;
+	width: 50rem;
+	height: 35rem;
 }
 </style>
