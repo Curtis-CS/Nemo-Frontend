@@ -39,7 +39,7 @@
         </p>
         <h5 class="fw-bold text-center lh-1 mb-4 mt-5 min-width"> Project Manager </h5>
         <p class="fw-normal text-muted text-center mb-lg-4">
-
+          Abhishek Kundu
         </p>
         <h5 class="fw-bold text-center lh-1 mb-4 mt-5 min-width"> Advisors </h5>
         <p class="fw-normal text-center text-muted mb-5 mb-lg-4">
