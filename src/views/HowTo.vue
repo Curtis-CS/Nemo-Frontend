@@ -6,6 +6,7 @@
     <section class="bg-white" style="text-align: center; padding-top: 1vw; padding-bottom: 2vw;">
       <video style="width: 70vw; height: auto; background-color: gray; border-style: solid;" controls>
         <source src="/NemoInterfaceHowToUse.mp4" type="video/mp4">
+        <source src="/NemoInterfaceHowToUse.ogx" type="video/ogg">
         Unfortunately your browser does not support the video tag. 
         The simple steps to use the Website are go to the home page/Run Nemo page, and simply upload some images and hit run.
       </video>
