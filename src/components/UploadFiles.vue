@@ -299,12 +299,39 @@ export default {
       this.uploadFiles.splice(i, 1)
       this.verifyFiles()
     },
+    SortFiles(a, b) {
+      const typeA = a.name.split(".").pop()
+      const typeB = b.name.split(".").pop()
+      console.log(typeA)
+      console.log(typeB)
+      if (typeA === "mp4" && typeB !== "mp4")
+      {
+        return 1
+      }
+      else if (typeA !== "mp4" && typeB === "mp4")
+      {
+        return -1
+      }
+      else
+      {
+        return 1
+      }
+    },
     submitFiles() {
       /**
        * Function to submit files to the back-end server and save results.
        * Files are send one at a time.
        */
       let filesLeftToSend = this.uploadFiles.length
+
+      this.uploadFiles = this.uploadFiles.sort(this.SortFiles)
+      // let x = 0
+      // while (x < this.uploadFiles.length)
+      // {
+      //   console.log(this.uploadFiles[x])
+      //   x++
+      // }
+
       for (let i = 0; i < this.uploadFiles.length; i++) {
         let file = this.uploadFiles[i]
         let formData = new FormData()
