@@ -302,8 +302,6 @@ export default {
     SortFiles(a, b) {
       const typeA = a.name.split(".").pop()
       const typeB = b.name.split(".").pop()
-      console.log(typeA)
-      console.log(typeB)
       if (typeA === "mp4" && typeB !== "mp4")
       {
         return 1
@@ -363,14 +361,11 @@ export default {
                       let fileName = file.name
                       const lastSlashIndex = fileName.lastIndexOf("/") + 1
                       fileName = fileName.substring(lastSlashIndex)
-                      console.log(fileName)
                       if (fileName === "stats.txt")
                       {
-                        console.log("STATS DETECTED")
                         const reader = new FileReader()
                         reader.onload = function () {
                           const lines = reader.result.split("\n")
-                          console.log(lines.length)
                           store.state.nemoAvg = lines[0]
                           store.state.nemoDetected = lines[2]
                           store.state.nemoDuration = lines[1]
