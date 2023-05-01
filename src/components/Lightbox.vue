@@ -54,6 +54,11 @@
         <p style="text-align: center; font-size: 1.5vw; color: white; cursor: pointer; background-color: gray; padding-top: 1px; margin-left: 38vw; margin-right: 38vw;">{{ imagesNames[index] }}</p>
       </div>
     </div>
+    <div style="padding-top: 2vw; text-align: center;">
+        <h5>Total Time Taken: {{  nemoT }} seconds</h5>
+        <h5>Average Time Taken Per an Image: {{  nemoA }} seconds</h5>
+        <h5>Smoke Detected in {{  nemoD }} / {{ nemoL }} images</h5>
+      </div>
   <!-- </section> -->
 </template>
 
@@ -69,7 +74,11 @@ export default {
       index: 0,
       images: store.state.result_images,
       imagesNames: store.state.result_images_names,
-      fileObjects: store.state.result_file_objects
+      fileObjects: store.state.result_file_objects,
+      nemoT: store.state.nemoDuration,
+      nemoA: store.state.nemoAvg,
+      nemoD: store.state.nemoDetected,
+      nemoL: store.state.nemoTotal
     }
   },
   methods: {

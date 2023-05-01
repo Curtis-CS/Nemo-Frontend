@@ -9,7 +9,11 @@ export const store = createStore({
             attention_weights_option: false,
             more_options_toggle: false,
             result_images_names: [],
-            status: ""
+            status: "",
+            nemoDuration: 0,
+            nemoDetected: 0,
+            nemoAvg: 0,
+            nemoTotal: 0
         }
     },
     mutations: {
