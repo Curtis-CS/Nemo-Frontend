@@ -1,9 +1,18 @@
 <template>
   <div class="ConfigureNemo">
-    <section class="bg-white">
-      <div class="InitialPadding">
-        <h2 class="display-6 lh-1 mb-5" style="margin-left: 5vw; font-size: 2.5vw;">Configure Nemo</h2>
+        <section class="bg-light custom-title">
+      <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-9">
+              <h2 class="display-6 text-center">Settings</h2>
+            </div>
+        </div>
       </div>
+    </section>
+    <section class="bg-white mt-custom">
+<!--      <div class="InitialPadding">-->
+<!--        <h2 class="display-6 lh-1 mb-5" style="margin-left: 5vw; font-size: 2.5vw;">Configure Nemo</h2>-->
+<!--      </div>-->
       <div style="padding-bottom: 15vw;">
         <div style="float: left; padding-left: 2vw;">
           <img class="Images" src="/NemoSingleClass.png"

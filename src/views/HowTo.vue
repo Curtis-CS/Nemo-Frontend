@@ -1,9 +1,15 @@
 <template>
   <div class="HowTo">
-    <div class="InitialPadding">
-        <h2 class="display-6 lh-1 mb-5" style="margin-left: 5vw; font-size: 2vw;">How To Use</h2>
-    </div>
-    <section class="bg-white" style="text-align: center; padding-top: 1vw; padding-bottom: 2vw;">
+    <section class="bg-light custom-title">
+      <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-9">
+              <h2 class="display-6 text-center">How To Use</h2>
+            </div>
+        </div>
+      </div>
+    </section>
+    <section class="bg-white mt-custom" style="text-align: center; padding-top: 1vw; padding-bottom: 2vw;">
       <video style="width: 70vw; height: auto; background-color: gray; border-style: solid;" controls>
         <source src="/NemoInterfaceHowToUse.mp4" type="video/mp4">
         <source src="/NemoInterfaceHowToUse.ogx" type="video/ogg">

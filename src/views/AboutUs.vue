@@ -240,10 +240,4 @@ export default {
   width: 890px;
 }
 
-.custom-title {
-  padding-top: 6rem;
-  padding-bottom: 3rem;
-  background-color: #fafafa;
-}
-
 </style>

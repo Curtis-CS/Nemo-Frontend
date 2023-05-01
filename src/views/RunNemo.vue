@@ -1,5 +1,14 @@
 <template>
   <div class="Home">
+    <section class="bg-light custom-title">
+      <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-9">
+              <h2 class="display-6 text-center">Run Nemo</h2>
+            </div>
+        </div>
+      </div>
+    </section>
     <section class="bg-white">
       <div class="container px-5 mt-custom">
         <div class="row gx-5 align-items-start justify-content-center justify-content-lg-between min-column-width">
@@ -12,7 +21,6 @@
               created for object detection. It has a CNN backbone along with encoder-decoder transformers. It also
               uses bipartite matching loss function.
             </p>
-            <h4 class="display-8 lh-1 mb-3 mt-5 min-width">Run Nemo</h4>
             <UploadFiles/>
           </div>
           <div class="col-sm-8 col-md-6">
