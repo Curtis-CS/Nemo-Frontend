@@ -60,11 +60,14 @@
           <table class="custom_table1 mt-2">
             <tr>
               <!--Run Status-->
-              <td v-if="getStatus() === 'pending'" class="custom_table_column2 align-left valid-file-type">Files submitted.</td>
-              <td v-if="getStatus() === 'success' && submitted"> {{ redirect() }} </td>
-              <td v-if="getStatus() === 'failed'" class="custom_table_column2 align-left invalid-file-type">Can't process files!</td>
-
-              <td class="custom_table_column"> Status: </td>
+              <td v-if="getStatus() === 'pending'" class="custom_table_column2 align-left valid-file-type">Files
+                submitted.
+              </td>
+              <td v-if="getStatus() === 'success' && submitted"> {{ redirect() }}</td>
+              <td v-if="getStatus() === 'failed'" class="custom_table_column2 align-left invalid-file-type">Can't
+                process files!
+              </td>
+              <td class="custom_table_column"> Status:</td>
               <!--Number of Files-->
               <td v-if="invalidNumUploadFiles" class="custom_table_column align-right invalid-file-type">
                 {{ getNumFiles() }} / 20
@@ -92,22 +95,42 @@
           </button>
         </div>
       </div>
-    </div>
-    <div v-if="processingFiles" class="InitialPadding">
-      <h2 class="display-6 lh-1 mb-5" style="margin-left: 5vw;">Processing</h2>
+      <!--      Default Run-->
+      <div v-else class="container min-container-height mt-4">
+        <table class="custom_table1 mt-2">
+          <tr>
+            <!--Run Status-->
+            <td v-if="getStatus() === 'pending'" class="custom_table_column2 align-left valid-file-type">Files
+              submitted.
+            </td>
+            <td v-if="getStatus() === 'success' && submitted"> {{ redirect() }}</td>
+            <td v-if="getStatus() === 'failed'" class="custom_table_column2 align-left invalid-file-type">Can't process
+              files!
+            </td>
+            <td>
+              <div>
+                <button :disabled="defaultRunStatus" class="base-button run-button align-right" type="button" @click="runDefault">
+                  Test Run
+                </button>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import { store } from "../store"
-import { router } from "../router"
+import {store} from "../store"
+import {router} from "../router"
 import JSZip from 'jszip'
 
 export default {
   data() {
     return {
+      defaultRunStatus: false,
       icons: {
         gif: '/file_types/gif-icon.png',
         jpg: '/file_types/jpeg-icon.png',
@@ -122,6 +145,7 @@ export default {
       invalidSizeUploadFiles: false,
       isDragging: false,
       processingFiles: false,
+      response: null,
       runStatus: false,
       submitted: false,
       totalUploadSize: 0,   // bytes
@@ -154,7 +178,7 @@ export default {
        * Function to convert bytes to GB.
        * Adapted from function "bytesToSize."
        */
-      let gigabyte = 1024 * 1024 *1024
+      let gigabyte = 1024 * 1024 * 1024
       return bytes / gigabyte
     },
     bytesToSize(bytes, precision) {
@@ -170,22 +194,22 @@ export default {
       let terabyte = gigabyte * 1024
 
       if ((bytes >= 0) && (bytes < kilobyte)) {
-          return bytes + ' B';
+        return bytes + ' B';
 
       } else if ((bytes >= kilobyte) && (bytes < megabyte)) {
-          return (bytes / kilobyte).toFixed(precision) + ' KB';
+        return (bytes / kilobyte).toFixed(precision) + ' KB';
 
       } else if ((bytes >= megabyte) && (bytes < gigabyte)) {
-          return (bytes / megabyte).toFixed(precision) + ' MB';
+        return (bytes / megabyte).toFixed(precision) + ' MB';
 
       } else if ((bytes >= gigabyte) && (bytes < terabyte)) {
-          return (bytes / gigabyte).toFixed(precision) + ' GB';
+        return (bytes / gigabyte).toFixed(precision) + ' GB';
 
       } else if (bytes >= terabyte) {
-          return (bytes / terabyte).toFixed(precision) + ' TB';
+        return (bytes / terabyte).toFixed(precision) + ' TB';
 
       } else {
-          return bytes + ' B';
+        return bytes + ' B';
       }
     },
     clearFiles() {
@@ -284,7 +308,45 @@ export default {
         this.addFile(files[i])
       }
     },
-    redirect () {
+    handleResponse() {
+      if (this.response.data.type === "application/zip") {
+        const zip = new JSZip()
+        zip.loadAsync(this.response.data).then((zipContents) => {
+          //Get each file in zip
+          zipContents.forEach((path, curZippedFile) => {
+            //if file or directory
+            if (!curZippedFile.dir) {
+              //get the file as a blob
+              curZippedFile.async("blob").then((fileBlob) => {
+                const file = new File([fileBlob], curZippedFile.name)
+                store.commit('insertFileObject', file)
+                let fileName = file.name
+                const lastSlashIndex = fileName.lastIndexOf("/") + 1
+                fileName = fileName.substring(lastSlashIndex)
+                if (fileName === "stats.txt") {
+                  const reader = new FileReader()
+                  reader.onload = function () {
+                    const lines = reader.result.split("\n")
+                    store.state.nemoAvg = lines[0]
+                    store.state.nemoDetected = lines[2]
+                    store.state.nemoDuration = lines[1]
+                    store.state.nemoTotal = lines[3]
+                  }
+                  reader.readAsText(file)
+                } else {
+                  const imageGotten = document.createElement("img")
+                  imageGotten.src = URL.createObjectURL(file)
+                  store.commit('insertFile', imageGotten.src)
+                  store.commit('insertFileName', fileName)
+                }
+              })
+            }
+          })
+          store.commit('setStatus', "success")
+        })
+      }
+    },
+    redirect() {
       /**
        * Function to redirect to results page.
        */
@@ -299,19 +361,31 @@ export default {
       this.uploadFiles.splice(i, 1)
       this.verifyFiles()
     },
+    runDefault() {
+      /**
+       * Function to submit 'Test Run' images.
+       */
+      this.submitted = true
+      this.defaultRunStatus = true
+      store.commit('setStatus', "pending")
+      axios.get('http://127.0.0.1:5000', {responseType: 'blob'})
+          .then(response => {
+            this.response = response
+            this.handleResponse()
+            store.commit('setStatus', "success")
+          })
+          .catch(function (error) {
+            store.commit('setStatus', "failed")
+          })
+    },
     SortFiles(a, b) {
       const typeA = a.name.split(".").pop()
       const typeB = b.name.split(".").pop()
-      if (typeA === "mp4" && typeB !== "mp4")
-      {
+      if (typeA === "mp4" && typeB !== "mp4") {
         return 1
-      }
-      else if (typeA !== "mp4" && typeB === "mp4")
-      {
+      } else if (typeA !== "mp4" && typeB === "mp4") {
         return -1
-      }
-      else
-      {
+      } else {
         return 1
       }
     },
@@ -321,15 +395,7 @@ export default {
        * Files are send one at a time.
        */
       let filesLeftToSend = this.uploadFiles.length
-
       this.uploadFiles = this.uploadFiles.sort(this.SortFiles)
-      // let x = 0
-      // while (x < this.uploadFiles.length)
-      // {
-      //   console.log(this.uploadFiles[x])
-      //   x++
-      // }
-
       for (let i = 0; i < this.uploadFiles.length; i++) {
         let file = this.uploadFiles[i]
         let formData = new FormData()
@@ -343,53 +409,13 @@ export default {
         axios.post('http://127.0.0.1:5000', formData, {
           responseType: 'blob'
         })
-          .then(function (response) {
-            // store.state.status = "success"
-            //console.log(response.data.type)
-            if (response.data.type == "application/zip")
-            {
-              const zip = new JSZip()
-              zip.loadAsync(response.data).then((zipContents) => {
-                //Get each file in zip
-                zipContents.forEach((path, curZippedFile) => {
-                  //if file or directory
-                  if (!curZippedFile.dir) {
-                    //get the file as a blob
-                    curZippedFile.async("blob").then((fileBlob) => {
-                      const file = new File([fileBlob], curZippedFile.name)
-                      store.commit('insertFileObject', file)
-                      let fileName = file.name
-                      const lastSlashIndex = fileName.lastIndexOf("/") + 1
-                      fileName = fileName.substring(lastSlashIndex)
-                      if (fileName === "stats.txt")
-                      {
-                        const reader = new FileReader()
-                        reader.onload = function () {
-                          const lines = reader.result.split("\n")
-                          store.state.nemoAvg = lines[0]
-                          store.state.nemoDetected = lines[2]
-                          store.state.nemoDuration = lines[1]
-                          store.state.nemoTotal = lines[3]
-                        }
-                        reader.readAsText(file)
-                      }
-                      else
-                      {
-                        const imageGotten = document.createElement("img")
-                        imageGotten.src = URL.createObjectURL(file)
-                        store.commit('insertFile', imageGotten.src)
-                        store.commit('insertFileName', fileName)
-                      }
-                    })
-                  }
-                })
-                store.commit('setStatus', "success")
-              })
-            }
-          })
-          .catch(function (error) {
-            store.commit('setStatus', "failed")
-          })
+            .then(response => {
+              this.response = response
+              this.handleResponse()
+            })
+            .catch(function (error) {
+              store.commit('setStatus', "failed")
+            })
       }
     },
     verifyFiles() {
