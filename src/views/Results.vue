@@ -1,11 +1,6 @@
 <template>
   <section class="bg-white">
-    <div class="container px-5 mt-custom max-column-width min-column-width" v-if="checkResults()">
-      <h2>No Results Received.</h2>
-    </div>
-    <div v-else>
-      <Lightbox/>
-    </div>
+    <Lightbox/>
   </section>
 </template>
 

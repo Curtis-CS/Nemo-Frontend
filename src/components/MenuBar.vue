@@ -20,7 +20,7 @@
           <li class="nav-item">
             <router-link class="nav-link me-lg-3" to="/">Run Nemo</router-link>
           </li>
-          <li v-if="checkStatus()" class="nav-item">
+          <li v-if="!checkStatus()" class="nav-item">
             <router-link class="nav-link me-lg-3" to="/results">Results</router-link>
           </li>
           <li class="nav-item">
@@ -52,7 +52,7 @@ export default {
       /**
        * Function to check the status of the post request.
        */
-      return !!store.state.status;
+      return store.state.result_images.length === 0;
     }
   }
 }
