@@ -14,28 +14,25 @@
     <div class="Center">
     <div v-if="visibleThumbnails" style="background-color:lightgray; display: flex; justify-content: center; max-width: 98%; margin-left: 1vw; margin-right: 1vw; flex-wrap: wrap;">
       <!-- This is the box that the thumbnail is in, that when clicked sends the index of the thumbnail, also generates thumbnails using v-for -->
-      
       <a v-for="(image, index) in images" :key="index" href="#"
           @click.prevent="showLightbox(index)">
         <div style="text-align: center;width: 50rem; height: 35rem; float:inline-end;">
         <!-- These are the thumbnails -->
-        <img :key="index" :src="image" style="padding-top: 1vw; padding-left: .5vw; padding-right: .5vw; width: 50rem; height: 35rem;">
+        <img :key="index" :src="image" style="padding-top: 1vw; padding-left: .5vw; padding-right: .5vw; width: 50rem; height: 35rem;" alt="Displaying smoke detection images.">
         <p style="width: 50rem; text-align: center; position: relative; background-color: lightgray;">{{ imagesNames[index] }}</p>
       </div>
       </a>
       </div>
     </div>
-
     <!--This is the lightbox (pop up image) that is set to invisible by default-->
     <div v-if="visibleLightbox" class="grayBackground" style="padding-bottom: 1vw;" @click="hideLightbox">
       <!--The X button to close-->
       <div class="XButton" @click.stop="hideLightbox">&times;
       </div>
-
       <!--The image that is displayed in the lightbox (pop up)-->
       <div class="Center">
         <div class="lightboxImage" @click.stop="">
-          <img :src="images[index]">
+          <img :src="images[index]" alt="Displaying smoke detection images.">
         </div>
       </div>
       <!--These are the two arrows to click to go to next or prev file-->
@@ -78,7 +75,7 @@
 
 <script>
 import JSZip from 'jszip'
-import { store } from "../store"
+import { store } from "@/store"
 export default {
   data() {
     return {
@@ -101,14 +98,7 @@ export default {
       this.nemoAvg = store.state.nemoAvg
       this.nemoDetected = store.state.nemoDetected
       this.nemoTotal = store.state.nemoTotal
-      if (this.nemoDuration > 0)
-      {
-        return true
-      }
-      else
-      {
-        return false
-      }
+      return this.nemoDuration > 0;
     },
     showLightbox(passedIndex) {
       this.visibleLightbox = true
@@ -126,7 +116,6 @@ export default {
       } else {
         this.index = 0
       }
-
     },
     goToPrevFile() {
       if (this.index > 0) {
@@ -145,18 +134,11 @@ export default {
       document.body.removeChild(link)
     },
     async DownloadAll() {
-      var x=0
+      let x = 0;
       const zip = new JSZip()
       while (x < this.fileObjects.length)
       {
         zip.folder('results').file(this.imagesNames[x], this.fileObjects[x])
-        // const link = document.createElement('a')
-        // link.href = this.images[x]
-        // link.setAttribute('download', this.imagesNames[x])
-
-        // document.body.appendChild(link)
-        // link.click()
-        // document.body.removeChild(link)
         x++
       }
       zip.generateAsync({type: "blob"}).then(function(content) {
@@ -225,8 +207,6 @@ export default {
 .lightboxImage img {
 	width: 60vw;
 	height: 39vw;
-	/* max-width: 90%;
-	max-height: calc(100vw - 100px); */
 }
 .XButton {
 	width: 3vw;
@@ -250,15 +230,5 @@ export default {
 }
 .Center {
 	text-align: center;
-}
-.thumbnailFormatting {
-	padding-top: 1vw;
-}
-.thumbnailFormattingMore {
-	padding-top: 1vw;
-  padding-left: 2.5vw;
-  padding-right: 2.5vw;
-	width: 50rem;
-	height: 35rem;
 }
 </style>

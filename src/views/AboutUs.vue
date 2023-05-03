@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col-lg-1 align-content-center"/>
         <div class="col-lg-1 align-content-center mt-5">
-          <img src="/list_icon.png" class="custom-circle"/>
+          <img src="/list_icon.png" class="custom-circle" alt="Bullet point icon for listing sections."/>
         </div>
         <div class="col-12 col-lg-9 bg mt-5">
           <div class="card bg-light border-white custom-min-width">
@@ -136,7 +136,7 @@
       <div class="row">
         <div class="col-lg-1 align-content-center"/>
         <div class="col-lg-1 align-content-center mt-5">
-          <img src="/list_icon.png" class="custom-circle"/>
+          <img src="/list_icon.png" class="custom-circle" alt="Bullet point icon for listing sections."/>
         </div>
         <div class="col-12 col-lg-9 bg mt-5">
           <div class="card bg-light border-white custom-min-width">
@@ -163,7 +163,7 @@
       <div class="row">
         <div class="col-lg-1 align-content-center"/>
         <div class="col-lg-1 align-content-center mt-5">
-          <img src="/list_icon.png" class="custom-circle"/>
+          <img src="/list_icon.png" class="custom-circle" alt="Bullet point icon for listing sections."/>
         </div>
         <div class="col-12 col-lg-9 bg mt-5">
           <div class="card bg-light border-white custom-min-width">
@@ -190,7 +190,7 @@
       <div class="row">
         <div class="col-lg-1 align-content-center"/>
         <div class="col-lg-1 align-content-center mt-5">
-          <img src="/list_icon.png" class="custom-circle"/>
+          <img src="/list_icon.png" class="custom-circle" alt="Bullet point icon for listing sections."/>
         </div>
         <div class="col-12 col-lg-9 bg mt-5">
           <div class="card bg-light border-white custom-min-width">

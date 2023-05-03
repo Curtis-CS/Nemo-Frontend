@@ -3,9 +3,9 @@
     <section class="bg-light custom-title">
       <div class="container">
         <div class="row justify-content-center">
-            <div class="col-12 col-lg-11">
-              <h2 class="display-6 text-center">Run Nemo</h2>
-            </div>
+          <div class="col-12 col-lg-11">
+            <h2 class="display-6 text-center">Run Nemo</h2>
+          </div>
         </div>
       </div>
     </section>
@@ -27,13 +27,15 @@
             <figure>
               <img alt="..." class="img-thumbnail mt-5" src="/nemo_smokev4.png">
               <figcaption class="figure-caption mt-3">
-                <b>Figure 1:</b> Annotated frame with confirmed smoke detection and estimated density, provided by the Nemo model.
+                <b>Figure 1:</b> Annotated frame with confirmed smoke detection and estimated density, provided by the
+                Nemo model.
               </figcaption>
             </figure>
             <figure>
               <img alt="..." class="img-thumbnail mt-5" src="/nemo_smokeV2..png">
               <figcaption class="figure-caption mt-3">
-                <b>Figure 2:</b> Annotated frame with confirmed smoke detection and estimated density, provided by the Nemo model.
+                <b>Figure 2:</b> Annotated frame with confirmed smoke detection and estimated density, provided by the
+                Nemo model.
               </figcaption>
             </figure>
           </div>

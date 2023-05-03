@@ -91,7 +91,7 @@
         <h3 class="card-title text-left display-7 mt-2 card-title-left-margin">Advanced Settings</h3>
         <div class="card mt-5 advanced-width">
           <div class="card-body">
-<!--            Attention Weights-->
+            <!--            Attention Weights-->
             <div class="row line-width mt-4">
               <div class="col-lg-8">
                 <h5 class="card-title display-7 mt-1">Encoder-Decoder Attention Weights</h5>
@@ -114,7 +114,7 @@
                 </div>
               </div>
             </div>
-<!--            NMSUP-->
+            <!--            NMSUP-->
             <div class="row line-width mt-4 border-top">
               <div class="col-lg-8">
                 <h5 class="card-title display-7 mt-4">NMSUP</h5>
@@ -127,8 +127,8 @@
                 <div class="form-group">
                   <label for="NMSUP_Value"/>
                   <select
-                      class="form-control text-input-bounds"
                       id="NMSUP_Value"
+                      class="form-control text-input-bounds"
                       @mouseleave="setExtraOption2()">
                     <option>0.1</option>
                     <option>0.2</option>
@@ -145,7 +145,7 @@
               </div>
               <div class="col-lg-1"/>
             </div>
-<!--            IOU Threshold-->
+            <!--            IOU Threshold-->
             <div class="row line-width mt-4 border-top">
               <div class="col-lg-8">
                 <h5 class="card-title display-7 mt-4">IOU Threshold</h5>
@@ -159,8 +159,8 @@
                 <div class="form-group">
                   <label for="IOU_Value"/>
                   <select
-                      class="form-control text-input-bounds"
                       id="IOU_Value"
+                      class="form-control text-input-bounds"
                       @mouseleave="setExtraOption3()">
                     <option>0.1</option>
                     <option>0.2</option>
@@ -213,12 +213,10 @@ export default {
     setDD() {
       this.typeToggle = false
       store.state.single_class_option = this.typeToggle
-      console.log(store.state.single_class_option)
     },
     setSCD() {
       this.typeToggle = true
       store.state.single_class_option = this.typeToggle
-      console.log(store.state.single_class_option)
     },
   }
 }

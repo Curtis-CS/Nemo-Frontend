@@ -13,7 +13,7 @@
           </a>
         </li>
       </ul>
-      <p class="text-center text-muted">&copy; 2022 UNR - Senior Project - Team 15</p>
+      <p class="text-center text-muted">&copy; 2023 UNR - Senior Project - Team 15</p>
     </footer>
   </div>
 </template>

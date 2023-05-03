@@ -5,8 +5,8 @@ import Footer from './components/NemoFooter.vue'
 
 <template>
   <div>
-    <MenuBar />
+    <MenuBar/>
     <router-view></router-view>
-    <Footer />
+    <Footer/>
   </div>
 </template>

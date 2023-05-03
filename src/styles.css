@@ -1,21 +1,22 @@
 .custom-title {
-  padding-top: 6rem;
-  padding-bottom: 2rem;
-  background-color: #fafafa;
+    padding-top: 6rem;
+    padding-bottom: 2rem;
+    background-color: #fafafa;
 }
 
 .max-column-width {
-  max-width: 900px;
+    max-width: 900px;
 }
 
 .min-column-width {
-  min-width: 600px;
+    min-width: 600px;
 }
 
 .mt-custom {
-  margin-top: 4rem;
-  margin-bottom: 4rem;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
 }
+
 .InitialPadding {
-  padding-top: 100px;
+    padding-top: 100px;
 }

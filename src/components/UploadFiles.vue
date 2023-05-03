@@ -123,8 +123,8 @@
 
 <script>
 import axios from 'axios'
-import {store} from "../store"
-import {router} from "../router"
+import {store} from "@/store"
+import {router} from "@/router"
 import JSZip from 'jszip'
 
 export default {
@@ -375,6 +375,7 @@ export default {
             store.commit('setStatus', "success")
           })
           .catch(function (error) {
+            console.log(error)
             store.commit('setStatus', "failed")
           })
     },
@@ -416,6 +417,7 @@ export default {
               this.handleResponse()
             })
             .catch(function (error) {
+              console.log(error)
               store.commit('setStatus', "failed")
             })
       }
