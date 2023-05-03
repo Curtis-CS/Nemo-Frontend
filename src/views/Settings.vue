@@ -129,7 +129,7 @@
                   <select
                       class="form-control text-input-bounds"
                       id="NMSUP_Value"
-                      @click="setExtraOption2()">
+                      @mouseleave="setExtraOption2()">
                     <option>0.1</option>
                     <option>0.2</option>
                     <option>0.3</option>
@@ -139,6 +139,7 @@
                     <option>0.7</option>
                     <option>0.8</option>
                     <option>0.9</option>
+                    <option>1.0</option>
                   </select>
                 </div>
               </div>
@@ -160,7 +161,7 @@
                   <select
                       class="form-control text-input-bounds"
                       id="IOU_Value"
-                      @click="setExtraOption3()">
+                      @mouseleave="setExtraOption3()">
                     <option>0.1</option>
                     <option>0.2</option>
                     <option>0.3</option>
@@ -170,6 +171,7 @@
                     <option>0.7</option>
                     <option>0.8</option>
                     <option>0.9</option>
+                    <option>1.0</option>
                   </select>
                 </div>
               </div>
@@ -201,10 +203,12 @@ export default {
       store.state.attention_weights_option = this.extraOption1 !== true;
     },
     setExtraOption2() {
-      store.state.nmsup_option = this.extraOption2 !== true;
+      let e = document.getElementById("NMSUP_Value")
+      store.state.nmsup_option = e.value;
     },
     setExtraOption3() {
-      store.state.iou_threshold_option = this.extraOption3 !== true;
+      let e = document.getElementById("IOU_Value")
+      store.state.iou_threshold_option = e.value;
     },
     setDD() {
       this.typeToggle = false

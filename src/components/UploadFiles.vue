@@ -402,6 +402,8 @@ export default {
         formData.append('filesLeft', filesLeftToSend)
         formData.append('runType', store.state.single_class_option)
         formData.append('attention_weights', store.state.attention_weights_option)
+        formData.append("iou_thresh", store.state.iou_threshold_option)
+        formData.append("nmsup", store.state.nmsup_option)
         formData.append('file', file)
         filesLeftToSend = filesLeftToSend - 1
         this.submitted = true
