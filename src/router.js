@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 
 import RunNemo from "./views/RunNemo.vue"
 import AboutUs from './views/AboutUs.vue'
-import ConfigureNemo from './views/ConfigureNemo.vue'
+import ConfigureNemo from './views/Settings.vue'
 import Results from './views/Results.vue'
 import HowTo from './views/HowTo.vue'
 

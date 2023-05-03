@@ -60,8 +60,8 @@
           <table class="custom_table1 mt-2">
             <tr>
               <!--Run Status-->
-              <td v-if="getStatus() === 'pending'" class="custom_table_column2 align-left valid-file-type">Files
-                submitted.
+              <td v-if="getStatus() === 'pending'" class="custom_table_column2 align-left valid-file-type">
+                Files submitted.
               </td>
               <td v-if="getStatus() === 'success' && submitted"> {{ redirect() }}</td>
               <td v-if="getStatus() === 'failed'" class="custom_table_column2 align-left invalid-file-type">Can't

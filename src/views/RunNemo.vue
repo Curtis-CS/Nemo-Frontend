@@ -3,7 +3,7 @@
     <section class="bg-light custom-title">
       <div class="container">
         <div class="row justify-content-center">
-            <div class="col-12 col-lg-9">
+            <div class="col-12 col-lg-11">
               <h2 class="display-6 text-center">Run Nemo</h2>
             </div>
         </div>
