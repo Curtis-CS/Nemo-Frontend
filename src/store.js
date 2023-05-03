@@ -7,12 +7,13 @@ export const store = createStore({
             result_file_objects: [],
             single_class_option: true,
             attention_weights_option: false,
-            more_options_toggle: false,
+            iou_threshold_option: false,
+            nmsup_option: "",
             result_images_names: [],
             status: "",
+            nemoAvg: 0,
             nemoDuration: 0,
             nemoDetected: 0,
-            nemoAvg: 0,
             nemoTotal: 0
         }
     },
