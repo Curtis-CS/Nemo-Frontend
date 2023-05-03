@@ -25,15 +25,15 @@
           </div>
           <div class="col-sm-8 col-md-6">
             <figure>
-              <img alt="..." class="img-thumbnail mt-5" src="/nemo_chris-leboutillier-be8mnFXzBgo-unsplash.png">
+              <img alt="..." class="img-thumbnail mt-5" src="/nemo_smokev4.png">
               <figcaption class="figure-caption mt-3">
-                <b>Figure 1:</b> Annotated frame with confirmed smoke detection and estimated density.
+                <b>Figure 1:</b> Annotated frame with confirmed smoke detection and estimated density, provided by the Nemo model.
               </figcaption>
             </figure>
             <figure>
               <img alt="..." class="img-thumbnail mt-5" src="/nemo_smokeV2..png">
               <figcaption class="figure-caption mt-3">
-                <b>Figure 2:</b> Annotated frame with confirmed smoke detection and estimated density.
+                <b>Figure 2:</b> Annotated frame with confirmed smoke detection and estimated density, provided by the Nemo model.
               </figcaption>
             </figure>
           </div>
