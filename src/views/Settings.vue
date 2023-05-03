@@ -124,24 +124,22 @@
               </div>
               <div class="col-lg-1"/>
               <div class="col-lg-2 ">
-                <div class="form-check form-switch">
-                  <div class="form-group">
-                    <label for="NMSUP_Value"/>
-                    <select
-                        class="form-control text-input-bounds"
-                        id="NMSUP_Value"
-                        @click="setExtraOption2()">
-                      <option>0.1</option>
-                      <option>0.2</option>
-                      <option>0.3</option>
-                      <option>0.4</option>
-                      <option>0.5</option>
-                      <option>0.6</option>
-                      <option>0.7</option>
-                      <option>0.8</option>
-                      <option>0.9</option>
-                    </select>
-                  </div>
+                <div class="form-group">
+                  <label for="NMSUP_Value"/>
+                  <select
+                      class="form-control text-input-bounds"
+                      id="NMSUP_Value"
+                      @click="setExtraOption2()">
+                    <option>0.1</option>
+                    <option>0.2</option>
+                    <option>0.3</option>
+                    <option>0.4</option>
+                    <option>0.5</option>
+                    <option>0.6</option>
+                    <option>0.7</option>
+                    <option>0.8</option>
+                    <option>0.9</option>
+                  </select>
                 </div>
               </div>
               <div class="col-lg-1"/>
@@ -157,24 +155,22 @@
               </div>
               <div class="col-lg-1"/>
               <div class="col-lg-2">
-                <div class="form-check form-switch">
-                  <div class="form-group">
-                    <label for="IOU_Value"/>
-                    <select
-                        class="form-control text-input-bounds"
-                        id="IOU_Value"
-                        @click="setExtraOption3()">
-                      <option>0.1</option>
-                      <option>0.2</option>
-                      <option>0.3</option>
-                      <option>0.4</option>
-                      <option>0.5</option>
-                      <option>0.6</option>
-                      <option>0.7</option>
-                      <option>0.8</option>
-                      <option>0.9</option>
-                    </select>
-                  </div>
+                <div class="form-group">
+                  <label for="IOU_Value"/>
+                  <select
+                      class="form-control text-input-bounds"
+                      id="IOU_Value"
+                      @click="setExtraOption3()">
+                    <option>0.1</option>
+                    <option>0.2</option>
+                    <option>0.3</option>
+                    <option>0.4</option>
+                    <option>0.5</option>
+                    <option>0.6</option>
+                    <option>0.7</option>
+                    <option>0.8</option>
+                    <option>0.9</option>
+                  </select>
                 </div>
               </div>
             </div>
