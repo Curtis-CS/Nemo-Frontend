@@ -53,11 +53,11 @@
         <p style="text-align: center; font-size: 1.5vw; color: white; cursor: pointer; background-color: gray; padding-top: 1px; margin-left: 38vw; margin-right: 38vw;">{{ imagesNames[index] }}</p>
       </div>
     </div>
-    <div style="padding-top: 2vw; text-align: center;">
-        <h5>Total Time Taken: {{  nemoT }} seconds</h5>
-        <h5>Average Time Taken Per an Image: {{  nemoA }} seconds</h5>
-        <h5>Smoke Detected in {{  nemoD }} / {{ nemoL }} images</h5>
-      </div>
+    <div style="padding-top: 3vw; text-align: center;" class="display-6 lh-1 mb-5" v-if="CheckStats()">
+        <p>Total Time Taken: {{  nemoDuration }} seconds</p>
+        <p>Average Time Taken Per an Image: {{  nemoAvg }} seconds</p>
+        <p>Smoke Detected in {{  nemoDetected }} / {{ nemoTotal }} images</p>
+    </div>
   <!-- </section> -->
 </template>
 
@@ -74,16 +74,28 @@ export default {
       images: store.state.result_images,
       imagesNames: store.state.result_images_names,
       fileObjects: store.state.result_file_objects,
-      nemoT: store.state.nemoDuration,
-      nemoA: store.state.nemoAvg,
-      nemoD: store.state.nemoDetected,
-      nemoL: store.state.nemoTotal
+      nemoDuration: 0,
+      nemoAvg: 0,
+      nemoDetected: 0,
+      nemoTotal: 0
     }
   },
   methods: {
+    CheckStats() {
+      this.nemoDuration = store.state.nemoDuration
+      this.nemoAvg = store.state.nemoAvg
+      this.nemoDetected = store.state.nemoDetected
+      this.nemoTotal = store.state.nemoTotal
+      if (this.nemoDuration > 0)
+      {
+        return true
+      }
+      else
+      {
+        return false
+      }
+    },
     showLightbox(passedIndex) {
-      console.log(this.images)
-      console.log(this.images.length)
       this.visibleLightbox = true
       this.visibleThumbnails = false
       this.index = passedIndex
