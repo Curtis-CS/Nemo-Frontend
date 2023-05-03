@@ -1,9 +1,15 @@
 <template>
   <!-- <section class="bg-white"> -->
     <!--Initial formatting for Results title-->
-    <div class="InitialPadding" style=" text-align: center; margin-left: 3vw; margin-right: 3vw;">
-      <h2 class="display-6 lh-1 mb-5" style="display: inline-block; margin-left: 20vw; cursor: pointer;" @click="DownloadAll()">Download All</h2>
+    <section class="bg-light custom-title">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-9">
+          <h2 class="display-6 text-center">Results</h2>
+        </div>
+      </div>
     </div>
+  </section>
     <!-- The padding and background behind the thumbnails -->
     <div class="Center">
     <div v-if="visibleThumbnails" style="background-color:lightgray; display: flex; justify-content: center; max-width: 98%; margin-left: 1vw; margin-right: 1vw; flex-wrap: wrap;">
@@ -34,14 +40,17 @@
       </div>
       <!--These are the two arrows to click to go to next or prev file-->
       <div class="Center">
-        <div class="grayBackground" style="width: 52vw; float:left" @click.stop="goToPrevFile">
+        <div class="grayBackground" style="margin-left: 20.98vw; float:left" @click.stop="goToPrevFile">
           <svg class="pointer-events-none ArrowLeft" fill="#fff" height="48" viewBox="0 0 24 24" width="48"
                 xmlns="http://www.w3.org/2000/svg">
             <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
             <path d="M0-.5h24v24H0z" fill="none"/>
           </svg>
         </div>
-        <div class="grayBackground" style="width: 48vw; float:right" @click.stop="goToNextFile">
+        <div style="text-align: center; width: 30vw; display: inline-block;" @click.stop="DownloadFile">
+        <p style="text-align: center; font-size: 1vw; color: blue; cursor: pointer; padding-top: 1px; margin-left: 1vw; margin-right: 1vw;">{{ imagesNames[index] }}</p>
+      </div>
+        <div class="grayBackground" style="margin-right: 18vw; float:right" @click.stop="goToNextFile">
           <svg class="pointer-events-none ArrowRight" fill="#fff" height="48" viewBox="0 0 24 24" width="48"
                 xmlns="http://www.w3.org/2000/svg">
             <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
@@ -49,15 +58,21 @@
           </svg>
         </div>
       </div>
-      <div style="text-align: center;" @click.stop="DownloadFile">
-        <p style="text-align: center; font-size: 1.5vw; color: white; cursor: pointer; background-color: gray; padding-top: 1px; margin-left: 38vw; margin-right: 38vw;">{{ imagesNames[index] }}</p>
-      </div>
     </div>
     <div style="padding-top: 3vw; text-align: center;" class="display-6 lh-1 mb-5" v-if="CheckStats()">
         <p>Total Time Taken: {{  nemoDuration }} seconds</p>
         <p>Average Time Taken Per an Image: {{  nemoAvg }} seconds</p>
         <p>Smoke Detected in {{  nemoDetected }} / {{ nemoTotal }} images</p>
     </div>
+    <section class="bg-light custom-title">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-9">
+          <h2 class="display-6 text-center" style="cursor: pointer; padding-bottom: 1vw;" @click="DownloadAll()">Download All</h2>
+        </div>
+      </div>
+    </div>
+  </section>
   <!-- </section> -->
 </template>
 
