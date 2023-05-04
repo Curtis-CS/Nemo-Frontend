@@ -319,7 +319,6 @@ export default {
               //get the file as a blob
               curZippedFile.async("blob").then((fileBlob) => {
                 const file = new File([fileBlob], curZippedFile.name)
-                store.commit('insertFileObject', file)
                 let fileName = file.name
                 const lastSlashIndex = fileName.lastIndexOf("/") + 1
                 fileName = fileName.substring(lastSlashIndex)
@@ -336,6 +335,7 @@ export default {
                 } else {
                   const imageGotten = document.createElement("img")
                   imageGotten.src = URL.createObjectURL(file)
+                  store.commit('insertFileObject', file)
                   store.commit('insertFile', imageGotten.src)
                   store.commit('insertFileName', fileName)
                 }
