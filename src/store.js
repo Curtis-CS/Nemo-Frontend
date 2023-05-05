@@ -5,7 +5,7 @@ export const store = createStore({
             return {
                 result_images: [],
                 result_file_objects: [],
-                single_class_option: true,
+                single_class_option: false,
                 attention_weights_option: false,
                 iou_threshold_option: .2,
                 nmsup_option: .2,
